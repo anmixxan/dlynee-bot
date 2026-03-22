@@ -1,6 +1,6 @@
 const token = process.env.BOT_TOKEN;
 
-async function sendMessage(chatId, text) {
+async function sendMessage(chatId, text, extra = {}) {
   const response = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
     method: 'POST',
     headers: {
@@ -9,6 +9,7 @@ async function sendMessage(chatId, text) {
     body: JSON.stringify({
       chat_id: chatId,
       text,
+      ...extra,
     }),
   });
 
@@ -39,11 +40,21 @@ export default async function handler(req, res) {
     }
 
     if (text === '/start') {
-      await sendMessage(chatId, 'Привет! Бот работает 🚀');
-    } else {
-      await sendMessage(chatId, `Ты написал: ${text}`);
+      await sendMessage(chatId, 'Открыть приложение 👇', {
+        reply_markup: {
+          inline_keyboard: [[
+            {
+              text: '🚀 Открыть Mini App',
+              web_app: { url: 'https://dlynee-bot.vercel.app' },
+            },
+          ]],
+        },
+      });
+
+      return res.status(200).send('ok');
     }
 
+    await sendMessage(chatId, `Ты написал: ${text}`);
     return res.status(200).send('ok');
   } catch (error) {
     console.error('Webhook error:', error);
