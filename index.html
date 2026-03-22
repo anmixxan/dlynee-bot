@@ -34,37 +34,41 @@
     }
 
     .topbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 30px;
-    }
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* меньше расстояние */
+}
 
-    /* 🔥 БОЛЬШОЙ ЛОГО */
-    .brand-mark {
-      width: 200px;
-      height: 200px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+/* 🔥 логотип большой, но аккуратный */
+.brand-mark {
+  width: 90px;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-    .brand-logo {
-      width: 200px;
-      height: 200px;
-      object-fit: contain;
-    }
+/* 🔥 ВАЖНО: уменьшаем "воздух" у картинки */
+.brand-logo {
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+  display: block;
+}
 
-    .brand-text {
-      font-size: 20px;
-      font-weight: 700;
-    }
+/* 🔥 текст ближе к логотипу */
+.brand-text {
+  font-size: 18px;
+  font-weight: 700;
+  margin-left: -10px; /* подтягиваем ближе */
+}
 
     .login-btn {
       border: 1px solid var(--line);
