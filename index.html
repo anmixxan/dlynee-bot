@@ -1,1 +1,52 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ДлянЁе | букеты</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0f1720;
+      color: white;
+      padding: 24px;
+    }
 
+    .card {
+      background: white;
+      color: black;
+      border-radius: 16px;
+      padding: 20px;
+      margin-top: 20px;
+    }
+
+    button {
+      margin-top: 16px;
+      padding: 12px 16px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <h1>ДлянЁе | букеты</h1>
+
+  <div class="card">
+    <p>Mini App работает 🚀</p>
+    <button id="btn">Нажми</button>
+  </div>
+
+  <script>
+    const tg = window.Telegram.WebApp;
+    tg.expand();
+
+    document.getElementById('btn').addEventListener('click', () => {
+      alert('Работает!');
+    });
+  </script>
+</body>
+</html>
