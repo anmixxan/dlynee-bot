@@ -2,9 +2,11 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ДлянЁе | букеты</title>
+
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
   <style>
     :root {
       --bg: #f3eee3;
@@ -14,7 +16,6 @@
       --accent-soft: #d7ada0;
       --line: rgba(122, 22, 38, 0.12);
       --shadow: 0 10px 30px rgba(92, 27, 36, 0.08);
-      --radius: 22px;
     }
 
     * {
@@ -27,256 +28,108 @@
       font-family: Arial, sans-serif;
       background: var(--bg);
       color: var(--text);
-      min-height: 100vh;
     }
 
     .app {
       max-width: 480px;
       margin: 0 auto;
-      padding: 18px 18px 28px;
+      padding: 20px;
     }
 
     .topbar {
       display: flex;
       justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 26px;
+      align-items: center;
+      margin-bottom: 24px;
     }
 
     .brand {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
 
     .brand-mark {
-      width: 46px;
-      height: 46px;
-      position: relative;
-      flex-shrink: 0;
+      width: 52px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    .petal {
-      position: absolute;
-      width: 24px;
-      height: 24px;
-      background: var(--accent);
-      border-radius: 50% 50% 45% 45%;
-      transform-origin: center center;
-    }
-
-    .petal.p1 { top: 0; left: 11px; }
-    .petal.p2 { top: 10px; right: 0; transform: rotate(72deg); }
-    .petal.p3 { bottom: 2px; right: 5px; transform: rotate(144deg); }
-    .petal.p4 { bottom: 2px; left: 5px; transform: rotate(216deg); }
-    .petal.p5 { top: 10px; left: 0; transform: rotate(288deg); }
-
-    .center {
-      position: absolute;
-      top: 14px;
-      left: 14px;
-      width: 18px;
-      height: 18px;
-      background: var(--accent-soft);
-      border-radius: 50%;
-      z-index: 2;
+    .brand-logo {
+      width: 52px;
+      height: 52px;
+      object-fit: contain;
     }
 
     .brand-text {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .brand-title {
-      font-size: 20px;
       font-weight: 700;
-      letter-spacing: 0.01em;
-    }
-
-    .brand-subtitle {
-      font-size: 12px;
-      opacity: 0.7;
+      font-size: 18px;
     }
 
     .login-btn {
       border: 1px solid var(--line);
-      background: rgba(255,255,255,0.45);
+      background: rgba(255,255,255,0.5);
       color: var(--text);
       border-radius: 999px;
-      padding: 11px 16px;
+      padding: 10px 16px;
       font-size: 14px;
-      font-weight: 600;
       cursor: pointer;
-      box-shadow: var(--shadow);
     }
 
     .hero {
-      background: linear-gradient(180deg, rgba(255,255,255,0.45), rgba(255,255,255,0.2));
-      border: 1px solid var(--line);
-      border-radius: 28px;
-      padding: 22px;
+      background: rgba(255,255,255,0.5);
+      border-radius: 20px;
+      padding: 20px;
       box-shadow: var(--shadow);
-      margin-bottom: 18px;
     }
 
-    .hero-label {
-      display: inline-block;
-      font-size: 12px;
-      padding: 7px 11px;
-      border-radius: 999px;
-      background: rgba(122, 22, 38, 0.07);
-      color: var(--accent);
-      margin-bottom: 14px;
+    h1 {
+      margin: 0 0 10px;
+      font-size: 28px;
     }
 
-    .hero h1 {
-      margin: 0 0 12px;
-      font-size: 32px;
-      line-height: 1.05;
-      font-weight: 700;
-    }
-
-    .hero p {
+    p {
       margin: 0;
-      font-size: 15px;
-      line-height: 1.5;
-      opacity: 0.85;
+      opacity: 0.8;
     }
 
     .status {
-      margin-top: 16px;
+      margin-top: 12px;
       font-size: 14px;
       color: var(--accent);
     }
 
-    .user-info {
-      margin-top: 10px;
+    .user {
+      margin-top: 8px;
       font-size: 14px;
-      opacity: 0.8;
-    }
-
-    .section-title {
-      font-size: 15px;
-      font-weight: 700;
-      margin: 18px 0 12px;
-      opacity: 0.85;
-    }
-
-    .catalog {
-      display: grid;
-      gap: 12px;
-    }
-
-    .card {
-      background: rgba(255,255,255,0.45);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      padding: 16px;
-      box-shadow: var(--shadow);
-    }
-
-    .card-title {
-      margin: 0 0 6px;
-      font-size: 18px;
-      font-weight: 700;
-    }
-
-    .card-text {
-      margin: 0 0 14px;
-      font-size: 14px;
-      line-height: 1.45;
-      opacity: 0.8;
-    }
-
-    .card-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .price {
-      font-size: 15px;
-      font-weight: 700;
-    }
-
-    .action-btn {
-      border: none;
-      background: var(--accent);
-      color: #fffdf8;
-      border-radius: 999px;
-      padding: 10px 14px;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-    }
-
-    .ghost-btn {
-      border: 1px solid var(--line);
-      background: transparent;
-      color: var(--text);
-      border-radius: 999px;
-      padding: 10px 14px;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-    }
-
-    .hidden {
-      display: none;
     }
   </style>
 </head>
+
 <body>
   <div class="app">
+
     <div class="topbar">
       <div class="brand">
         <div class="brand-mark">
-  <img src="/Logo.png" alt="Логотип ДлянЁе" class="brand-logo" />
-</div>
-
-        <div class="brand-text">
-          <div class="brand-title">ДляНеё</div>
+          <img src="/Logo.png" alt="Логотип" class="brand-logo">
         </div>
+        <div class="brand-text">ДлянЁе</div>
       </div>
 
       <button id="loginBtn" class="login-btn">Войти</button>
     </div>
 
-    <section class="hero">
-      <div class="hero-label">цветы с характером</div>
-      <h1>Букеты<br>для особенных моментов</h1>
-      <p>
-        Минималистичные композиции в тёплой эстетике.
-        Оформляйте заказ прямо внутри Telegram.
-      </p>
+    <div class="hero">
+      <h1>Букеты с характером</h1>
+      <p>Минималистичные композиции. Заказ прямо в Telegram.</p>
 
       <div id="status" class="status"></div>
-      <div id="userInfo" class="user-info hidden"></div>
-    </section>
+      <div id="user" class="user"></div>
+    </div>
 
-    <div class="section-title">Подборка</div>
-
-    <section class="catalog">
-      <div class="card">
-        <h3 class="card-title">Винный акцент</h3>
-        <p class="card-text">Глубокие оттенки, мягкая упаковка, спокойный выразительный стиль.</p>
-        <div class="card-row">
-          <div class="price">от 4 900 ₽</div>
-          <button class="action-btn">Выбрать</button>
-        </div>
-      </div>
-
-      <div class="card">
-        <h3 class="card-title">Нежная форма</h3>
-        <p class="card-text">Светлая палитра и воздушная композиция для тёплого повода.</p>
-        <div class="card-row">
-          <div class="price">от 3 800 ₽</div>
-          <button class="ghost-btn">Подробнее</button>
-        </div>
-      </div>
-    </section>
   </div>
 
   <script>
@@ -285,51 +138,47 @@
 
     const loginBtn = document.getElementById('loginBtn');
     const statusEl = document.getElementById('status');
-    const userInfoEl = document.getElementById('userInfo');
+    const userEl = document.getElementById('user');
 
-    async function registerUser() {
+    async function login() {
       const user = tg.initDataUnsafe?.user;
 
       if (!user) {
-        statusEl.textContent = 'Не удалось получить данные Telegram.';
+        statusEl.textContent = 'Ошибка получения пользователя';
         return;
       }
 
-      statusEl.textContent = 'Выполняем вход...';
+      statusEl.textContent = 'Вход...';
 
       try {
-        const response = await fetch('/api/register', {
+        const res = await fetch('/api/register', {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json'
           },
           body: JSON.stringify({
             telegram_id: user.id,
             first_name: user.first_name || '',
             last_name: user.last_name || '',
-            username: user.username || '',
-          }),
+            username: user.username || ''
+          })
         });
 
-        const data = await response.json();
-        console.log('register result:', data);
-
-        if (response.ok) {
-          loginBtn.textContent = user.first_name || 'Профиль';
-          userInfoEl.textContent =
-            `Вы вошли как ${user.first_name}${user.username ? ' (@' + user.username + ')' : ''}`;
-          userInfoEl.classList.remove('hidden');
-          statusEl.textContent = 'Вход выполнен';
+        if (res.ok) {
+          loginBtn.textContent = user.first_name;
+          statusEl.textContent = 'Вы вошли';
+          userEl.textContent = `@${user.username || ''}`;
         } else {
           statusEl.textContent = 'Ошибка входа';
         }
-      } catch (error) {
-        console.error(error);
-        statusEl.textContent = 'Ошибка соединения';
+
+      } catch (e) {
+        statusEl.textContent = 'Ошибка сети';
       }
     }
 
-    loginBtn.addEventListener('click', registerUser);
+    loginBtn.addEventListener('click', login);
   </script>
+
 </body>
 </html>
