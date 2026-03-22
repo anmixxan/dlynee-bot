@@ -22,13 +22,9 @@
       margin-top: 20px;
     }
 
-    button {
-      margin-top: 16px;
-      padding: 12px 16px;
-      border: none;
-      border-radius: 12px;
-      cursor: pointer;
-      font-size: 16px;
+    .muted {
+      opacity: 0.7;
+      font-size: 14px;
     }
   </style>
 </head>
@@ -36,17 +32,55 @@
   <h1>ДлянЁе | букеты</h1>
 
   <div class="card">
-    <p>Mini App работает 🚀</p>
-    <button id="btn">Нажми</button>
+    <p id="status">Проверяем вход...</p>
+    <p id="user"></p>
   </div>
 
   <script>
     const tg = window.Telegram.WebApp;
     tg.expand();
 
-    document.getElementById('btn').addEventListener('click', () => {
-      alert('Работает!');
-    });
+    async function registerUser() {
+      const user = tg.initDataUnsafe?.user;
+
+      if (!user) {
+        document.getElementById('status').textContent = 'Не удалось получить данные Telegram.';
+        return;
+      }
+
+      document.getElementById('user').textContent =
+        `Привет, ${user.first_name}${user.username ? ' (@' + user.username + ')' : ''}`;
+      document.getElementById('status').textContent = 'Регистрируем пользователя...';
+
+      try {
+        const response = await fetch('/api/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            telegram_id: user.id,
+            first_name: user.first_name || '',
+            last_name: user.last_name || '',
+            username: user.username || '',
+          }),
+        });
+
+        const data = await response.json();
+        console.log('register result:', data);
+
+        if (response.ok) {
+          document.getElementById('status').textContent = 'Вы успешно зарегистрированы ✅';
+        } else {
+          document.getElementById('status').textContent = 'Ошибка регистрации ❌';
+        }
+      } catch (error) {
+        console.error(error);
+        document.getElementById('status').textContent = 'Ошибка соединения ❌';
+      }
+    }
+
+    registerUser();
   </script>
 </body>
 </html>
