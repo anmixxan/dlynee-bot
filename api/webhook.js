@@ -1,28 +1,52 @@
 const token = process.env.BOT_TOKEN;
-const bot = new TelegramBot(token);
 
-bot.on('message', async (msg) => {
-  const chatId = msg.chat.id;
-  const text = msg.text || '';
+async function sendMessage(chatId, text) {
+  const response = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      chat_id: chatId,
+      text,
+    }),
+  });
 
-  if (text === '/start') {
-    await bot.sendMessage(chatId, 'Привет! Бот работает 🚀');
-    return;
+  const data = await response.json();
+  console.log('sendMessage:', data);
+
+  if (!data.ok) {
+    throw new Error(data.description || 'Telegram API error');
   }
-
-  await bot.sendMessage(chatId, `Ты написал: ${text}`);
-});
+}
 
 export default async function handler(req, res) {
-  if (req.method === 'POST') {
-    try {
-      await bot.processUpdate(req.body);
-      return res.status(200).send('ok');
-    } catch (error) {
-      console.error('Webhook error:', error);
-      return res.status(500).send('error');
-    }
-  }
+  try {
+    console.log('method:', req.method);
 
-  return res.status(200).send('bot is alive');
+    if (req.method !== 'POST') {
+      return res.status(200).send('bot is alive');
+    }
+
+    const message = req.body?.message;
+    const chatId = message?.chat?.id;
+    const text = message?.text || '';
+
+    console.log('incoming:', { chatId, text });
+
+    if (!chatId) {
+      return res.status(200).send('no message');
+    }
+
+    if (text === '/start') {
+      await sendMessage(chatId, 'Привет! Бот работает 🚀');
+    } else {
+      await sendMessage(chatId, `Ты написал: ${text}`);
+    }
+
+    return res.status(200).send('ok');
+  } catch (error) {
+    console.error('Webhook error:', error);
+    return res.status(500).send('error');
+  }
 }
