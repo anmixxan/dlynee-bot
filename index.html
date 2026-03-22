@@ -2,55 +2,306 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>ДлянЁе | букеты</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <style>
+    :root {
+      --bg: #f3eee3;
+      --card: #f8f4ea;
+      --text: #5c1b24;
+      --accent: #7a1626;
+      --accent-soft: #d7ada0;
+      --line: rgba(122, 22, 38, 0.12);
+      --shadow: 0 10px 30px rgba(92, 27, 36, 0.08);
+      --radius: 22px;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: #0f1720;
-      color: white;
-      padding: 24px;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    .app {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 18px 18px 28px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 26px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-mark {
+      width: 46px;
+      height: 46px;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .petal {
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      background: var(--accent);
+      border-radius: 50% 50% 45% 45%;
+      transform-origin: center center;
+    }
+
+    .petal.p1 { top: 0; left: 11px; }
+    .petal.p2 { top: 10px; right: 0; transform: rotate(72deg); }
+    .petal.p3 { bottom: 2px; right: 5px; transform: rotate(144deg); }
+    .petal.p4 { bottom: 2px; left: 5px; transform: rotate(216deg); }
+    .petal.p5 { top: 10px; left: 0; transform: rotate(288deg); }
+
+    .center {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      width: 18px;
+      height: 18px;
+      background: var(--accent-soft);
+      border-radius: 50%;
+      z-index: 2;
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .brand-title {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+    }
+
+    .brand-subtitle {
+      font-size: 12px;
+      opacity: 0.7;
+    }
+
+    .login-btn {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.45);
+      color: var(--text);
+      border-radius: 999px;
+      padding: 11px 16px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+    }
+
+    .hero {
+      background: linear-gradient(180deg, rgba(255,255,255,0.45), rgba(255,255,255,0.2));
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      padding: 22px;
+      box-shadow: var(--shadow);
+      margin-bottom: 18px;
+    }
+
+    .hero-label {
+      display: inline-block;
+      font-size: 12px;
+      padding: 7px 11px;
+      border-radius: 999px;
+      background: rgba(122, 22, 38, 0.07);
+      color: var(--accent);
+      margin-bottom: 14px;
+    }
+
+    .hero h1 {
+      margin: 0 0 12px;
+      font-size: 32px;
+      line-height: 1.05;
+      font-weight: 700;
+    }
+
+    .hero p {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.5;
+      opacity: 0.85;
+    }
+
+    .status {
+      margin-top: 16px;
+      font-size: 14px;
+      color: var(--accent);
+    }
+
+    .user-info {
+      margin-top: 10px;
+      font-size: 14px;
+      opacity: 0.8;
+    }
+
+    .section-title {
+      font-size: 15px;
+      font-weight: 700;
+      margin: 18px 0 12px;
+      opacity: 0.85;
+    }
+
+    .catalog {
+      display: grid;
+      gap: 12px;
     }
 
     .card {
-      background: white;
-      color: black;
-      border-radius: 16px;
-      padding: 20px;
-      margin-top: 20px;
+      background: rgba(255,255,255,0.45);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 16px;
+      box-shadow: var(--shadow);
     }
 
-    .muted {
-      opacity: 0.7;
+    .card-title {
+      margin: 0 0 6px;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .card-text {
+      margin: 0 0 14px;
       font-size: 14px;
+      line-height: 1.45;
+      opacity: 0.8;
+    }
+
+    .card-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .price {
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .action-btn {
+      border: none;
+      background: var(--accent);
+      color: #fffdf8;
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .ghost-btn {
+      border: 1px solid var(--line);
+      background: transparent;
+      color: var(--text);
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .hidden {
+      display: none;
     }
   </style>
 </head>
 <body>
-  <h1>ДлянЁе | букеты</h1>
+  <div class="app">
+    <div class="topbar">
+      <div class="brand">
+        <div class="brand-mark">
+          <div class="petal p1"></div>
+          <div class="petal p2"></div>
+          <div class="petal p3"></div>
+          <div class="petal p4"></div>
+          <div class="petal p5"></div>
+          <div class="center"></div>
+        </div>
 
-  <div class="card">
-    <p id="status">Проверяем вход...</p>
-    <p id="user"></p>
+        <div class="brand-text">
+          <div class="brand-title">ДлянЁе</div>
+          <div class="brand-subtitle">букеты</div>
+        </div>
+      </div>
+
+      <button id="loginBtn" class="login-btn">Войти</button>
+    </div>
+
+    <section class="hero">
+      <div class="hero-label">цветы с характером</div>
+      <h1>Букеты<br>для особенных моментов</h1>
+      <p>
+        Минималистичные композиции в тёплой эстетике.
+        Оформляйте заказ прямо внутри Telegram.
+      </p>
+
+      <div id="status" class="status"></div>
+      <div id="userInfo" class="user-info hidden"></div>
+    </section>
+
+    <div class="section-title">Подборка</div>
+
+    <section class="catalog">
+      <div class="card">
+        <h3 class="card-title">Винный акцент</h3>
+        <p class="card-text">Глубокие оттенки, мягкая упаковка, спокойный выразительный стиль.</p>
+        <div class="card-row">
+          <div class="price">от 4 900 ₽</div>
+          <button class="action-btn">Выбрать</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 class="card-title">Нежная форма</h3>
+        <p class="card-text">Светлая палитра и воздушная композиция для тёплого повода.</p>
+        <div class="card-row">
+          <div class="price">от 3 800 ₽</div>
+          <button class="ghost-btn">Подробнее</button>
+        </div>
+      </div>
+    </section>
   </div>
 
   <script>
     const tg = window.Telegram.WebApp;
     tg.expand();
 
+    const loginBtn = document.getElementById('loginBtn');
+    const statusEl = document.getElementById('status');
+    const userInfoEl = document.getElementById('userInfo');
+
     async function registerUser() {
       const user = tg.initDataUnsafe?.user;
 
       if (!user) {
-        document.getElementById('status').textContent = 'Не удалось получить данные Telegram.';
+        statusEl.textContent = 'Не удалось получить данные Telegram.';
         return;
       }
 
-      document.getElementById('user').textContent =
-        `Привет, ${user.first_name}${user.username ? ' (@' + user.username + ')' : ''}`;
-      document.getElementById('status').textContent = 'Регистрируем пользователя...';
+      statusEl.textContent = 'Выполняем вход...';
 
       try {
         const response = await fetch('/api/register', {
@@ -70,17 +321,21 @@
         console.log('register result:', data);
 
         if (response.ok) {
-          document.getElementById('status').textContent = 'Вы успешно зарегистрированы ✅';
+          loginBtn.textContent = user.first_name || 'Профиль';
+          userInfoEl.textContent =
+            `Вы вошли как ${user.first_name}${user.username ? ' (@' + user.username + ')' : ''}`;
+          userInfoEl.classList.remove('hidden');
+          statusEl.textContent = 'Вход выполнен';
         } else {
-          document.getElementById('status').textContent = 'Ошибка регистрации ❌';
+          statusEl.textContent = 'Ошибка входа';
         }
       } catch (error) {
         console.error(error);
-        document.getElementById('status').textContent = 'Ошибка соединения ❌';
+        statusEl.textContent = 'Ошибка соединения';
       }
     }
 
-    registerUser();
+    loginBtn.addEventListener('click', registerUser);
   </script>
 </body>
 </html>
