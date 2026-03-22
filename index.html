@@ -2,19 +2,35 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ДлянЁе | букеты</title>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+  />
+  <title>ДляНеё | букеты</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
   <style>
     :root {
       --bg: #f3eee3;
-      --card: rgba(255,255,255,0.58);
-      --text: #5c1b24;
+      --bg-2: #efe7da;
+      --card: rgba(255, 252, 247, 0.72);
+      --card-solid: #f8f2e8;
+      --text: #5b1b24;
+      --text-soft: #85545c;
       --accent: #7a1626;
-      --accent-soft: #d7ada0;
+      --accent-2: #8d2435;
+      --accent-soft: #d9b0a5;
+      --white: #fffaf5;
       --line: rgba(122, 22, 38, 0.14);
-      --shadow: 0 10px 30px rgba(92, 27, 36, 0.08);
+      --line-strong: rgba(122, 22, 38, 0.24);
+      --shadow: 0 18px 40px rgba(92, 27, 36, 0.08);
+      --shadow-soft: 0 8px 24px rgba(92, 27, 36, 0.06);
+      --radius-xl: 32px;
+      --radius-lg: 24px;
+      --radius-md: 18px;
+      --radius-sm: 14px;
+      --container: 480px;
+      --nav-height: 78px;
     }
 
     * {
@@ -22,246 +38,1778 @@
       -webkit-tap-highlight-color: transparent;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: var(--bg);
+      background:
+        radial-gradient(circle at top, rgba(255,255,255,0.32), transparent 24%),
+        linear-gradient(180deg, var(--bg), var(--bg-2));
       color: var(--text);
+      font-family: Arial, sans-serif;
+      min-height: 100vh;
+    }
+
+    button,
+    input,
+    textarea {
+      font-family: inherit;
     }
 
     .app {
-      max-width: 480px;
+      max-width: var(--container);
       margin: 0 auto;
-      padding: 4px 12px 24px;
+      padding: 10px 14px calc(var(--nav-height) + 28px);
+      position: relative;
     }
 
-    .header {
-      padding-top: 2px;
-      margin-bottom: 10px;
+    .page {
+      display: none;
+      animation: fadeIn 0.25s ease;
     }
 
-    .logo-wrap {
+    .page.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .top-shell {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      padding-top: 6px;
+      background: linear-gradient(180deg, rgba(243, 238, 227, 0.96), rgba(243, 238, 227, 0.78), transparent);
+      backdrop-filter: blur(8px);
+    }
+
+    .brand-zone {
       display: flex;
-      justify-content: center;
       align-items: center;
-      margin-bottom: 10px;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
     }
 
-    .logo {
-      width: 140px;
-      height: 140px;
+    .brand-stack {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 0;
+    }
+
+    .brand-mark-wrap {
+      width: 124px;
+      height: 124px;
+      border-radius: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background:
+        radial-gradient(circle at 50% 35%, rgba(255,255,255,0.5), transparent 45%),
+        rgba(255,255,255,0.12);
+      box-shadow: var(--shadow-soft);
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+
+    .brand-logo {
+      width: 124px;
+      height: 124px;
       object-fit: contain;
       display: block;
     }
 
-    .auth-row {
+    .brand-copy {
+      min-width: 0;
+    }
+
+    .brand-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(122, 22, 38, 0.07);
+      color: var(--accent);
+      font-size: 12px;
+      margin-bottom: 10px;
+    }
+
+    .brand-title {
+      font-size: 28px;
+      line-height: 1;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      margin: 0 0 8px;
+    }
+
+    .brand-subtitle {
+      font-size: 14px;
+      line-height: 1.45;
+      color: var(--text-soft);
+      margin: 0;
+      max-width: 210px;
+    }
+
+    .auth-column {
       display: flex;
-      gap: 10px;
-      margin-bottom: 14px;
+      flex-direction: column;
+      gap: 8px;
+      align-items: stretch;
+      width: 126px;
+      flex-shrink: 0;
     }
 
     .btn {
       border: none;
       border-radius: 999px;
-      padding: 12px 18px;
-      font-size: 15px;
       cursor: pointer;
-      box-shadow: var(--shadow);
+      transition: transform 0.15s ease, opacity 0.15s ease, background 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .btn:active {
+      transform: scale(0.98);
     }
 
     .btn-primary {
       background: var(--accent);
-      color: #fffaf6;
-      flex: 1;
+      color: var(--white);
+      padding: 12px 16px;
+      font-size: 15px;
+      font-weight: 700;
+      box-shadow: var(--shadow-soft);
     }
 
     .btn-secondary {
       background: rgba(255,255,255,0.58);
+      border: 1px solid var(--line);
       color: var(--text);
-      border: 1px solid var(--line);
-      flex: 1;
-    }
-
-    .hero {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 24px;
-      padding: 22px;
-      box-shadow: var(--shadow);
-      margin-bottom: 18px;
-    }
-
-    .hero-badge {
-      display: inline-block;
-      margin-bottom: 14px;
-      padding: 8px 12px;
-      border-radius: 999px;
-      background: rgba(122, 22, 38, 0.06);
-      color: var(--accent);
-      font-size: 12px;
-    }
-
-    .hero h1 {
-      margin: 0 0 12px;
-      font-size: 28px;
-      line-height: 1.12;
-    }
-
-    .hero p {
-      margin: 0;
-      font-size: 16px;
-      line-height: 1.45;
-      opacity: 0.82;
-    }
-
-    .status {
-      margin-top: 14px;
-      font-size: 14px;
-      color: var(--accent);
-    }
-
-    .user {
-      margin-top: 8px;
-      font-size: 14px;
-      opacity: 0.85;
-    }
-
-    .section-title {
-      margin: 18px 4px 10px;
-      font-size: 16px;
+      padding: 12px 16px;
+      font-size: 15px;
       font-weight: 700;
     }
 
-    .sections {
+    .btn-ghost {
+      background: transparent;
+      border: 1px solid var(--line);
+      color: var(--text);
+      padding: 11px 15px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .btn-small {
+      padding: 10px 14px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .hero {
+      position: relative;
+      background: var(--card);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      border-radius: var(--radius-xl);
+      padding: 22px;
+      overflow: hidden;
+      margin-bottom: 18px;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      width: 160px;
+      height: 160px;
+      right: -40px;
+      top: -40px;
+      border-radius: 50%;
+      background: rgba(122, 22, 38, 0.05);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 110px;
+      height: 110px;
+      left: -24px;
+      bottom: -36px;
+      border-radius: 50%;
+      background: rgba(217, 176, 165, 0.16);
+    }
+
+    .hero-badge {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 999px;
+      padding: 8px 12px;
+      background: rgba(122, 22, 38, 0.06);
+      color: var(--accent);
+      font-size: 12px;
+      z-index: 1;
+      margin-bottom: 14px;
+    }
+
+    .hero-title {
+      position: relative;
+      z-index: 1;
+      margin: 0 0 12px;
+      font-size: 38px;
+      line-height: 0.96;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-text {
+      position: relative;
+      z-index: 1;
+      margin: 0;
+      color: var(--text-soft);
+      font-size: 16px;
+      line-height: 1.5;
+      max-width: 280px;
+    }
+
+    .hero-actions {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      gap: 10px;
+      margin-top: 18px;
+      flex-wrap: wrap;
+    }
+
+    .status-row {
+      margin-top: 14px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .status {
+      font-size: 14px;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+
+    .profile-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 999px;
+      padding: 8px 12px;
+      background: rgba(255,255,255,0.56);
+      border: 1px solid var(--line);
+      font-size: 13px;
+      color: var(--text);
+    }
+
+    .section {
+      margin-bottom: 20px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      margin: 0;
+      font-size: 20px;
+      line-height: 1;
+      letter-spacing: -0.01em;
+    }
+
+    .section-subtitle {
+      margin: 0;
+      font-size: 13px;
+      color: var(--text-soft);
+    }
+
+    .chips {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+      scrollbar-width: none;
+    }
+
+    .chips::-webkit-scrollbar {
+      display: none;
+    }
+
+    .chip {
+      flex-shrink: 0;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 10px 14px;
+      background: rgba(255,255,255,0.5);
+      color: var(--text);
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .chip.active {
+      background: var(--accent);
+      color: var(--white);
+      border-color: var(--accent);
+    }
+
+    .banners {
       display: grid;
       gap: 12px;
     }
 
-    .section-card {
-      background: var(--card);
+    .banner-card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.62), rgba(255,255,255,0.48));
       border: 1px solid var(--line);
-      border-radius: 22px;
+      border-radius: var(--radius-lg);
       padding: 18px;
-      box-shadow: var(--shadow);
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
     }
 
-    .section-card h3 {
+    .banner-card::after {
+      content: "";
+      position: absolute;
+      right: -20px;
+      bottom: -20px;
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      background: rgba(122, 22, 38, 0.06);
+    }
+
+    .banner-label {
+      display: inline-block;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(122, 22, 38, 0.06);
+      color: var(--accent);
+      font-size: 12px;
+      margin-bottom: 12px;
+    }
+
+    .banner-title {
       margin: 0 0 8px;
-      font-size: 20px;
-      line-height: 1.15;
+      font-size: 24px;
+      line-height: 1.05;
     }
 
-    .section-card p {
-      margin: 0 0 14px;
-      font-size: 15px;
-      line-height: 1.45;
-      opacity: 0.8;
+    .banner-text {
+      margin: 0;
+      color: var(--text-soft);
+      max-width: 250px;
+      line-height: 1.5;
+      font-size: 14px;
     }
 
-    .section-card-row {
+    .banner-footer {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
+      gap: 10px;
+      margin-top: 16px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .grid-two {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .mini-card {
+      background: rgba(255,255,255,0.52);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: 16px;
+      box-shadow: var(--shadow-soft);
+      min-height: 126px;
+    }
+
+    .mini-card .eyebrow {
+      color: var(--text-soft);
+      font-size: 12px;
+      margin-bottom: 8px;
+    }
+
+    .mini-card h3 {
+      margin: 0 0 8px;
+      font-size: 18px;
+      line-height: 1.1;
+    }
+
+    .mini-card p {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.45;
+      color: var(--text-soft);
+    }
+
+    .products {
+      display: grid;
       gap: 12px;
     }
 
-    .price {
+    .product-card {
+      background: rgba(255,255,255,0.56);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      padding: 16px;
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .product-media {
+      height: 154px;
+      border-radius: 20px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,0.5), transparent 25%),
+        linear-gradient(135deg, rgba(122,22,38,0.16), rgba(217,176,165,0.18));
+      border: 1px solid rgba(122, 22, 38, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 14px;
+      color: var(--accent);
+      font-size: 38px;
+    }
+
+    .product-tag {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.74);
+      border: 1px solid rgba(122,22,38,0.1);
+      font-size: 12px;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .product-title {
+      margin: 0 0 6px;
+      font-size: 22px;
+      line-height: 1.08;
+    }
+
+    .product-description {
+      margin: 0 0 14px;
+      color: var(--text-soft);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .product-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .product-price {
+      font-size: 22px;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .product-note {
+      font-size: 12px;
+      color: var(--text-soft);
+      margin-top: 6px;
+    }
+
+    .product-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .story-card,
+    .faq-card,
+    .contact-card,
+    .delivery-card,
+    .profile-card,
+    .empty-card {
+      background: rgba(255,255,255,0.56);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      padding: 18px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .story-card h3,
+    .faq-card h3,
+    .contact-card h3,
+    .delivery-card h3,
+    .profile-card h3,
+    .empty-card h3 {
+      margin: 0 0 10px;
+      font-size: 22px;
+    }
+
+    .story-card p,
+    .faq-card p,
+    .contact-card p,
+    .delivery-card p,
+    .profile-card p,
+    .empty-card p {
+      margin: 0;
+      color: var(--text-soft);
+      line-height: 1.55;
+      font-size: 14px;
+    }
+
+    .story-points,
+    .delivery-list,
+    .faq-list,
+    .contact-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .story-point,
+    .delivery-item,
+    .faq-item,
+    .contact-item {
+      background: rgba(255,255,255,0.46);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 14px;
+    }
+
+    .story-point strong,
+    .delivery-item strong,
+    .faq-item strong,
+    .contact-item strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 15px;
+    }
+
+    .orders-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .order-item {
+      background: rgba(255,255,255,0.56);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 16px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .order-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .order-name {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .order-status {
+      padding: 7px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      background: rgba(122,22,38,0.08);
+      color: var(--accent);
+      white-space: nowrap;
+      align-self: flex-start;
+    }
+
+    .order-meta {
+      display: grid;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--text-soft);
+    }
+
+    .cart-fab {
+      position: fixed;
+      right: max(16px, calc((100vw - var(--container)) / 2 + 16px));
+      bottom: calc(var(--nav-height) + 18px);
+      z-index: 50;
+      border: none;
+      border-radius: 999px;
+      background: var(--accent);
+      color: var(--white);
+      box-shadow: 0 16px 30px rgba(122,22,38,0.26);
+      padding: 14px 18px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
       font-size: 15px;
       font-weight: 700;
     }
 
-    .small-btn {
-      border: none;
+    .cart-fab.hidden {
+      display: none;
+    }
+
+    .cart-count {
+      min-width: 22px;
+      height: 22px;
       border-radius: 999px;
-      padding: 11px 16px;
-      background: var(--accent);
-      color: white;
-      font-size: 14px;
+      background: rgba(255,255,255,0.2);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      padding: 0 6px;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 0;
+      width: 100%;
+      max-width: var(--container);
+      padding: 10px 12px 14px;
+      background: linear-gradient(180deg, rgba(243,238,227,0.0), rgba(243,238,227,0.88) 22%, rgba(243,238,227,0.98));
+      z-index: 70;
+      backdrop-filter: blur(10px);
+    }
+
+    .bottom-nav-inner {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      background: rgba(255,255,255,0.64);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    .nav-btn {
+      border: none;
+      background: transparent;
+      color: var(--text-soft);
+      border-radius: 16px;
+      padding: 10px 8px;
+      font-size: 12px;
+      font-weight: 700;
       cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .nav-btn.active {
+      background: rgba(122,22,38,0.08);
+      color: var(--accent);
+    }
+
+    .nav-icon {
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    .drawer-overlay,
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(38, 16, 20, 0.3);
+      backdrop-filter: blur(4px);
+      z-index: 90;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+
+    .drawer-overlay.active,
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .cart-drawer {
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%) translateY(110%);
+      bottom: 0;
+      width: 100%;
+      max-width: var(--container);
+      z-index: 100;
+      background: #fbf6ee;
+      border-top-left-radius: 30px;
+      border-top-right-radius: 30px;
+      border: 1px solid var(--line);
+      box-shadow: 0 -18px 40px rgba(92,27,36,0.12);
+      transition: transform 0.25s ease;
+      padding: 18px 14px calc(var(--nav-height) + 18px);
+      max-height: 82vh;
+      overflow: auto;
+    }
+
+    .cart-drawer.active {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .drawer-handle {
+      width: 56px;
+      height: 5px;
+      border-radius: 999px;
+      background: rgba(122,22,38,0.15);
+      margin: 0 auto 14px;
+    }
+
+    .drawer-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .drawer-title {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .icon-btn {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.58);
+      color: var(--text);
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 18px;
+    }
+
+    .cart-list {
+      display: grid;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .cart-item {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.58);
+      border-radius: 20px;
+      padding: 14px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .cart-item-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .cart-item-title {
+      margin: 0;
+      font-size: 17px;
+    }
+
+    .cart-item-price {
+      font-size: 15px;
+      font-weight: 700;
       white-space: nowrap;
     }
 
-    .ghost-btn {
-      border: 1px solid var(--line);
+    .cart-controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .qty-box {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px;
+      background: rgba(255,255,255,0.7);
       border-radius: 999px;
-      padding: 11px 16px;
-      background: transparent;
-      color: var(--text);
-      font-size: 14px;
+      border: 1px solid var(--line);
+    }
+
+    .qty-btn {
+      width: 30px;
+      height: 30px;
+      border-radius: 999px;
+      border: none;
+      background: var(--accent);
+      color: var(--white);
       cursor: pointer;
-      white-space: nowrap;
+      font-size: 16px;
+    }
+
+    .qty-value {
+      min-width: 18px;
+      text-align: center;
+      font-weight: 700;
+    }
+
+    .drawer-summary {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.62);
+      border-radius: 22px;
+      padding: 16px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 14px;
+      color: var(--text-soft);
+    }
+
+    .summary-row.total {
+      color: var(--text);
+      font-size: 18px;
+      font-weight: 700;
+      padding-top: 6px;
+      border-top: 1px solid var(--line);
+    }
+
+    .drawer-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .drawer-actions .btn {
+      flex: 1;
+    }
+
+    .modal-card {
+      position: fixed;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%) scale(0.96);
+      width: calc(100% - 28px);
+      max-width: 440px;
+      background: #fbf6ee;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      box-shadow: 0 20px 40px rgba(92,27,36,0.14);
+      z-index: 100;
+      padding: 16px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .modal-card.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .modal-media {
+      height: 180px;
+      border-radius: 22px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,0.55), transparent 22%),
+        linear-gradient(135deg, rgba(122,22,38,0.16), rgba(217,176,165,0.20));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 46px;
+      color: var(--accent);
+      margin-bottom: 14px;
+      border: 1px solid rgba(122,22,38,0.08);
+    }
+
+    .modal-title {
+      margin: 0 0 8px;
+      font-size: 26px;
+      line-height: 1.04;
+    }
+
+    .modal-price {
+      font-size: 21px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .modal-text {
+      margin: 0 0 14px;
+      line-height: 1.55;
+      color: var(--text-soft);
+      font-size: 14px;
+    }
+
+    .meta-list {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .meta-item {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 14px;
+      padding: 10px 12px;
+      background: rgba(255,255,255,0.56);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .modal-actions .btn {
+      flex: 1;
     }
 
     .hidden {
-      display: none;
+      display: none !important;
+    }
+
+    .muted {
+      color: var(--text-soft);
+    }
+
+    @media (max-width: 390px) {
+      .brand-mark-wrap,
+      .brand-logo {
+        width: 108px;
+        height: 108px;
+      }
+
+      .brand-title {
+        font-size: 24px;
+      }
+
+      .hero-title {
+        font-size: 34px;
+      }
+
+      .grid-two {
+        grid-template-columns: 1fr;
+      }
+
+      .auth-column {
+        width: 112px;
+      }
+
+      .btn-primary,
+      .btn-secondary {
+        font-size: 14px;
+        padding: 11px 12px;
+      }
     }
   </style>
 </head>
 <body>
   <div class="app">
-    <header class="header">
-      <div class="logo-wrap">
-        <img src="/Logo.png" alt="Логотип" class="logo" />
-      </div>
+    <div class="top-shell">
+      <div class="brand-zone">
+        <div class="brand-stack">
+          <div class="brand-mark-wrap">
+            <img src="/Logo.png" alt="ДлянЁе" class="brand-logo" />
+          </div>
 
-      <div class="auth-row">
-        <button id="loginBtn" class="btn btn-primary">Войти</button>
-        <button id="registerBtn" class="btn btn-secondary">Регистрация</button>
-      </div>
-    </header>
+          <div class="brand-copy">
+            <div class="brand-kicker">flower mini app</div>
+            <h1 class="brand-title">ДляНеё</h1>
+            <p class="brand-subtitle">
+              букеты с характером, мягкой формой и тёплой эстетикой
+            </p>
+          </div>
+        </div>
 
-    <section class="hero">
-      <div class="hero-badge">цветы с характером</div>
-      <h1>Букеты для<br>особенных моментов</h1>
-      <p>Минималистичные композиции. Заказ прямо в Telegram.</p>
-
-      <div id="status" class="status"></div>
-      <div id="user" class="user"></div>
-    </section>
-
-    <div class="section-title">Разделы</div>
-
-    <section class="sections">
-      <div class="section-card">
-        <h3>Каталог букетов</h3>
-        <p>Подборка композиций в фирменной эстетике.</p>
-        <div class="section-card-row">
-          <div class="price">от 3 800 ₽</div>
-          <button class="small-btn">Открыть</button>
+        <div class="auth-column">
+          <button id="loginBtn" class="btn btn-primary">Войти</button>
+          <button id="registerBtn" class="btn btn-secondary">Регистрация</button>
         </div>
       </div>
+    </div>
 
-      <div class="section-card">
-        <h3>Мои заказы</h3>
-        <p>История заказов, статус, детали доставки.</p>
-        <div class="section-card-row">
-          <div></div>
-          <button class="ghost-btn">Смотреть</button>
-        </div>
-      </div>
+    <main>
+      <section id="homePage" class="page active">
+        <section class="hero section">
+          <div class="hero-badge">авторские композиции</div>
+          <h2 class="hero-title">Букеты<br>для особенных<br>моментов</h2>
+          <p class="hero-text">
+            Минималистичные композиции в винной и пудровой палитре.
+            Заказ, история покупок и любимые букеты — прямо внутри Telegram.
+          </p>
 
-      <div class="section-card">
-        <h3>О бренде</h3>
-        <p>История, стиль, подход к букетам и упаковке.</p>
-        <div class="section-card-row">
-          <div></div>
-          <button class="ghost-btn">Подробнее</button>
-        </div>
-      </div>
-    </section>
+          <div class="hero-actions">
+            <button class="btn btn-primary" data-open-page="catalogPage">Смотреть каталог</button>
+            <button class="btn btn-ghost" data-open-page="aboutPage">О бренде</button>
+          </div>
+
+          <div class="status-row">
+            <div id="status" class="status"></div>
+            <div id="profilePill" class="profile-pill hidden">
+              <span>👤</span>
+              <span id="profilePillText"></span>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <div>
+              <h3 class="section-title">Быстрые разделы</h3>
+              <p class="section-subtitle">начни с того, что ближе по настроению</p>
+            </div>
+          </div>
+
+          <div class="grid-two">
+            <div class="mini-card" data-open-page="catalogPage">
+              <div class="eyebrow">подборка</div>
+              <h3>Каталог букетов</h3>
+              <p>Все композиции, фильтры по настроению и быстрый заказ.</p>
+            </div>
+
+            <div class="mini-card" data-open-page="ordersPage">
+              <div class="eyebrow">личный кабинет</div>
+              <h3>Мои заказы</h3>
+              <p>Статусы, детали доставки и повтор любимых композиций.</p>
+            </div>
+
+            <div class="mini-card" data-open-page="deliveryPage">
+              <div class="eyebrow">сервис</div>
+              <h3>Доставка</h3>
+              <p>Интервалы, условия, упаковка и сопровождение заказа.</p>
+            </div>
+
+            <div class="mini-card" data-open-page="aboutPage">
+              <div class="eyebrow">история бренда</div>
+              <h3>О нас</h3>
+              <p>Почему цветы у нас выглядят именно так и зачем это важно.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <div>
+              <h3 class="section-title">Подборки</h3>
+              <p class="section-subtitle">готовые сценарии под настроение и повод</p>
+            </div>
+          </div>
+
+          <div class="banners">
+            <div class="banner-card">
+              <div class="banner-label">для свидания</div>
+              <h3 class="banner-title">Винные акценты</h3>
+              <p class="banner-text">
+                Глубокие оттенки, мягкая форма и дорогая спокойная подача.
+              </p>
+              <div class="banner-footer">
+                <button class="btn btn-primary btn-small" data-filter="Винные">Открыть подборку</button>
+                <button class="btn btn-ghost btn-small" data-open-page="catalogPage">В каталог</button>
+              </div>
+            </div>
+
+            <div class="banner-card">
+              <div class="banner-label">для утра</div>
+              <h3 class="banner-title">Светлые формы</h3>
+              <p class="banner-text">
+                Нежные композиции с воздухом, тактильной упаковкой и мягким ритмом.
+              </p>
+              <div class="banner-footer">
+                <button class="btn btn-primary btn-small" data-filter="Нежные">Смотреть</button>
+                <button class="btn btn-ghost btn-small" data-open-page="catalogPage">Подробнее</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <div>
+              <h3 class="section-title">Хиты недели</h3>
+              <p class="section-subtitle">самые выбираемые сейчас</p>
+            </div>
+            <button class="btn btn-ghost btn-small" data-open-page="catalogPage">Все букеты</button>
+          </div>
+
+          <div id="featuredProducts" class="products"></div>
+        </section>
+      </section>
+
+      <section id="catalogPage" class="page">
+        <section class="section">
+          <div class="section-head">
+            <div>
+              <h2 class="section-title">Каталог букетов</h2>
+              <p class="section-subtitle">выбери настроение, цвет и ритм</p>
+            </div>
+          </div>
+
+          <div id="chips" class="chips section"></div>
+          <div id="catalogProducts" class="products"></div>
+        </section>
+      </section>
+
+      <section id="ordersPage" class="page">
+        <section class="section">
+          <div class="section-head">
+            <div>
+              <h2 class="section-title">Мои заказы</h2>
+              <p class="section-subtitle">история и статусы внутри mini app</p>
+            </div>
+          </div>
+
+          <div id="ordersContent"></div>
+        </section>
+      </section>
+
+      <section id="aboutPage" class="page">
+        <section class="section">
+          <div class="story-card">
+            <h3>О бренде</h3>
+            <p>
+              ДлянЁе — это цветочные композиции, в которых важны не только сами цветы,
+              но и тишина формы, воздух между лепестками, оттенок упаковки и ощущение,
+              которое остаётся у человека после встречи с букетом.
+            </p>
+
+            <div class="story-points">
+              <div class="story-point">
+                <strong>Спокойная эстетика</strong>
+                <span class="muted">Мы собираем букеты так, чтобы они не кричали, а звучали.</span>
+              </div>
+
+              <div class="story-point">
+                <strong>Фирменная палитра</strong>
+                <span class="muted">Винные, пудровые и тёплые молочные оттенки — основа визуального языка.</span>
+              </div>
+
+              <div class="story-point">
+                <strong>Личное сопровождение</strong>
+                <span class="muted">От выбора до доставки клиент чувствует, что заказ собирают именно для него.</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="faq-card">
+            <h3>Частые вопросы</h3>
+
+            <div class="faq-list">
+              <div class="faq-item">
+                <strong>Можно ли собрать букет под бюджет?</strong>
+                <span class="muted">Да. Мы можем адаптировать форму и состав под нужную сумму.</span>
+              </div>
+
+              <div class="faq-item">
+                <strong>Можно ли повторить букет с фото?</strong>
+                <span class="muted">Да, но мы всегда сохраняем живость композиции и подбираем актуальные цветы.</span>
+              </div>
+
+              <div class="faq-item">
+                <strong>Есть ли открытка?</strong>
+                <span class="muted">Да, текст для открытки можно добавить при оформлении заказа.</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="contact-card">
+            <h3>Контакты</h3>
+            <p>Пиши, если нужен букет под событие, съёмку или особенный подарок.</p>
+
+            <div class="contact-list">
+              <div class="contact-item">
+                <strong>Telegram</strong>
+                <span class="muted">@dlynee_flower_bot</span>
+              </div>
+
+              <div class="contact-item">
+                <strong>График</strong>
+                <span class="muted">ежедневно, 10:00–21:00</span>
+              </div>
+
+              <div class="contact-item">
+                <strong>Формат</strong>
+                <span class="muted">индивидуальные композиции, заказы по городу, стильная упаковка</span>
+              </div>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <section id="deliveryPage" class="page">
+        <section class="section">
+          <div class="delivery-card">
+            <h3>Доставка и оформление</h3>
+            <p>
+              Мы собираем и отправляем букеты так, чтобы они доезжали аккуратно,
+              красиво и в нужном ритме — без ощущения случайной покупки.
+            </p>
+
+            <div class="delivery-list">
+              <div class="delivery-item">
+                <strong>Интервалы</strong>
+                <span class="muted">Утро, день, вечер — с уточнением перед выездом.</span>
+              </div>
+
+              <div class="delivery-item">
+                <strong>Упаковка</strong>
+                <span class="muted">Фирменная спокойная подача в палитре бренда.</span>
+              </div>
+
+              <div class="delivery-item">
+                <strong>Открытка</strong>
+                <span class="muted">Можно добавить послание, подпись или короткую фразу.</span>
+              </div>
+
+              <div class="delivery-item">
+                <strong>Срочный заказ</strong>
+                <span class="muted">Возможен при наличии свободного окна и подходящих цветов.</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="grid-two">
+            <div class="mini-card">
+              <div class="eyebrow">совет</div>
+              <h3>Закажи заранее</h3>
+              <p>Так у нас будет больше свободы на подбор оттенков и деталей композиции.</p>
+            </div>
+            <div class="mini-card">
+              <div class="eyebrow">важно</div>
+              <h3>Фото перед отправкой</h3>
+              <p>По запросу можем показать итоговый букет до передачи курьеру.</p>
+            </div>
+          </div>
+        </section>
+      </section>
+    </main>
   </div>
 
-  <script>
-    const tg = window.Telegram.WebApp;
-    tg.expand();
+  <button id="cartFab" class="cart-fab hidden">
+    <span>Корзина</span>
+    <span id="cartCount" class="cart-count">0</span>
+  </button>
 
+  <div id="drawerOverlay" class="drawer-overlay"></div>
+  <div id="cartDrawer" class="cart-drawer">
+    <div class="drawer-handle"></div>
+
+    <div class="drawer-head">
+      <h3 class="drawer-title">Корзина</h3>
+      <button id="closeCartBtn" class="icon-btn">×</button>
+    </div>
+
+    <div id="cartList" class="cart-list"></div>
+
+    <div class="drawer-summary">
+      <div class="summary-row">
+        <span>Товары</span>
+        <span id="summaryItems">0</span>
+      </div>
+      <div class="summary-row">
+        <span>Доставка</span>
+        <span>от 500 ₽</span>
+      </div>
+      <div class="summary-row total">
+        <span>Итого</span>
+        <span id="summaryTotal">0 ₽</span>
+      </div>
+    </div>
+
+    <div class="drawer-actions">
+      <button id="clearCartBtn" class="btn btn-secondary">Очистить</button>
+      <button id="checkoutBtn" class="btn btn-primary">Оформить</button>
+    </div>
+  </div>
+
+  <div id="modalOverlay" class="modal-overlay"></div>
+  <div id="productModal" class="modal-card">
+    <div id="modalMedia" class="modal-media">✿</div>
+    <h3 id="modalTitle" class="modal-title"></h3>
+    <div id="modalPrice" class="modal-price"></div>
+    <p id="modalText" class="modal-text"></p>
+
+    <div class="meta-list">
+      <div class="meta-item">
+        <span>Настроение</span>
+        <strong id="modalMood"></strong>
+      </div>
+      <div class="meta-item">
+        <span>Размер</span>
+        <strong id="modalSize"></strong>
+      </div>
+      <div class="meta-item">
+        <span>Доступность</span>
+        <strong id="modalAvailability"></strong>
+      </div>
+    </div>
+
+    <div class="modal-actions">
+      <button id="modalCloseBtn" class="btn btn-secondary">Закрыть</button>
+      <button id="modalAddBtn" class="btn btn-primary">В корзину</button>
+    </div>
+  </div>
+
+  <nav class="bottom-nav">
+    <div class="bottom-nav-inner">
+      <button class="nav-btn active" data-open-page="homePage">
+        <span class="nav-icon">⌂</span>
+        <span>Главная</span>
+      </button>
+      <button class="nav-btn" data-open-page="catalogPage">
+        <span class="nav-icon">✿</span>
+        <span>Каталог</span>
+      </button>
+      <button class="nav-btn" data-open-page="ordersPage">
+        <span class="nav-icon">◔</span>
+        <span>Заказы</span>
+      </button>
+      <button class="nav-btn" data-open-page="aboutPage">
+        <span class="nav-icon">♡</span>
+        <span>Бренд</span>
+      </button>
+    </div>
+  </nav>
+
+  <script>
+    const tg = window.Telegram?.WebApp;
+    if (tg) {
+      tg.expand();
+      tg.ready();
+    }
+
+    const state = {
+      user: null,
+      filter: 'Все',
+      cart: [],
+      selectedProduct: null,
+      products: [
+        {
+          id: 1,
+          title: 'Винный акцент',
+          description: 'Глубокая композиция с бархатным ритмом, плотной формой и дорогим спокойствием в подаче.',
+          price: 4900,
+          tag: 'Хит',
+          mood: 'Винные',
+          size: 'Средний',
+          available: 'Сегодня',
+          icon: '✿'
+        },
+        {
+          id: 2,
+          title: 'Нежная форма',
+          description: 'Светлый букет с мягкой геометрией и чистым ощущением утреннего воздуха.',
+          price: 3800,
+          tag: 'Нежность',
+          mood: 'Нежные',
+          size: 'Компактный',
+          available: 'Сегодня',
+          icon: '❀'
+        },
+        {
+          id: 3,
+          title: 'Тихое признание',
+          description: 'Минималистичная композиция для личного жеста, без лишнего шума и декора.',
+          price: 4200,
+          tag: 'Для двоих',
+          mood: 'Романтика',
+          size: 'Средний',
+          available: 'Завтра',
+          icon: '✾'
+        },
+        {
+          id: 4,
+          title: 'Пудровый свет',
+          description: 'Спокойная светлая гамма, воздушная упаковка и ощущение тактичной заботы.',
+          price: 4600,
+          tag: 'Светлое',
+          mood: 'Нежные',
+          size: 'Большой',
+          available: 'Сегодня',
+          icon: '❁'
+        },
+        {
+          id: 5,
+          title: 'Глубина вечера',
+          description: 'Тёмные оттенки и собранная форма для сильного впечатления без перегруза.',
+          price: 5700,
+          tag: 'Вечер',
+          mood: 'Винные',
+          size: 'Большой',
+          available: 'Завтра',
+          icon: '✿'
+        },
+        {
+          id: 6,
+          title: 'Лёгкий жест',
+          description: 'Компактный букет для благодарности, внимания и нежного повода.',
+          price: 3100,
+          tag: 'Лаконично',
+          mood: 'Повседневные',
+          size: 'Компактный',
+          available: 'Сегодня',
+          icon: '❀'
+        },
+        {
+          id: 7,
+          title: 'Тёплое утро',
+          description: 'Молочные и пудровые оттенки, ощущение света, чистоты и очень мягкой подачи.',
+          price: 4300,
+          tag: 'Утро',
+          mood: 'Нежные',
+          size: 'Средний',
+          available: 'Сегодня',
+          icon: '❁'
+        },
+        {
+          id: 8,
+          title: 'Редкий акцент',
+          description: 'Композиция с характером для важных встреч, съёмок и красивого впечатления.',
+          price: 6500,
+          tag: 'Премиум',
+          mood: 'Праздник',
+          size: 'Большой',
+          available: 'Под заказ',
+          icon: '✾'
+        }
+      ]
+    };
+
+    const pages = document.querySelectorAll('.page');
+    const navButtons = document.querySelectorAll('.nav-btn');
     const loginBtn = document.getElementById('loginBtn');
     const registerBtn = document.getElementById('registerBtn');
     const statusEl = document.getElementById('status');
-    const userEl = document.getElementById('user');
+    const profilePill = document.getElementById('profilePill');
+    const profilePillText = document.getElementById('profilePillText');
 
-    async function authUser(mode) {
-      const user = tg.initDataUnsafe?.user;
+    const featuredProductsEl = document.getElementById('featuredProducts');
+    const catalogProductsEl = document.getElementById('catalogProducts');
+    const chipsEl = document.getElementById('chips');
+    const ordersContentEl = document.getElementById('ordersContent');
+
+    const cartFab = document.getElementById('cartFab');
+    const cartCount = document.getElementById('cartCount');
+    const drawerOverlay = document.getElementById('drawerOverlay');
+    const cartDrawer = document.getElementById('cartDrawer');
+    const closeCartBtn = document.getElementById('closeCartBtn');
+    const clearCartBtn = document.getElementById('clearCartBtn');
+    const checkoutBtn = document.getElementById('checkoutBtn');
+    const cartListEl = document.getElementById('cartList');
+    const summaryItemsEl = document.getElementById('summaryItems');
+    const summaryTotalEl = document.getElementById('summaryTotal');
+
+    const modalOverlay = document.getElementById('modalOverlay');
+    const productModal = document.getElementById('productModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalPrice = document.getElementById('modalPrice');
+    const modalText = document.getElementById('modalText');
+    const modalMood = document.getElementById('modalMood');
+    const modalSize = document.getElementById('modalSize');
+    const modalAvailability = document.getElementById('modalAvailability');
+    const modalAddBtn = document.getElementById('modalAddBtn');
+    const modalCloseBtn = document.getElementById('modalCloseBtn');
+    const modalMedia = document.getElementById('modalMedia');
+
+    function formatPrice(value) {
+      return `${value.toLocaleString('ru-RU')} ₽`;
+    }
+
+    function getFilters() {
+      return ['Все', 'Винные', 'Нежные', 'Романтика', 'Повседневные', 'Праздник'];
+    }
+
+    function renderChips() {
+      chipsEl.innerHTML = '';
+      getFilters().forEach((filter) => {
+        const btn = document.createElement('button');
+        btn.className = `chip ${state.filter === filter ? 'active' : ''}`;
+        btn.textContent = filter;
+        btn.addEventListener('click', () => {
+          state.filter = filter;
+          renderChips();
+          renderCatalog();
+        });
+        chipsEl.appendChild(btn);
+      });
+    }
+
+    function filteredProducts() {
+      if (state.filter === 'Все') return state.products;
+      return state.products.filter((item) => item.mood === state.filter);
+    }
+
+    function createProductCard(product) {
+      const card = document.createElement('article');
+      card.className = 'product-card';
+
+      card.innerHTML = `
+        <div class="product-tag">${product.tag}</div>
+        <div class="product-media">${product.icon}</div>
+        <h3 class="product-title">${product.title}</h3>
+        <p class="product-description">${product.description}</p>
+        <div class="product-meta">
+          <div>
+            <div class="product-price">${formatPrice(product.price)}</div>
+            <div class="product-note">${product.size} · ${product.available}</div>
+          </div>
+        </div>
+        <div class="product-actions">
+          <button class="btn btn-primary btn-small js-add">В корзину</button>
+          <button class="btn btn-ghost btn-small js-open">Подробнее</button>
+        </div>
+      `;
+
+      card.querySelector('.js-add').addEventListener('click', () => addToCart(product.id));
+      card.querySelector('.js-open').addEventListener('click', () => openProductModal(product.id));
+
+      return card;
+    }
+
+    function renderFeatured() {
+      featuredProductsEl.innerHTML = '';
+      state.products.slice(0, 3).forEach((product) => {
+        featuredProductsEl.appendChild(createProductCard(product));
+      });
+    }
+
+    function renderCatalog() {
+      catalogProductsEl.innerHTML = '';
+      filteredProducts().forEach((product) => {
+        catalogProductsEl.appendChild(createProductCard(product));
+      });
+    }
+
+    function findCartItem(productId) {
+      return state.cart.find((item) => item.id === productId);
+    }
+
+    function addToCart(productId) {
+      const product = state.products.find((item) => item.id === productId);
+      if (!product) return;
+
+      const existing = findCartItem(productId);
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        state.cart.push({
+          id: product.id,
+          title: product.title,
+          price: product.price,
+          qty: 1
+        });
+      }
+
+      renderCart();
+      openCart();
+    }
+
+    function removeFromCart(productId) {
+      state.cart = state.cart.filter((item) => item.id !== productId);
+      renderCart();
+    }
+
+    function changeQty(productId, delta) {
+      const item = findCartItem(productId);
+      if (!item) return;
+      item.qty += delta;
+      if (item.qty <= 0) {
+        removeFromCart(productId);
+        return;
+      }
+      renderCart();
+    }
+
+    function cartTotals() {
+      const items = state.cart.reduce((acc, item) => acc + item.qty, 0);
+      const total = state.cart.reduce((acc, item) => acc + item.qty * item.price, 0);
+      return { items, total };
+    }
+
+    function renderCart() {
+      const { items, total } = cartTotals();
+
+      cartCount.textContent = items;
+      summaryItemsEl.textContent = String(items);
+      summaryTotalEl.textContent = formatPrice(total);
+
+      if (items > 0) {
+        cartFab.classList.remove('hidden');
+      } else {
+        cartFab.classList.add('hidden');
+      }
+
+      cartListEl.innerHTML = '';
+
+      if (state.cart.length === 0) {
+        cartListEl.innerHTML = `
+          <div class="empty-card">
+            <h3>Корзина пуста</h3>
+            <p>Добавь один или несколько букетов, и здесь появится заказ.</p>
+          </div>
+        `;
+        return;
+      }
+
+      state.cart.forEach((item) => {
+        const row = document.createElement('div');
+        row.className = 'cart-item';
+        row.innerHTML = `
+          <div class="cart-item-top">
+            <div>
+              <h4 class="cart-item-title">${item.title}</h4>
+            </div>
+            <div class="cart-item-price">${formatPrice(item.price * item.qty)}</div>
+          </div>
+          <div class="cart-controls">
+            <div class="qty-box">
+              <button class="qty-btn js-minus">−</button>
+              <div class="qty-value">${item.qty}</div>
+              <button class="qty-btn js-plus">+</button>
+            </div>
+            <button class="btn btn-ghost btn-small js-remove">Удалить</button>
+          </div>
+        `;
+        row.querySelector('.js-minus').addEventListener('click', () => changeQty(item.id, -1));
+        row.querySelector('.js-plus').addEventListener('click', () => changeQty(item.id, 1));
+        row.querySelector('.js-remove').addEventListener('click', () => removeFromCart(item.id));
+        cartListEl.appendChild(row);
+      });
+    }
+
+    function openCart() {
+      drawerOverlay.classList.add('active');
+      cartDrawer.classList.add('active');
+    }
+
+    function closeCart() {
+      drawerOverlay.classList.remove('active');
+      cartDrawer.classList.remove('active');
+    }
+
+    function openProductModal(productId) {
+      const product = state.products.find((item) => item.id === productId);
+      if (!product) return;
+
+      state.selectedProduct = product;
+      modalTitle.textContent = product.title;
+      modalPrice.textContent = formatPrice(product.price);
+      modalText.textContent = product.description;
+      modalMood.textContent = product.mood;
+      modalSize.textContent = product.size;
+      modalAvailability.textContent = product.available;
+      modalMedia.textContent = product.icon;
+
+      modalOverlay.classList.add('active');
+      productModal.classList.add('active');
+    }
+
+    function closeProductModal() {
+      modalOverlay.classList.remove('active');
+      productModal.classList.remove('active');
+      state.selectedProduct = null;
+    }
+
+    function openPage(pageId) {
+      pages.forEach((page) => page.classList.remove('active'));
+      const page = document.getElementById(pageId);
+      if (page) page.classList.add('active');
+
+      navButtons.forEach((btn) => {
+        btn.classList.toggle('active', btn.dataset.openPage === pageId);
+      });
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function fakeOrdersMarkup() {
+      if (!state.user) {
+        return `
+          <div class="profile-card">
+            <h3>Войди, чтобы видеть историю заказов</h3>
+            <p>
+              После входа здесь будут отображаться оформленные заказы,
+              статусы доставки и повтор любимых букетов.
+            </p>
+          </div>
+        `;
+      }
+
+      return `
+        <div class="orders-list">
+          <div class="order-item">
+            <div class="order-top">
+              <div>
+                <h4 class="order-name">Винный акцент</h4>
+              </div>
+              <div class="order-status">в работе</div>
+            </div>
+            <div class="order-meta">
+              <div>Заказ №1048</div>
+              <div>Доставка: сегодня, 18:00–21:00</div>
+              <div>Сумма: 4 900 ₽</div>
+            </div>
+          </div>
+
+          <div class="order-item">
+            <div class="order-top">
+              <div>
+                <h4 class="order-name">Тёплое утро</h4>
+              </div>
+              <div class="order-status">доставлен</div>
+            </div>
+            <div class="order-meta">
+              <div>Заказ №1019</div>
+              <div>Доставка: 2 дня назад</div>
+              <div>Сумма: 4 300 ₽</div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderOrders() {
+      ordersContentEl.innerHTML = fakeOrdersMarkup();
+    }
+
+    async function authUser(mode = 'login') {
+      const user = tg?.initDataUnsafe?.user;
 
       if (!user) {
         statusEl.textContent = 'Не удалось получить данные Telegram';
@@ -284,22 +1832,103 @@
           })
         });
 
+        const data = await res.json().catch(() => ({}));
+        console.log('auth result:', data);
+
         if (res.ok) {
-          const fullName = user.first_name || 'Профиль';
-          loginBtn.textContent = fullName;
+          state.user = user;
+
+          loginBtn.textContent = user.first_name || 'Профиль';
           registerBtn.classList.add('hidden');
-          statusEl.textContent = mode === 'register' ? 'Регистрация завершена' : 'Вы вошли';
-          userEl.textContent = user.username ? `@${user.username}` : '';
+
+          profilePill.classList.remove('hidden');
+          profilePillText.textContent = user.username
+            ? `${user.first_name} · @${user.username}`
+            : user.first_name || 'Профиль';
+
+          statusEl.textContent =
+            mode === 'register' ? 'Регистрация завершена' : 'Вы вошли в профиль';
+
+          renderOrders();
         } else {
-          statusEl.textContent = mode === 'register' ? 'Ошибка регистрации' : 'Ошибка входа';
+          statusEl.textContent =
+            mode === 'register' ? 'Ошибка регистрации' : 'Ошибка входа';
         }
       } catch (e) {
+        console.error(e);
         statusEl.textContent = 'Ошибка сети';
       }
     }
 
-    loginBtn.addEventListener('click', () => authUser('login'));
-    registerBtn.addEventListener('click', () => authUser('register'));
+    function bindPageLinks() {
+      document.querySelectorAll('[data-open-page]').forEach((el) => {
+        el.addEventListener('click', () => {
+          const pageId = el.dataset.openPage;
+          openPage(pageId);
+        });
+      });
+
+      document.querySelectorAll('[data-filter]').forEach((el) => {
+        el.addEventListener('click', () => {
+          state.filter = el.dataset.filter;
+          renderChips();
+          renderCatalog();
+          openPage('catalogPage');
+        });
+      });
+    }
+
+    function initEvents() {
+      loginBtn.addEventListener('click', () => authUser('login'));
+      registerBtn.addEventListener('click', () => authUser('register'));
+
+      cartFab.addEventListener('click', openCart);
+      drawerOverlay.addEventListener('click', closeCart);
+      closeCartBtn.addEventListener('click', closeCart);
+
+      clearCartBtn.addEventListener('click', () => {
+        state.cart = [];
+        renderCart();
+      });
+
+      checkoutBtn.addEventListener('click', () => {
+        if (state.cart.length === 0) return;
+        const payload = {
+          action: 'checkout',
+          items: state.cart,
+          total: cartTotals().total
+        };
+
+        if (tg?.sendData) {
+          tg.sendData(JSON.stringify(payload));
+        }
+
+        statusEl.textContent = 'Черновик заказа отправлен. Дальше подключим оформление.';
+        closeCart();
+        openPage('ordersPage');
+      });
+
+      modalOverlay.addEventListener('click', closeProductModal);
+      modalCloseBtn.addEventListener('click', closeProductModal);
+      modalAddBtn.addEventListener('click', () => {
+        if (state.selectedProduct) {
+          addToCart(state.selectedProduct.id);
+          closeProductModal();
+        }
+      });
+    }
+
+    function init() {
+      renderChips();
+      renderFeatured();
+      renderCatalog();
+      renderOrders();
+      renderCart();
+      bindPageLinks();
+      initEvents();
+    }
+
+    init();
   </script>
 </body>
 </html>
