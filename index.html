@@ -3,21 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ДляНеё | букеты</title>
-
+  <title>ДлянЁе | букеты</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
   <style>
     :root {
       --bg: #f3eee3;
+      --card: rgba(255,255,255,0.58);
       --text: #5c1b24;
       --accent: #7a1626;
-      --line: rgba(122, 22, 38, 0.15);
+      --accent-soft: #d7ada0;
+      --line: rgba(122, 22, 38, 0.14);
       --shadow: 0 10px 30px rgba(92, 27, 36, 0.08);
     }
 
     * {
       box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
     }
 
     body {
@@ -28,113 +30,225 @@
     }
 
     .app {
-  max-width: 480px;
-  margin: 0 auto;
-  padding: 2px 16px 20px; /* было 12px → стало 2px */
-}
-
-    /* 🔥 ШАПКА */
-    .topbar {
-  ...
-  margin-top: -5px;   /* поднимаем вверх */
-  margin-bottom: 10px;
-}
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 6px; /* почти вплотную */
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 4px 12px 24px;
     }
 
-    /* 🔥 БОЛЬШОЙ ЛОГО */
-    .brand-mark {
-      width: 140px;
-      height: 140px;
+    .header {
+      padding-top: 2px;
+      margin-bottom: 10px;
+    }
+
+    .logo-wrap {
       display: flex;
-      align-items: center;
       justify-content: center;
-      margin-left: -10px; /* прижимаем к краю */
+      align-items: center;
+      margin-bottom: 10px;
     }
 
-    .brand-logo {
+    .logo {
       width: 140px;
       height: 140px;
       object-fit: contain;
       display: block;
     }
 
-    /* 🔥 текст близко к лого */
-    .brand-text {
-      font-size: 18px;
-      font-weight: 700;
-      margin-left: -20px; /* подтягиваем ближе */
+    .auth-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 14px;
     }
 
-    .login-btn {
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.6);
+    .btn {
+      border: none;
       border-radius: 999px;
-      padding: 10px 16px;
-      font-size: 14px;
+      padding: 12px 18px;
+      font-size: 15px;
       cursor: pointer;
-      white-space: nowrap;
+      box-shadow: var(--shadow);
     }
 
-    /* 🔥 блок ниже */
+    .btn-primary {
+      background: var(--accent);
+      color: #fffaf6;
+      flex: 1;
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.58);
+      color: var(--text);
+      border: 1px solid var(--line);
+      flex: 1;
+    }
+
     .hero {
-      background: rgba(255,255,255,0.6);
-      border-radius: 20px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 24px;
       padding: 22px;
       box-shadow: var(--shadow);
-      margin-top: -10px; /* поднимаем ближе к логотипу */
+      margin-bottom: 18px;
     }
 
-    h1 {
-      margin: 0 0 10px;
+    .hero-badge {
+      display: inline-block;
+      margin-bottom: 14px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(122, 22, 38, 0.06);
+      color: var(--accent);
+      font-size: 12px;
+    }
+
+    .hero h1 {
+      margin: 0 0 12px;
       font-size: 28px;
-      line-height: 1.2;
+      line-height: 1.12;
     }
 
-    p {
+    .hero p {
       margin: 0;
-      opacity: 0.8;
+      font-size: 16px;
+      line-height: 1.45;
+      opacity: 0.82;
     }
 
     .status {
-      margin-top: 12px;
+      margin-top: 14px;
       font-size: 14px;
       color: var(--accent);
     }
 
     .user {
-      margin-top: 6px;
+      margin-top: 8px;
       font-size: 14px;
+      opacity: 0.85;
+    }
+
+    .section-title {
+      margin: 18px 4px 10px;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .sections {
+      display: grid;
+      gap: 12px;
+    }
+
+    .section-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .section-card h3 {
+      margin: 0 0 8px;
+      font-size: 20px;
+      line-height: 1.15;
+    }
+
+    .section-card p {
+      margin: 0 0 14px;
+      font-size: 15px;
+      line-height: 1.45;
+      opacity: 0.8;
+    }
+
+    .section-card-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .price {
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .small-btn {
+      border: none;
+      border-radius: 999px;
+      padding: 11px 16px;
+      background: var(--accent);
+      color: white;
+      font-size: 14px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .ghost-btn {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 11px 16px;
+      background: transparent;
+      color: var(--text);
+      font-size: 14px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .hidden {
+      display: none;
     }
   </style>
 </head>
-
 <body>
   <div class="app">
-
-    <div class="topbar">
-      <div class="brand">
-        <div class="brand-mark">
-          <img src="/Logo.png" alt="Логотип" class="brand-logo">
-        </div>
-        <div class="brand-text">ДляНеё</div>
+    <header class="header">
+      <div class="logo-wrap">
+        <img src="/Logo.png" alt="Логотип" class="logo" />
       </div>
 
-      <button id="loginBtn" class="login-btn">Войти</button>
-    </div>
+      <div class="auth-row">
+        <button id="loginBtn" class="btn btn-primary">Войти</button>
+        <button id="registerBtn" class="btn btn-secondary">Регистрация</button>
+      </div>
+    </header>
 
-    <div class="hero">
-      <h1>Букеты с характером</h1>
+    <section class="hero">
+      <div class="hero-badge">цветы с характером</div>
+      <h1>Букеты для<br>особенных моментов</h1>
       <p>Минималистичные композиции. Заказ прямо в Telegram.</p>
 
       <div id="status" class="status"></div>
       <div id="user" class="user"></div>
-    </div>
+    </section>
 
+    <div class="section-title">Разделы</div>
+
+    <section class="sections">
+      <div class="section-card">
+        <h3>Каталог букетов</h3>
+        <p>Подборка композиций в фирменной эстетике.</p>
+        <div class="section-card-row">
+          <div class="price">от 3 800 ₽</div>
+          <button class="small-btn">Открыть</button>
+        </div>
+      </div>
+
+      <div class="section-card">
+        <h3>Мои заказы</h3>
+        <p>История заказов, статус, детали доставки.</p>
+        <div class="section-card-row">
+          <div></div>
+          <button class="ghost-btn">Смотреть</button>
+        </div>
+      </div>
+
+      <div class="section-card">
+        <h3>О бренде</h3>
+        <p>История, стиль, подход к букетам и упаковке.</p>
+        <div class="section-card-row">
+          <div></div>
+          <button class="ghost-btn">Подробнее</button>
+        </div>
+      </div>
+    </section>
   </div>
 
   <script>
@@ -142,18 +256,19 @@
     tg.expand();
 
     const loginBtn = document.getElementById('loginBtn');
+    const registerBtn = document.getElementById('registerBtn');
     const statusEl = document.getElementById('status');
     const userEl = document.getElementById('user');
 
-    async function login() {
+    async function authUser(mode) {
       const user = tg.initDataUnsafe?.user;
 
       if (!user) {
-        statusEl.textContent = 'Ошибка получения пользователя';
+        statusEl.textContent = 'Не удалось получить данные Telegram';
         return;
       }
 
-      statusEl.textContent = 'Вход...';
+      statusEl.textContent = mode === 'register' ? 'Регистрируем...' : 'Выполняем вход...';
 
       try {
         const res = await fetch('/api/register', {
@@ -170,20 +285,21 @@
         });
 
         if (res.ok) {
-          loginBtn.textContent = user.first_name;
-          statusEl.textContent = 'Вы вошли';
-          userEl.textContent = `@${user.username || ''}`;
+          const fullName = user.first_name || 'Профиль';
+          loginBtn.textContent = fullName;
+          registerBtn.classList.add('hidden');
+          statusEl.textContent = mode === 'register' ? 'Регистрация завершена' : 'Вы вошли';
+          userEl.textContent = user.username ? `@${user.username}` : '';
         } else {
-          statusEl.textContent = 'Ошибка входа';
+          statusEl.textContent = mode === 'register' ? 'Ошибка регистрации' : 'Ошибка входа';
         }
-
       } catch (e) {
         statusEl.textContent = 'Ошибка сети';
       }
     }
 
-    loginBtn.addEventListener('click', login);
+    loginBtn.addEventListener('click', () => authUser('login'));
+    registerBtn.addEventListener('click', () => authUser('register'));
   </script>
-
 </body>
 </html>
