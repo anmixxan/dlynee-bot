@@ -2151,10 +2151,12 @@
         showPage('categories');
       });
 
-      catalogSearchInputEl.addEventListener('input', (e) => {
-        state.currentCatalogSearch = e.target.value;
-        renderCatalogProducts();
-      });
+      searchInputEl.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    searchInputEl.blur(); // закрывает клавиатуру
+  }
+});
 
       categoryBackBtnEl.addEventListener('click', () => {
         showPage(state.lastCategorySourcePage || 'categories');
