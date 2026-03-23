@@ -7,14 +7,15 @@
     content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
   />
   <title>ДляНеё | mini app</title>
+
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
   <style>
     :root {
       --bg: #f3eee3;
       --bg-2: #efe7da;
-      --surface: rgba(255, 251, 245, 0.82);
-      --surface-strong: rgba(255, 251, 245, 0.94);
+      --surface: rgba(255, 251, 245, 0.84);
+      --surface-strong: rgba(255, 251, 245, 0.96);
       --white: #fffaf6;
       --text: #5c1b24;
       --text-soft: #8b6168;
@@ -32,7 +33,7 @@
       --radius-sm: 14px;
       --radius-pill: 999px;
       --container: 480px;
-      --nav-height: 84px;
+      --nav-height: 88px;
     }
 
     * {
@@ -74,34 +75,13 @@
       margin: 0 auto;
       min-height: 100vh;
       position: relative;
-      padding-bottom: calc(var(--nav-height) + 24px);
-    }
-
-    .page {
-      display: none;
-      padding: 12px 14px 0;
-      animation: fadeIn 0.18s ease;
-    }
-
-    .page.active {
-      display: block;
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(6px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      padding-bottom: calc(var(--nav-height) + 26px);
     }
 
     .topbar {
       position: sticky;
       top: 0;
-      z-index: 20;
+      z-index: 40;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -172,12 +152,17 @@
       justify-content: center;
       box-shadow: var(--shadow-soft);
       position: relative;
+      transition: transform 0.15s ease;
     }
 
     .icon-btn:active,
     .btn:active,
     .tab-btn:active,
-    .nav-btn:active {
+    .nav-btn:active,
+    .category-card:active,
+    .product-card:active,
+    .qty-btn:active,
+    .back-btn:active {
       transform: scale(0.98);
     }
 
@@ -196,6 +181,27 @@
       align-items: center;
       justify-content: center;
       box-shadow: var(--shadow-soft);
+    }
+
+    .page {
+      display: none;
+      padding: 12px 14px 0;
+      animation: fadeIn 0.18s ease;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .hero {
@@ -252,14 +258,14 @@
       font-size: 36px;
       line-height: 0.98;
       letter-spacing: -0.02em;
-      max-width: 290px;
+      max-width: 300px;
     }
 
     .hero-text {
       position: relative;
       z-index: 1;
       margin: 0;
-      max-width: 300px;
+      max-width: 312px;
       color: var(--text-soft);
       font-size: 15px;
       line-height: 1.55;
@@ -344,19 +350,10 @@
       font-size: 13px;
     }
 
-    .banner-grid,
-    .product-grid,
-    .category-grid,
-    .story-grid,
-    .order-list,
-    .profile-grid {
-      display: grid;
-      gap: 12px;
-    }
-
-    .banner-row {
+    .banner-row,
+    .tabs {
       display: flex;
-      gap: 12px;
+      gap: 8px;
       overflow-x: auto;
       padding-bottom: 4px;
       scrollbar-width: none;
@@ -446,15 +443,6 @@
       pointer-events: none;
     }
 
-    .tabs {
-      display: flex;
-      gap: 8px;
-      overflow-x: auto;
-      padding-bottom: 4px;
-      scrollbar-width: none;
-      margin-bottom: 12px;
-    }
-
     .tab-btn {
       border: 1px solid var(--line);
       border-radius: var(--radius-pill);
@@ -472,6 +460,15 @@
       color: var(--white);
       border-color: var(--accent);
       box-shadow: var(--shadow-soft);
+    }
+
+    .product-grid,
+    .category-grid,
+    .story-grid,
+    .order-list,
+    .profile-grid {
+      display: grid;
+      gap: 12px;
     }
 
     .category-card,
@@ -520,6 +517,7 @@
 
     .product-card {
       overflow: hidden;
+      cursor: pointer;
     }
 
     .product-media {
@@ -906,7 +904,7 @@
           rgba(243, 238, 227, 0.98)
         );
       backdrop-filter: blur(10px);
-      z-index: 40;
+      z-index: 50;
     }
 
     .nav-btn {
@@ -1001,7 +999,6 @@
       </div>
     </header>
 
-    <!-- HOME -->
     <section id="page-home" class="page active">
       <div class="hero">
         <div class="hero-badge">рабочий минималистичный магазин</div>
@@ -1078,7 +1075,6 @@
       </div>
     </section>
 
-    <!-- CATALOG -->
     <section id="page-catalog" class="page">
       <div class="section">
         <div class="section-head">
@@ -1104,7 +1100,6 @@
       </div>
     </section>
 
-    <!-- CATEGORIES -->
     <section id="page-categories" class="page">
       <div class="section">
         <div class="section-head">
@@ -1118,7 +1113,6 @@
       </div>
     </section>
 
-    <!-- CATEGORY DETAIL -->
     <section id="page-category-detail" class="page">
       <div class="back-row">
         <button type="button" id="categoryBackBtn" class="back-btn">←</button>
@@ -1133,7 +1127,6 @@
       <div id="categoryDetailProducts" class="product-grid"></div>
     </section>
 
-    <!-- PRODUCT DETAIL -->
     <section id="page-product-detail" class="page">
       <div class="back-row">
         <button type="button" id="productBackBtn" class="back-btn">←</button>
@@ -1157,7 +1150,6 @@
       </div>
     </section>
 
-    <!-- CART -->
     <section id="page-cart" class="page">
       <div class="section">
         <div class="section-head">
@@ -1223,7 +1215,6 @@
       </div>
     </section>
 
-    <!-- PROFILE -->
     <section id="page-profile" class="page">
       <div class="section">
         <div class="section-head">
@@ -1259,7 +1250,580 @@
     </section>
 
     <nav class="nav">
-      <          state.currentCatalogTab = tab;
+      <button type="button" class="nav-btn active" data-page="home">
+        <span class="nav-icon">⌂</span>
+        <span class="nav-label">Главная</span>
+      </button>
+
+      <button type="button" class="nav-btn" data-page="catalog">
+        <span class="nav-icon">⌕</span>
+        <span class="nav-label">Каталог</span>
+      </button>
+
+      <button type="button" class="nav-btn" data-page="categories">
+        <span class="nav-icon">≡</span>
+        <span class="nav-label">Разделы</span>
+      </button>
+
+      <button type="button" class="nav-btn" data-page="cart">
+        <span class="nav-icon">◔</span>
+        <span class="nav-label">Корзина</span>
+        <span id="navCartCount" class="nav-count hidden">0</span>
+      </button>
+
+      <button type="button" class="nav-btn" data-page="profile">
+        <span class="nav-icon">☺</span>
+        <span class="nav-label">Профиль</span>
+      </button>
+    </nav>
+  </div>
+
+  <script>
+    const tg = window.Telegram?.WebApp;
+
+    try {
+      tg?.expand();
+      tg?.ready();
+    } catch (e) {
+      console.log('telegram init skipped');
+    }
+
+    const state = {
+      user: null,
+      cart: [],
+      currentCatalogTab: 'Все',
+      currentCatalogSearch: '',
+      currentCategory: null,
+      currentProduct: null,
+      lastCategorySourcePage: 'categories',
+      categories: [
+        {
+          id: 'wine',
+          name: 'Винные',
+          label: 'глубокий тон',
+          description: 'Композиции с более насыщенными оттенками и взрослым спокойным характером.'
+        },
+        {
+          id: 'soft',
+          name: 'Нежные',
+          label: 'мягкая подача',
+          description: 'Светлые и воздушные букеты с деликатной пластикой и мягкой формой.'
+        },
+        {
+          id: 'romance',
+          name: 'Романтика',
+          label: 'для двоих',
+          description: 'Собранные композиции для свиданий, жестов и особых личных моментов.'
+        },
+        {
+          id: 'daily',
+          name: 'Повседневные',
+          label: 'без повода',
+          description: 'Лаконичные букеты для благодарности, встречи или просто хорошего дня.'
+        },
+        {
+          id: 'event',
+          name: 'Праздник',
+          label: 'заметный акцент',
+          description: 'Более выразительные букеты для важных событий, съёмок и торжеств.'
+        }
+      ],
+      featured: [
+        {
+          id: 'f1',
+          label: 'для свидания',
+          title: 'Винные акценты',
+          text: 'Глубокие оттенки, спокойная форма и ощущение дорогой простоты.',
+          categoryName: 'Винные'
+        },
+        {
+          id: 'f2',
+          label: 'для утра',
+          title: 'Светлые формы',
+          text: 'Лёгкие композиции с воздухом и мягкой пудровой гаммой.',
+          categoryName: 'Нежные'
+        },
+        {
+          id: 'f3',
+          label: 'без повода',
+          title: 'Тихие жесты',
+          text: 'Компактные и тактичные букеты, когда хочется просто порадовать.',
+          categoryName: 'Повседневные'
+        }
+      ],
+      products: [
+        {
+          id: 1,
+          title: 'Винный акцент',
+          description: 'Собранная композиция с глубоким тоном, мягкой упаковкой и взрослым спокойным характером.',
+          longText: 'Букет для тех случаев, когда нужен выразительный, но не шумный жест. В нём важны глубина оттенка, спокойный ритм и взрослая подача.',
+          price: 4900,
+          size: 'Средний',
+          availability: 'Сегодня',
+          category: 'Винные',
+          tag: 'Хит',
+          icon: '✿'
+        },
+        {
+          id: 2,
+          title: 'Нежная форма',
+          description: 'Светлый букет с воздухом, деликатной пластикой и чистым утренним ощущением.',
+          longText: 'Лёгкая композиция с мягким ритмом и тактильной подачей. Хорошо подходит для тёплых спокойных жестов и светлых поводов.',
+          price: 3800,
+          size: 'Компактный',
+          availability: 'Сегодня',
+          category: 'Нежные',
+          tag: 'Утро',
+          icon: '❀'
+        },
+        {
+          id: 3,
+          title: 'Тихое признание',
+          description: 'Минималистичная композиция для личного жеста, без визуального шума и лишнего декора.',
+          longText: 'Сдержанный букет для моментов, где важнее тонкость, чем громкость. Хорошо работает как жест внимания и как очень личный подарок.',
+          price: 4200,
+          size: 'Средний',
+          availability: 'Завтра',
+          category: 'Романтика',
+          tag: 'Для двоих',
+          icon: '✾'
+        },
+        {
+          id: 4,
+          title: 'Пудровый свет',
+          description: 'Мягкая светлая гамма, спокойный ритм и красивая тактильная подача в фирменной эстетике.',
+          longText: 'Светлая композиция с ощущением воздуха и мягкости. Идеальна для нежных случаев, утренних встреч и деликатных поздравлений.',
+          price: 4600,
+          size: 'Большой',
+          availability: 'Сегодня',
+          category: 'Нежные',
+          tag: 'Светлое',
+          icon: '❁'
+        },
+        {
+          id: 5,
+          title: 'Глубина вечера',
+          description: 'Букет с более плотной формой и глубоким оттенком для сильного, но очень тихого впечатления.',
+          longText: 'Композиция с насыщенной подачей и чувством внутренней плотности. Подходит для вечерних встреч и акцентных подарков.',
+          price: 5700,
+          size: 'Большой',
+          availability: 'Завтра',
+          category: 'Винные',
+          tag: 'Вечер',
+          icon: '✿'
+        },
+        {
+          id: 6,
+          title: 'Лёгкий жест',
+          description: 'Компактная композиция для благодарности, внимания и небольшого красивого повода.',
+          longText: 'Небольшой, но собранный букет для повседневных жестов. Хорош, когда хочется сделать красиво, но без лишней торжественности.',
+          price: 3100,
+          size: 'Компактный',
+          availability: 'Сегодня',
+          category: 'Повседневные',
+          tag: 'Лаконично',
+          icon: '❀'
+        },
+        {
+          id: 7,
+          title: 'Тёплое утро',
+          description: 'Пудрово-молочная палитра и ощущение света, воздуха и нежного начала дня.',
+          longText: 'Мягкий светлый букет с ощущением тепла и чистого пространства. Подходит для нежных моментов, утренних поздравлений и спокойных встреч.',
+          price: 4300,
+          size: 'Средний',
+          availability: 'Сегодня',
+          category: 'Нежные',
+          tag: 'Мягкость',
+          icon: '❁'
+        },
+        {
+          id: 8,
+          title: 'Редкий акцент',
+          description: 'Более статусный букет для важной встречи, съёмки или эффектного подарка.',
+          longText: 'Выразительная композиция для крупных поводов. Сильнее по форме и масштабу, но всё равно остаётся в рамках спокойной эстетики бренда.',
+          price: 6500,
+          size: 'Большой',
+          availability: 'Под заказ',
+          category: 'Праздник',
+          tag: 'Премиум',
+          icon: '✾'
+        },
+        {
+          id: 9,
+          title: 'Для встречи',
+          description: 'Сдержанная композиция для красивого, но не слишком формального повода.',
+          longText: 'Букет для визита, встречи или небольшого события, где важна аккуратная и собранная подача без перегруза.',
+          price: 4500,
+          size: 'Средний',
+          availability: 'Сегодня',
+          category: 'Повседневные',
+          tag: 'Встреча',
+          icon: '✿'
+        },
+        {
+          id: 10,
+          title: 'Красивое спасибо',
+          description: 'Букет для благодарности, который смотрится собранно и очень бережно.',
+          longText: 'Аккуратная композиция для благодарности преподавателю, коллеге, подруге или близкому человеку. Универсальный и очень спокойный выбор.',
+          price: 3900,
+          size: 'Компактный',
+          availability: 'Сегодня',
+          category: 'Повседневные',
+          tag: 'Спасибо',
+          icon: '❀'
+        },
+        {
+          id: 11,
+          title: 'Вечер для двоих',
+          description: 'Букет с мягким романтическим настроением и взрослой сдержанностью.',
+          longText: 'Подходит для свиданий, важных разговоров и очень личных жестов. В композиции есть глубина, но она подана мягко и тихо.',
+          price: 5200,
+          size: 'Средний',
+          availability: 'Завтра',
+          category: 'Романтика',
+          tag: 'Романтика',
+          icon: '✾'
+        },
+        {
+          id: 12,
+          title: 'Событие',
+          description: 'Более заметная композиция для поздравлений и яркого впечатления.',
+          longText: 'Товар для торжественных случаев, где хочется большего масштаба и более сильного присутствия, но без визуальной перегрузки.',
+          price: 7100,
+          size: 'Большой',
+          availability: 'Под заказ',
+          category: 'Праздник',
+          tag: 'Событие',
+          icon: '❁'
+        }
+      ]
+    };
+
+    const pageEls = {
+      home: document.getElementById('page-home'),
+      catalog: document.getElementById('page-catalog'),
+      categories: document.getElementById('page-categories'),
+      'category-detail': document.getElementById('page-category-detail'),
+      'product-detail': document.getElementById('page-product-detail'),
+      cart: document.getElementById('page-cart'),
+      profile: document.getElementById('page-profile')
+    };
+
+    const navButtons = [...document.querySelectorAll('.nav-btn')];
+    const homeStatusEl = document.getElementById('homeStatus');
+    const featuredRowEl = document.getElementById('featuredRow');
+    const homeProductsEl = document.getElementById('homeProducts');
+    const catalogSearchInputEl = document.getElementById('catalogSearchInput');
+    const catalogTabsEl = document.getElementById('catalogTabs');
+    const catalogProductsEl = document.getElementById('catalogProducts');
+    const categoriesGridEl = document.getElementById('categoriesGrid');
+    const categoryBackBtnEl = document.getElementById('categoryBackBtn');
+    const categoryDetailTitleEl = document.getElementById('categoryDetailTitle');
+    const categoryDetailHeadingEl = document.getElementById('categoryDetailHeading');
+    const categoryDetailTextEl = document.getElementById('categoryDetailText');
+    const categoryDetailProductsEl = document.getElementById('categoryDetailProducts');
+    const productBackBtnEl = document.getElementById('productBackBtn');
+    const productDetailMediaEl = document.getElementById('productDetailMedia');
+    const productDetailTitleEl = document.getElementById('productDetailTitle');
+    const productDetailPriceEl = document.getElementById('productDetailPrice');
+    const productDetailTextEl = document.getElementById('productDetailText');
+    const productDetailMetaEl = document.getElementById('productDetailMeta');
+    const productDetailAddBtnEl = document.getElementById('productDetailAddBtn');
+    const productDetailCatalogBtnEl = document.getElementById('productDetailCatalogBtn');
+    const headerProfileBtnEl = document.getElementById('headerProfileBtn');
+    const headerCartBtnEl = document.getElementById('headerCartBtn');
+    const headerCartCountEl = document.getElementById('headerCartCount');
+    const navCartCountEl = document.getElementById('navCartCount');
+    const goCatalogBtnEl = document.getElementById('goCatalogBtn');
+    const goCategoriesBtnEl = document.getElementById('goCategoriesBtn');
+    const cartItemsWrapEl = document.getElementById('cartItemsWrap');
+    const cartSummaryBoxEl = document.getElementById('cartSummaryBox');
+    const cartItemsCountEl = document.getElementById('cartItemsCount');
+    const cartDeliveryPriceEl = document.getElementById('cartDeliveryPrice');
+    const cartTotalPriceEl = document.getElementById('cartTotalPrice');
+    const checkoutNameEl = document.getElementById('checkoutName');
+    const checkoutPhoneEl = document.getElementById('checkoutPhone');
+    const checkoutAddressEl = document.getElementById('checkoutAddress');
+    const checkoutCommentEl = document.getElementById('checkoutComment');
+    const checkoutBtnEl = document.getElementById('checkoutBtn');
+    const clearCartBtnEl = document.getElementById('clearCartBtn');
+    const cartStatusEl = document.getElementById('cartStatus');
+    const profileMetaEl = document.getElementById('profileMeta');
+    const profileLoginBtnEl = document.getElementById('profileLoginBtn');
+    const profileLogoutBtnEl = document.getElementById('profileLogoutBtn');
+    const profileStatusEl = document.getElementById('profileStatus');
+    const recentOrdersWrapEl = document.getElementById('recentOrdersWrap');
+
+    function setHomeStatus(text) {
+      homeStatusEl.textContent = text || '';
+    }
+
+    function setCartStatus(text) {
+      cartStatusEl.textContent = text || '';
+    }
+
+    function setProfileStatus(text) {
+      profileStatusEl.textContent = text || '';
+    }
+
+    function formatPrice(value) {
+      return `${Number(value).toLocaleString('ru-RU')} ₽`;
+    }
+
+    function saveUser(user) {
+      localStorage.setItem('dlynee_user', JSON.stringify(user));
+    }
+
+    function readUser() {
+      try {
+        return JSON.parse(localStorage.getItem('dlynee_user') || 'null');
+      } catch {
+        return null;
+      }
+    }
+
+    function clearUser() {
+      localStorage.removeItem('dlynee_user');
+    }
+
+    function saveCart() {
+      localStorage.setItem('dlynee_cart', JSON.stringify(state.cart));
+    }
+
+    function readCart() {
+      try {
+        return JSON.parse(localStorage.getItem('dlynee_cart') || '[]');
+      } catch {
+        return [];
+      }
+    }
+
+    function saveRecentOrders(orders) {
+      localStorage.setItem('dlynee_recent_orders', JSON.stringify(orders));
+    }
+
+    function readRecentOrders() {
+      try {
+        return JSON.parse(localStorage.getItem('dlynee_recent_orders') || '[]');
+      } catch {
+        return [];
+      }
+    }
+
+    function restoreState() {
+      const user = readUser();
+      const cart = readCart();
+      if (user) state.user = user;
+      if (Array.isArray(cart)) state.cart = cart;
+    }
+
+    function setActiveNav(pageName) {
+      navButtons.forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.page === pageName);
+      });
+    }
+
+    function showPage(pageName) {
+      Object.entries(pageEls).forEach(([key, el]) => {
+        el.classList.toggle('active', key === pageName);
+      });
+
+      const navPage = ['category-detail', 'product-detail'].includes(pageName)
+        ? (state.lastCategorySourcePage === 'catalog' ? 'catalog' : 'categories')
+        : pageName;
+
+      setActiveNav(navPage);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function getCategoryByName(name) {
+      return state.categories.find(c => c.name === name) || null;
+    }
+
+    function getProductById(id) {
+      return state.products.find(p => p.id === id) || null;
+    }
+
+    function getFeaturedProducts() {
+      return state.products.slice(0, 4);
+    }
+
+    function getCatalogTabs() {
+      return ['Все', ...state.categories.map(c => c.name)];
+    }
+
+    function getVisibleCatalogProducts() {
+      let list = [...state.products];
+
+      if (state.currentCatalogTab !== 'Все') {
+        list = list.filter(item => item.category === state.currentCatalogTab);
+      }
+
+      const q = state.currentCatalogSearch.trim().toLowerCase();
+      if (q) {
+        list = list.filter(item =>
+          item.title.toLowerCase().includes(q) ||
+          item.description.toLowerCase().includes(q) ||
+          item.category.toLowerCase().includes(q) ||
+          item.tag.toLowerCase().includes(q)
+        );
+      }
+
+      return list;
+    }
+
+    function addToCart(productId) {
+      const product = getProductById(productId);
+      if (!product) return;
+
+      const existing = state.cart.find(item => item.id === product.id);
+
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        state.cart.push({
+          id: product.id,
+          title: product.title,
+          price: product.price,
+          qty: 1
+        });
+      }
+
+      saveCart();
+      renderCart();
+      setHomeStatus(`Добавлено: ${product.title}`);
+      setCartStatus(`Добавлено: ${product.title}`);
+    }
+
+    function removeFromCart(productId) {
+      state.cart = state.cart.filter(item => item.id !== productId);
+      saveCart();
+      renderCart();
+    }
+
+    function changeQty(productId, delta) {
+      const item = state.cart.find(x => x.id === productId);
+      if (!item) return;
+
+      item.qty += delta;
+
+      if (item.qty <= 0) {
+        removeFromCart(productId);
+        return;
+      }
+
+      saveCart();
+      renderCart();
+    }
+
+    function clearCart() {
+      state.cart = [];
+      saveCart();
+      renderCart();
+      setCartStatus('Корзина очищена');
+    }
+
+    function getCartTotals() {
+      const items = state.cart.reduce((sum, item) => sum + item.qty, 0);
+      const subtotal = state.cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+      const delivery = items > 0 ? 500 : 0;
+      const total = subtotal + delivery;
+
+      return { items, subtotal, delivery, total };
+    }
+
+    function renderCounters() {
+      const { items } = getCartTotals();
+
+      if (items > 0) {
+        headerCartCountEl.textContent = items;
+        navCartCountEl.textContent = items;
+        headerCartCountEl.classList.remove('hidden');
+        navCartCountEl.classList.remove('hidden');
+      } else {
+        headerCartCountEl.classList.add('hidden');
+        navCartCountEl.classList.add('hidden');
+      }
+    }
+
+    function createProductCard(product) {
+      const card = document.createElement('article');
+      card.className = 'product-card';
+
+      card.innerHTML = `
+        <div class="product-media">
+          <div class="product-badge">${product.tag}</div>
+          <div class="product-icon">${product.icon}</div>
+        </div>
+        <div class="product-body">
+          <h3 class="product-title">${product.title}</h3>
+          <p class="product-desc">${product.description}</p>
+          <div class="product-price">${formatPrice(product.price)}</div>
+          <div class="product-note">${product.size} · ${product.availability} · ${product.category}</div>
+          <div class="product-actions">
+            <button type="button" class="btn btn-primary btn-small js-add">В корзину</button>
+            <button type="button" class="btn btn-secondary btn-small js-open">Подробнее</button>
+          </div>
+        </div>
+      `;
+
+      card.querySelector('.js-add').addEventListener('click', (e) => {
+        e.stopPropagation();
+        addToCart(product.id);
+      });
+
+      card.querySelector('.js-open').addEventListener('click', (e) => {
+        e.stopPropagation();
+        openProduct(product.id);
+      });
+
+      card.addEventListener('click', () => {
+        openProduct(product.id);
+      });
+
+      return card;
+    }
+
+    function renderHomeFeatured() {
+      featuredRowEl.innerHTML = '';
+
+      state.featured.forEach(item => {
+        const card = document.createElement('article');
+        card.className = 'banner-card';
+
+        card.innerHTML = `
+          <div class="banner-label">${item.label}</div>
+          <h3 class="banner-title">${item.title}</h3>
+          <p class="banner-text">${item.text}</p>
+          <button type="button" class="btn btn-primary btn-small">Открыть</button>
+        `;
+
+        card.querySelector('button').addEventListener('click', () => {
+          openCategoryByName(item.categoryName, 'home');
+        });
+
+        featuredRowEl.appendChild(card);
+      });
+    }
+
+    function renderHomeProducts() {
+      homeProductsEl.innerHTML = '';
+      getFeaturedProducts().forEach(product => {
+        homeProductsEl.appendChild(createProductCard(product));
+      });
+    }
+
+    function renderCatalogTabs() {
+      catalogTabsEl.innerHTML = '';
+
+      getCatalogTabs().forEach(tab => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = `tab-btn ${state.currentCatalogTab === tab ? 'active' : ''}`;
+        btn.textContent = tab;
+
+        btn.addEventListener('click', () => {
+          state.currentCatalogTab = tab;
           renderCatalogTabs();
           renderCatalogProducts();
         });
@@ -1369,7 +1933,7 @@
     function renderCart() {
       cartItemsWrapEl.innerHTML = '';
 
-      if (state.cart.length === 0) {
+      if (!state.cart.length) {
         cartItemsWrapEl.innerHTML = `
           <div class="empty-card">
             <h3>Корзина пуста</h3>
