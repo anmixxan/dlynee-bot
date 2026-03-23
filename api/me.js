@@ -1,4 +1,3 @@
-import crypto from 'crypto';
 import { createClient } from '@supabase/supabase-js';
 
 const supabase = createClient(
@@ -14,36 +13,27 @@ function parseCookies(cookieHeader = '') {
       .filter(Boolean)
       .map(part => {
         const index = part.indexOf('=');
-        const key = part.slice(0, index);
-        const value = part.slice(index + 1);
-        return [key, value];
+        return [part.slice(0, index), part.slice(index + 1)];
       })
   );
-}
-
-function verifySession(token) {
-  if (!token || !token.includes('.')) return null;
-
-  const [encoded, signature] = token.split('.');
-
-  const expected = crypto
-    .createHmac('sha256', process.env.SESSION_SECRET)
-    .update(encoded)
-    .digest('hex');
-
-  if (expected !== signature) return null;
-
-  try {
-    return JSON.parse(Buffer.from(encoded, 'base64url').toString('utf8'));
-  } catch {
-    return null;
-  }
 }
 
 export default async function handler(req, res) {
   try {
     const cookies = parseCookies(req.headers.cookie || '');
-    const session = verifySession(cookies.dlynee_session);
+    const token = cookies.dlynee_session;
+
+    if (!token) {
+      return res.status(401).json({ user: null });
+    }
+
+    let session = null;
+
+    try {
+      session = JSON.parse(Buffer.from(token, 'base64url').toString('utf8'));
+    } catch {
+      return res.status(401).json({ user: null });
+    }
 
     if (!session?.telegram_id) {
       return res.status(401).json({ user: null });
