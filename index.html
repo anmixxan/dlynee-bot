@@ -133,18 +133,18 @@
     }
 
     .topbar-clean {
-  padding: 14px 14px 6px;
+  padding: 10px 14px 2px;
   justify-content: flex-start;
 }
 
 .brand-clean {
-  gap: 14px;
+  gap: 18px;
   align-items: center;
 }
 
 .brand-logo-clean {
-  width: 54px;
-  height: 54px;
+  width: 96px;
+  height: 96px;
   object-fit: contain;
   flex-shrink: 0;
 }
@@ -253,15 +253,15 @@
     }
 
     .hero {
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: var(--radius-xxl);
-      padding: 24px 22px;
-      box-shadow: var(--shadow-md);
-      position: relative;
-      overflow: hidden;
-      margin-bottom: 18px;
-    }
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xxl);
+  padding: 22px 22px 20px;
+  box-shadow: var(--shadow-md);
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 18px;
+}
 
     .hero::before {
       content: "";
@@ -300,14 +300,14 @@
     }
 
     .hero-title {
-      position: relative;
-      z-index: 1;
-      margin: 0 0 12px;
-      font-size: 36px;
-      line-height: 0.98;
-      letter-spacing: -0.02em;
-      max-width: 300px;
-    }
+  position: relative;
+  z-index: 1;
+  margin: 0 0 18px;
+  font-size: 42px;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  max-width: 320px;
+}
 
     .hero-text {
       position: relative;
@@ -1045,13 +1045,7 @@
 
     <section id="page-home" class="page active">
       <div class="hero">
-        <div class="hero-badge">рабочий минималистичный магазин</div>
         <h2 class="hero-title">Букеты для особенных моментов</h2>
-        <p class="hero-text">
-          Тихая эстетика, собранный ритм, тёплая палитра. Выбирай категории,
-          открывай каталог, добавляй в корзину и оформляй заказ внутри mini app.
-        </p>
-
         <div class="hero-actions">
           <button type="button" id="goCatalogBtn" class="btn btn-primary">Каталог</button>
           <button type="button" id="goCategoriesBtn" class="btn btn-secondary">Категории</button>
@@ -1574,9 +1568,9 @@
     const productDetailMetaEl = document.getElementById('productDetailMeta');
     const productDetailAddBtnEl = document.getElementById('productDetailAddBtn');
     const productDetailCatalogBtnEl = document.getElementById('productDetailCatalogBtn');
-    const headerProfileBtnEl = document.getElementById('headerProfileBtn');
-    const headerCartBtnEl = document.getElementById('headerCartBtn');
-    const headerCartCountEl = document.getElementById('headerCartCount');
+    const headerProfileBtnEl = null;
+const headerCartBtnEl = null;
+const headerCartCountEl = null;
     const navCartCountEl = document.getElementById('navCartCount');
     const goCatalogBtnEl = document.getElementById('goCatalogBtn');
     const goCategoriesBtnEl = document.getElementById('goCategoriesBtn');
