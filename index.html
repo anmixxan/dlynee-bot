@@ -1808,25 +1808,29 @@
     }
 
     function openProduct(productId) {
-      const product = getProductById(productId);
-      if (!product) return;
+  const product = getProductById(productId);
+  if (!product) return;
 
-      state.currentProduct = product;
+  if (!state.lastCategorySourcePage) {
+    state.lastCategorySourcePage = 'catalog';
+  }
 
-      productDetailMediaEl.textContent = product.icon;
-      productDetailTitleEl.textContent = product.title;
-      productDetailPriceEl.textContent = formatPrice(product.price);
-      productDetailTextEl.textContent = product.longText;
+  state.currentProduct = product;
 
-      productDetailMetaEl.innerHTML = `
-        <div><strong>Категория:</strong> ${product.category}</div>
-        <div><strong>Размер:</strong> ${product.size}</div>
-        <div><strong>Доступность:</strong> ${product.availability}</div>
-        <div><strong>Коллекция:</strong> ${product.tag}</div>
-      `;
+  productDetailMediaEl.textContent = product.icon;
+  productDetailTitleEl.textContent = product.title;
+  productDetailPriceEl.textContent = formatPrice(product.price);
+  productDetailTextEl.textContent = product.longText;
 
-      showPage('product-detail');
-    }
+  productDetailMetaEl.innerHTML = `
+    <div><strong>Категория:</strong> ${product.category}</div>
+    <div><strong>Размер:</strong> ${product.size}</div>
+    <div><strong>Доступность:</strong> ${product.availability}</div>
+    <div><strong>Коллекция:</strong> ${product.tag}</div>
+  `;
+
+  showPage('product-detail');
+}
 
     function renderCart() {
       cartItemsWrapEl.innerHTML = '';
