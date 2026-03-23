@@ -6,15 +6,16 @@ const supabase = createClient(
 );
 
 export default async function handler(req, res) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
-
   try {
-    const { id, first_name, last_name, username, photo_url } = req.body || {};
+    if (req.method !== 'POST') {
+      return res.status(405).json({ error: 'Method not allowed' });
+    }
+
+    const body = req.body || {};
+    const { id, first_name, last_name, username, photo_url } = body;
 
     if (!id) {
-      return res.status(400).json({ error: 'Нет Telegram ID' });
+      return res.status(400).json({ error: 'No Telegram ID' });
     }
 
     const user = {
@@ -32,11 +33,13 @@ export default async function handler(req, res) {
       .single();
 
     if (error) {
+      console.error('Supabase error:', error);
       return res.status(500).json({ error: error.message });
     }
 
     return res.status(200).json({ ok: true, user: data });
   } catch (error) {
-    return res.status(500).json({ error: 'Server error' });
+    console.error('Handler error:', error);
+    return res.status(500).json({ error: error.message || 'Server error' });
   }
 }
