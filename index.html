@@ -2,7 +2,10 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+  />
   <title>ДляНеё | mini app</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
@@ -403,7 +406,6 @@
 
     .product-grid,
     .category-grid,
-    .story-grid,
     .order-list,
     .profile-grid {
       display: grid;
@@ -412,7 +414,6 @@
 
     .category-card,
     .product-card,
-    .story-card,
     .profile-card,
     .cart-card,
     .checkout-card,
@@ -460,7 +461,7 @@
     }
 
     .product-media {
-      height: 158px;
+      height: 170px;
       background:
         radial-gradient(circle at 30% 30%, rgba(255,255,255,0.54), transparent 22%),
         linear-gradient(135deg, rgba(122,22,38,0.16), rgba(215,173,160,0.18));
@@ -469,11 +470,14 @@
       justify-content: center;
       border-bottom: 1px solid rgba(122, 22, 38, 0.06);
       position: relative;
+      overflow: hidden;
     }
 
-    .product-icon {
-      font-size: 48px;
-      color: var(--accent);
+    .product-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
 
     .product-badge {
@@ -482,11 +486,12 @@
       top: 14px;
       padding: 7px 10px;
       border-radius: var(--radius-pill);
-      background: rgba(255,255,255,0.78);
+      background: rgba(255,255,255,0.85);
       color: var(--accent);
       font-size: 12px;
       font-weight: 700;
       border: 1px solid rgba(122, 22, 38, 0.08);
+      z-index: 2;
     }
 
     .product-body {
@@ -526,14 +531,6 @@
       flex-wrap: wrap;
     }
 
-    .product-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-    .story-card,
     .profile-card,
     .checkout-card,
     .cart-card,
@@ -542,7 +539,6 @@
       padding: 18px;
     }
 
-    .story-card h3,
     .profile-card h3,
     .checkout-card h3,
     .cart-card h3,
@@ -553,7 +549,6 @@
       font-size: 22px;
     }
 
-    .story-card p,
     .profile-card p,
     .checkout-card p,
     .cart-card p,
@@ -563,31 +558,6 @@
       color: var(--text-soft);
       font-size: 14px;
       line-height: 1.5;
-    }
-
-    .story-list {
-      display: grid;
-      gap: 10px;
-      margin-top: 14px;
-    }
-
-    .story-item {
-      background: rgba(255,255,255,0.60);
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: 14px;
-    }
-
-    .story-item strong {
-      display: block;
-      margin-bottom: 6px;
-      font-size: 15px;
-    }
-
-    .story-item span {
-      color: var(--text-soft);
-      font-size: 13px;
-      line-height: 1.45;
     }
 
     .field {
@@ -773,10 +743,14 @@
 
     .product-detail {
       overflow: hidden;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-soft);
     }
 
     .product-detail-media {
-      height: 220px;
+      height: 260px;
       background:
         radial-gradient(circle at 30% 30%, rgba(255,255,255,0.54), transparent 22%),
         linear-gradient(135deg, rgba(122,22,38,0.16), rgba(215,173,160,0.18));
@@ -786,6 +760,14 @@
       color: var(--accent);
       font-size: 60px;
       position: relative;
+      overflow: hidden;
+    }
+
+    .detail-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
 
     .product-detail-body {
@@ -958,40 +940,6 @@
         </div>
         <div id="homeProducts" class="product-grid"></div>
       </div>
-
-      <div class="section">
-        <div class="section-head">
-          <div>
-            <h3 class="section-title">О бренде</h3>
-            <p class="section-subtitle">спокойная эстетика</p>
-          </div>
-        </div>
-
-        <div class="story-grid">
-          <article class="story-card">
-            <h3>Минимализм и характер</h3>
-            <p>
-              ДляНеё — цветы и подарки, которые говорят за вас.
-Мы помогаем порадовать любимую, маму, подругу или коллегу красиво, вовремя и без лишних сложностей.
-            </p>
-
-            <div class="story-list">
-              <div class="story-item">
-                <strong>Фирменная палитра</strong>
-                <span>Винные, пудровые и тёплые молочные оттенки.</span>
-              </div>
-              <div class="story-item">
-                <strong>Собранный ритм</strong>
-                <span>Каждый букет смотрится спокойно и цельно.</span>
-              </div>
-              <div class="story-item">
-                <strong>Тихая роскошь</strong>
-                <span>Упаковка и композиция работают как единое целое.</span>
-              </div>
-            </div>
-          </article>
-        </div>
-      </div>
     </section>
 
     <section id="page-catalog" class="page">
@@ -1057,7 +1005,7 @@
       </div>
 
       <div class="product-detail">
-        <div id="productDetailMedia" class="product-detail-media">✿</div>
+        <div id="productDetailMedia" class="product-detail-media"></div>
         <div class="product-detail-body">
           <h3 id="productDetailTitle">Название</h3>
           <div id="productDetailPrice" class="product-detail-price">0 ₽</div>
@@ -1208,6 +1156,8 @@
       console.log('telegram init skipped');
     }
 
+    const DEFAULT_IMAGE = '/images/photo_2026-03-19_02-27-04.jpg';
+
     const state = {
       user: null,
       cart: [],
@@ -1282,21 +1232,20 @@
           availability: 'Сегодня',
           category: 'Винные',
           tag: 'Хит',
-          icon: '✿'
+          image: '/images/1.jpg'
         },
         {
-  id: 1,
-  title: 'Винный акцент',
-  description: 'Собранная композиция с глубоким тоном.',
-  longText: 'Букет для тех случаев, когда нужен выразительный, но не шумный жест.',
-  price: 4900,
-  size: 'Средний',
-  availability: 'Сегодня',
-  category: 'Винные',
-  tag: 'Хит',
-  icon: '✿',
-  image: '/images/photo_2026-03-19_02-27-04.jpg'
-},
+          id: 2,
+          title: 'Нежная форма',
+          description: 'Светлый букет с деликатной пластикой.',
+          longText: 'Лёгкая композиция с мягким ритмом и тактильной подачей.',
+          price: 3800,
+          size: 'Компактный',
+          availability: 'Сегодня',
+          category: 'Нежные',
+          tag: 'Утро',
+          image: DEFAULT_IMAGE
+        },
         {
           id: 3,
           title: 'Тихое признание',
@@ -1307,7 +1256,7 @@
           availability: 'Завтра',
           category: 'Романтика',
           tag: 'Для двоих',
-          icon: '✾'
+          image: DEFAULT_IMAGE
         },
         {
           id: 4,
@@ -1319,7 +1268,7 @@
           availability: 'Сегодня',
           category: 'Нежные',
           tag: 'Светлое',
-          icon: '❁'
+          image: DEFAULT_IMAGE
         },
         {
           id: 5,
@@ -1331,7 +1280,7 @@
           availability: 'Завтра',
           category: 'Винные',
           tag: 'Вечер',
-          icon: '✿'
+          image: DEFAULT_IMAGE
         },
         {
           id: 6,
@@ -1343,7 +1292,7 @@
           availability: 'Сегодня',
           category: 'Повседневные',
           tag: 'Лаконично',
-          icon: '❀'
+          image: DEFAULT_IMAGE
         },
         {
           id: 7,
@@ -1355,7 +1304,7 @@
           availability: 'Сегодня',
           category: 'Нежные',
           tag: 'Мягкость',
-          icon: '❁'
+          image: DEFAULT_IMAGE
         },
         {
           id: 8,
@@ -1367,7 +1316,7 @@
           availability: 'Под заказ',
           category: 'Праздник',
           tag: 'Премиум',
-          icon: '✾'
+          image: DEFAULT_IMAGE
         },
         {
           id: 9,
@@ -1379,7 +1328,7 @@
           availability: 'Сегодня',
           category: 'Повседневные',
           tag: 'Встреча',
-          icon: '✿'
+          image: DEFAULT_IMAGE
         },
         {
           id: 10,
@@ -1391,7 +1340,7 @@
           availability: 'Сегодня',
           category: 'Повседневные',
           tag: 'Спасибо',
-          icon: '❀'
+          image: DEFAULT_IMAGE
         }
       ]
     };
@@ -1636,6 +1585,10 @@
       setCartStatus('Корзина очищена');
     }
 
+    function getSafeImage(product) {
+      return product?.image || DEFAULT_IMAGE;
+    }
+
     function createProductCard(product) {
       const card = document.createElement('article');
       card.className = 'product-card';
@@ -1643,7 +1596,7 @@
       card.innerHTML = `
         <div class="product-media">
           <div class="product-badge">${product.tag}</div>
-          <img src="${product.image}" class="product-img" alt="${product.title}">
+          <img src="${getSafeImage(product)}" class="product-img" alt="${product.title}">
         </div>
         <div class="product-body">
           <h3 class="product-title">${product.title}</h3>
@@ -1656,6 +1609,11 @@
           </div>
         </div>
       `;
+
+      const img = card.querySelector('.product-img');
+      img.addEventListener('error', () => {
+        img.src = DEFAULT_IMAGE;
+      });
 
       card.querySelector('.js-add').addEventListener('click', (e) => {
         e.stopPropagation();
@@ -1803,7 +1761,15 @@
 
       state.currentProduct = product;
 
-      productDetailMediaEl.innerHTML = `<img src="${product.image}" style="width:100%;height:100%;object-fit:cover;display:block;" alt="${product.title}">`;
+      productDetailMediaEl.innerHTML = `
+        <img src="${getSafeImage(product)}" class="detail-img" alt="${product.title}">
+      `;
+
+      const detailImg = productDetailMediaEl.querySelector('.detail-img');
+      detailImg.addEventListener('error', () => {
+        detailImg.src = DEFAULT_IMAGE;
+      });
+
       productDetailTitleEl.textContent = product.title;
       productDetailPriceEl.textContent = formatPrice(product.price);
       productDetailTextEl.textContent = product.longText;
@@ -1847,6 +1813,7 @@
           </div>
 
           <div class="cart-item-actions">
+            <div class=" cart-item-actions">
             <div class="qty-box">
               <button type="button" class="qty-btn js-minus">−</button>
               <div class="qty-value">${item.qty}</div>
@@ -1921,29 +1888,32 @@
         return;
       }
 
-      orders.slice().reverse().forEach(order => {
-        const card = document.createElement('article');
-        card.className = 'order-card';
+      orders
+        .slice()
+        .reverse()
+        .forEach(order => {
+          const card = document.createElement('article');
+          card.className = 'order-card';
 
-        const itemsCount = Array.isArray(order.items)
-          ? order.items.reduce((sum, item) => sum + (item.qty || 1), 0)
-          : 0;
+          const itemsCount = Array.isArray(order.items)
+            ? order.items.reduce((sum, item) => sum + (item.qty || 1), 0)
+            : 0;
 
-        card.innerHTML = `
-          <div class="order-card-head">
-            <div>
-              <h3>Заказ #${order.id}</h3>
-              <p>${new Date(order.createdAt).toLocaleString('ru-RU')}</p>
+          card.innerHTML = `
+            <div class="order-card-head">
+              <div>
+                <h3>Заказ #${order.id}</h3>
+                <p>${new Date(order.createdAt).toLocaleString('ru-RU')}</p>
+              </div>
+              <div class="order-status">${order.status || 'new'}</div>
             </div>
-            <div class="order-status">${order.status || 'new'}</div>
-          </div>
 
-          <p>Товаров: ${itemsCount}</p>
-          <p style="margin-top:6px;">Сумма: ${formatPrice(order.total || 0)}</p>
-        `;
+            <p>Товаров: ${itemsCount}</p>
+            <p style="margin-top:6px;">Сумма: ${formatPrice(order.total || 0)}</p>
+          `;
 
-        recentOrdersWrapEl.appendChild(card);
-      });
+          recentOrdersWrapEl.appendChild(card);
+        });
     }
 
     async function loginTelegram() {
