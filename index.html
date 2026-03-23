@@ -15,6 +15,9 @@
       --text-soft: #8b6168;
       --accent: #7a1626;
       --line: rgba(122, 22, 38, 0.12);
+      --shadow: 0 12px 30px rgba(92, 27, 36, 0.08);
+      --radius: 28px;
+      --radius-sm: 20px;
     }
 
     * {
@@ -35,20 +38,22 @@
     .app {
       max-width: 480px;
       margin: 0 auto;
-      padding: 14px;
+      padding: 14px 14px 40px;
     }
 
     .topbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 16px;
+      margin-bottom: 18px;
+      gap: 12px;
     }
 
     .brand {
       display: flex;
       align-items: center;
       gap: 12px;
+      min-width: 0;
     }
 
     .brand-logo {
@@ -78,14 +83,16 @@
       background: rgba(255,255,255,0.75);
       color: var(--text);
       cursor: pointer;
+      flex-shrink: 0;
     }
 
     .card {
       background: var(--card);
       border: 1px solid var(--line);
-      border-radius: 28px;
+      border-radius: var(--radius);
       padding: 20px;
       margin-bottom: 14px;
+      box-shadow: var(--shadow);
     }
 
     .card h2,
@@ -132,8 +139,44 @@
       min-height: 18px;
     }
 
+    .section-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin: 0 0 10px;
+    }
+
+    .chips {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      margin-bottom: 12px;
+      padding-bottom: 4px;
+      scrollbar-width: none;
+    }
+
+    .chips::-webkit-scrollbar {
+      display: none;
+    }
+
+    .chip {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.78);
+      color: var(--text);
+      border-radius: 999px;
+      padding: 10px 14px;
+      white-space: nowrap;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .chip.active {
+      background: var(--accent);
+      color: white;
+    }
+
     .product {
-      background: rgba(255,255,255,0.7);
+      background: rgba(255,255,255,0.72);
       border: 1px solid var(--line);
       border-radius: 22px;
       padding: 16px;
@@ -155,11 +198,71 @@
     .price {
       font-weight: 700;
       margin-bottom: 10px;
+      font-size: 16px;
+    }
+
+    .small-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .small-btn {
+      border: none;
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    .small-btn.primary {
+      background: var(--accent);
+      color: white;
+    }
+
+    .small-btn.secondary {
+      background: rgba(255,255,255,0.8);
+      color: var(--text);
+      border: 1px solid var(--line);
     }
 
     .cart-box {
       font-size: 15px;
       font-weight: 700;
+      margin-bottom: 14px;
+    }
+
+    .field {
+      margin-top: 10px;
+    }
+
+    .field input,
+    .field textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      padding: 14px 14px;
+      background: rgba(255,255,255,0.84);
+      color: var(--text);
+      font-size: 15px;
+      outline: none;
+    }
+
+    .field textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    .profile-meta {
+      margin-top: 14px;
+      display: grid;
+      gap: 8px;
+      font-size: 14px;
+    }
+
+    .muted {
+      color: var(--text-soft);
     }
 
     .hidden {
@@ -182,8 +285,8 @@
     </div>
 
     <div class="card">
-      <h2>Тестовая живая страница</h2>
-      <p>Сейчас проверяем, работают ли вообще кнопки и вход через Telegram.</p>
+      <h2>Букеты для особенных моментов</h2>
+      <p>Минималистично, спокойно, красиво. Выбирай букет, входи через Telegram и оформляй заказ прямо внутри mini app.</p>
 
       <div class="row">
         <button type="button" id="loginBtn" class="btn btn-primary">Войти через Telegram</button>
@@ -194,26 +297,19 @@
     </div>
 
     <div class="card">
-      <h3>Каталог</h3>
+      <div class="section-title">Подборки</div>
+      <div id="chips" class="chips"></div>
+    </div>
 
-      <div class="product">
-        <h3>Винный акцент</h3>
-        <p>Глубокие оттенки и спокойная форма.</p>
-        <div class="price">4 900 ₽</div>
-        <button type="button" class="btn btn-primary add-btn" data-title="Винный акцент">Добавить</button>
-      </div>
-
-      <div class="product">
-        <h3>Нежная форма</h3>
-        <p>Светлый букет с мягкой подачей.</p>
-        <div class="price">3 800 ₽</div>
-        <button type="button" class="btn btn-primary add-btn" data-title="Нежная форма">Добавить</button>
-      </div>
+    <div class="card">
+      <div class="section-title">Каталог</div>
+      <div id="productsWrap"></div>
     </div>
 
     <div id="profileCard" class="card hidden">
       <h3>Профиль</h3>
-      <p id="profileText">Нет данных</p>
+      <p class="muted">Ваш текущий аккаунт внутри mini app.</p>
+      <div id="profileText" class="profile-meta">Нет данных</div>
 
       <div class="row">
         <button type="button" id="logoutBtn" class="btn btn-secondary">Выйти</button>
@@ -221,20 +317,30 @@
     </div>
 
     <div id="cartCard" class="card hidden">
-  <h3>Корзина</h3>
+      <h3>Корзина</h3>
 
-  <div id="cartText" class="cart-box">Пусто</div>
+      <div id="cartText" class="cart-box">Пусто</div>
 
-  <div class="row">
-    <input id="nameInput" placeholder="Имя" />
-    <input id="phoneInput" placeholder="Телефон" />
-    <input id="addressInput" placeholder="Адрес" />
-  </div>
+      <div class="field">
+        <input id="nameInput" type="text" placeholder="Имя" />
+      </div>
 
-  <div class="row">
-    <button id="orderBtn" class="btn btn-primary">Оформить заказ</button>
-  </div>
-</div>
+      <div class="field">
+        <input id="phoneInput" type="text" placeholder="Телефон" />
+      </div>
+
+      <div class="field">
+        <input id="addressInput" type="text" placeholder="Адрес" />
+      </div>
+
+      <div class="field">
+        <textarea id="commentInput" placeholder="Комментарий к заказу"></textarea>
+      </div>
+
+      <div class="row">
+        <button type="button" id="orderBtn" class="btn btn-primary">Оформить заказ</button>
+      </div>
+    </div>
   </div>
 
   <script>
@@ -249,7 +355,45 @@
 
     const state = {
       user: null,
-      cart: []
+      cart: [],
+      filter: 'Все',
+      products: [
+        {
+          id: 1,
+          title: 'Винный акцент',
+          description: 'Глубокие оттенки и спокойная форма.',
+          price: 4900,
+          mood: 'Винные'
+        },
+        {
+          id: 2,
+          title: 'Нежная форма',
+          description: 'Светлый букет с мягкой подачей.',
+          price: 3800,
+          mood: 'Нежные'
+        },
+        {
+          id: 3,
+          title: 'Тихое признание',
+          description: 'Минималистичная композиция для особого жеста.',
+          price: 4200,
+          mood: 'Романтика'
+        },
+        {
+          id: 4,
+          title: 'Лёгкий жест',
+          description: 'Небольшой красивый букет без лишнего шума.',
+          price: 3100,
+          mood: 'Повседневные'
+        },
+        {
+          id: 5,
+          title: 'Праздничный акцент',
+          description: 'Более заметный букет для события.',
+          price: 6500,
+          mood: 'Праздник'
+        }
+      ]
     };
 
     const statusEl = document.getElementById('status');
@@ -263,6 +407,15 @@
 
     const cartCard = document.getElementById('cartCard');
     const cartText = document.getElementById('cartText');
+
+    const chipsEl = document.getElementById('chips');
+    const productsWrap = document.getElementById('productsWrap');
+
+    const nameInput = document.getElementById('nameInput');
+    const phoneInput = document.getElementById('phoneInput');
+    const addressInput = document.getElementById('addressInput');
+    const commentInput = document.getElementById('commentInput');
+    const orderBtn = document.getElementById('orderBtn');
 
     function setStatus(text) {
       statusEl.textContent = text;
@@ -284,6 +437,33 @@
       localStorage.removeItem('dlynee_user');
     }
 
+    function restoreUser() {
+      const saved = readUser();
+      if (saved) {
+        state.user = saved;
+      }
+    }
+
+    async function loadMe() {
+      try {
+        const res = await fetch('/api/me', {
+          method: 'GET',
+          credentials: 'include'
+        });
+
+        if (!res.ok) return;
+
+        const data = await res.json();
+
+        if (data?.user) {
+          state.user = data.user;
+          saveUser(data.user);
+        }
+      } catch (e) {
+        console.log('me skipped');
+      }
+    }
+
     function renderProfile() {
       if (!state.user) {
         profileCard.classList.add('hidden');
@@ -291,34 +471,109 @@
       }
 
       profileCard.classList.remove('hidden');
+
       const username = state.user.username ? '@' + state.user.username : 'без username';
-      profileText.textContent =
-        `Имя: ${state.user.first_name || '-'} | Username: ${username} | ID: ${state.user.telegram_id || state.user.id}`;
+      const telegramId = state.user.telegram_id || state.user.id || '-';
+
+      profileText.innerHTML = `
+        <div><strong>Имя:</strong> ${state.user.first_name || '-'}</div>
+        <div><strong>Фамилия:</strong> ${state.user.last_name || '-'}</div>
+        <div><strong>Username:</strong> ${username}</div>
+        <div><strong>ID Telegram:</strong> ${telegramId}</div>
+      `;
     }
 
     function renderCart() {
       if (state.cart.length === 0) {
         cartText.textContent = 'Пусто';
-      } else {
-        cartText.textContent = state.cart.join(', ');
+        return;
       }
+
+      const lines = state.cart.map(item => `${item.title} — ${item.price.toLocaleString('ru-RU')} ₽`);
+      const total = state.cart.reduce((sum, item) => sum + item.price, 0);
+
+      cartText.innerHTML = `
+        ${lines.join('<br>')}
+        <br><br>
+        Итого: ${total.toLocaleString('ru-RU')} ₽
+      `;
     }
 
     function toggleCart() {
       cartCard.classList.toggle('hidden');
-      setStatus('Кнопка корзины работает');
+      setStatus('Корзина открыта');
     }
 
     function openProfile() {
       if (!state.user) {
-        setStatus('Профиль открылся, но вы ещё не вошли');
         profileCard.classList.remove('hidden');
-        profileText.textContent = 'Вы не вошли';
+        profileText.innerHTML = 'Вы не вошли';
+        setStatus('Профиль открыт');
         return;
       }
 
       renderProfile();
-      setStatus('Кнопка профиля работает');
+      setStatus('Профиль открыт');
+    }
+
+    function getVisibleProducts() {
+      if (state.filter === 'Все') return state.products;
+      return state.products.filter(p => p.mood === state.filter);
+    }
+
+    function renderChips() {
+      const filters = ['Все', 'Винные', 'Нежные', 'Романтика', 'Повседневные', 'Праздник'];
+      chipsEl.innerHTML = '';
+
+      filters.forEach(filter => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = `chip ${state.filter === filter ? 'active' : ''}`;
+        btn.textContent = filter;
+
+        btn.addEventListener('click', () => {
+          state.filter = filter;
+          renderChips();
+          renderProducts();
+          setStatus(`Фильтр: ${filter}`);
+        });
+
+        chipsEl.appendChild(btn);
+      });
+    }
+
+    function renderProducts() {
+      productsWrap.innerHTML = '';
+
+      const visible = getVisibleProducts();
+
+      visible.forEach(product => {
+        const card = document.createElement('div');
+        card.className = 'product';
+
+        card.innerHTML = `
+          <h3>${product.title}</h3>
+          <p>${product.description}</p>
+          <div class="price">${product.price.toLocaleString('ru-RU')} ₽</div>
+          <div class="small-row">
+            <button type="button" class="small-btn primary">Добавить</button>
+            <button type="button" class="small-btn secondary">${product.mood}</button>
+          </div>
+        `;
+
+        card.querySelector('.primary').addEventListener('click', () => {
+          state.cart.push({
+            id: product.id,
+            title: product.title,
+            price: product.price
+          });
+          renderCart();
+          cartCard.classList.remove('hidden');
+          setStatus(`Добавлено: ${product.title}`);
+        });
+
+        productsWrap.appendChild(card);
+      });
     }
 
     async function loginTelegram() {
@@ -393,25 +648,67 @@
       setStatus('Вы вышли');
     }
 
-    async function loadMe() {
-      try {
-        const res = await fetch('/api/me', {
-          method: 'GET',
-          credentials: 'include'
-        });
+    async function createOrder() {
+      if (!state.user) {
+        setStatus('Сначала войди через Telegram');
+        return;
+      }
 
-        if (!res.ok) return;
+      if (state.cart.length === 0) {
+        setStatus('Корзина пустая');
+        return;
+      }
+
+      const name = nameInput.value.trim();
+      const phone = phoneInput.value.trim();
+      const address = addressInput.value.trim();
+      const comment = commentInput.value.trim();
+
+      if (!name || !phone || !address) {
+        setStatus('Заполни имя, телефон и адрес');
+        return;
+      }
+
+      const total = state.cart.reduce((sum, item) => sum + item.price, 0);
+
+      try {
+        const res = await fetch('/api/create-order', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            user: state.user,
+            customer: {
+              name,
+              phone,
+              address,
+              comment
+            },
+            items: state.cart,
+            totals: {
+              total
+            }
+          })
+        });
 
         const data = await res.json();
 
-        if (data?.user) {
-          state.user = data.user;
-          saveUser(data.user);
-          renderProfile();
-          setStatus('Сессия восстановлена');
+        if (!res.ok) {
+          setStatus(data.error || 'Ошибка заказа');
+          return;
         }
+
+        setStatus('Заказ создан #' + data.order.id);
+
+        state.cart = [];
+        renderCart();
+
+        nameInput.value = '';
+        phoneInput.value = '';
+        addressInput.value = '';
+        commentInput.value = '';
       } catch (e) {
-        console.log('me skipped');
+        console.error(e);
+        setStatus('Ошибка сети');
       }
     }
 
@@ -419,21 +716,20 @@
     loginBtn.addEventListener('click', loginTelegram);
     cartBtn.addEventListener('click', toggleCart);
     logoutBtn.addEventListener('click', logoutTelegram);
+    orderBtn.addEventListener('click', createOrder);
 
-    document.querySelectorAll('.add-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        state.cart.push(btn.dataset.title);
-        renderCart();
-        cartCard.classList.remove('hidden');
-        setStatus(`Добавлено: ${btn.dataset.title}`);
-      });
-    });
+    async function init() {
+      restoreUser();
+      renderProfile();
+      renderCart();
+      renderChips();
+      renderProducts();
+      await loadMe();
+      renderProfile();
+      setStatus('Mini app загружен');
+    }
 
-    state.user = readUser();
-    renderProfile();
-    renderCart();
-    loadMe();
-    setStatus('JS загрузился');
+    init();
   </script>
 </body>
 </html>
