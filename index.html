@@ -2072,9 +2072,11 @@
     renderProfile();
     toast('Вы вошли через Telegram');
   } catch (error) {
+    console.error('loginTelegram error:', error);
     toast('Ошибка сети');
   }
 }
+
 
 
 
