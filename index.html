@@ -2071,10 +2071,13 @@
     saveUser(state.user);
     renderProfile();
     toast('Вы вошли через Telegram');
-  } catch (error) {
-    console.error('loginTelegram error:', error);
-    toast('Ошибка сети');
-  }
+  } 
+  
+  catch (error) {
+  console.error('loginTelegram error:', error);
+  toast(error.message || 'Ошибка сети');
+}
+
 }
 
 
