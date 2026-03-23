@@ -11,28 +11,20 @@
       --bg: #f3eee3;
       --bg-2: #efe7da;
       --card: rgba(255, 251, 245, 0.68);
-      --card-solid: #f8f2e8;
       --text: #5c1b24;
       --text-soft: #8c6268;
       --accent: #7a1626;
-      --accent-2: #8e2434;
       --accent-soft: #d7ada0;
       --line: rgba(122, 22, 38, 0.14);
       --shadow: 0 14px 34px rgba(92, 27, 36, 0.08);
       --radius-xl: 30px;
       --radius-lg: 24px;
-      --radius-md: 18px;
-      --radius-sm: 14px;
       --container: 480px;
     }
 
     * {
       box-sizing: border-box;
       -webkit-tap-highlight-color: transparent;
-    }
-
-    html {
-      scroll-behavior: smooth;
     }
 
     body {
@@ -84,21 +76,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      margin: 2px 0 8px;
-    }
-
-    .logo-card {
-      width: 168px;
-      height: 168px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 42px;
-      background:
-        radial-gradient(circle at 50% 35%, rgba(255,255,255,0.52), transparent 44%),
-        rgba(255,255,255,0.14);
-      box-shadow: var(--shadow);
-      overflow: hidden;
+      margin: 6px 0 10px;
     }
 
     .logo {
@@ -110,21 +88,11 @@
 
     .brand-block {
       text-align: center;
-      margin-bottom: 12px;
-    }
-
-    .brand-badge {
-      display: inline-block;
-      padding: 8px 12px;
-      border-radius: 999px;
-      font-size: 12px;
-      color: var(--accent);
-      background: rgba(122, 22, 38, 0.06);
-      margin-bottom: 12px;
+      margin-bottom: 14px;
     }
 
     .brand-title {
-      margin: 0 0 8px;
+      margin: 0 0 10px;
       font-size: 30px;
       line-height: 1;
       letter-spacing: 0.01em;
@@ -191,9 +159,9 @@
     }
 
     .hero-card,
-    .card,
-    .form-card,
-    .section-card {
+    .section-card,
+    .choice-card,
+    .form-card {
       background: var(--card);
       border: 1px solid var(--line);
       border-radius: var(--radius-xl);
@@ -434,16 +402,7 @@
       display: none !important;
     }
 
-    .spacer-16 {
-      height: 16px;
-    }
-
     @media (max-width: 390px) {
-      .logo-card {
-        width: 154px;
-        height: 154px;
-      }
-
       .logo {
         width: 132px;
         height: 132px;
@@ -470,13 +429,10 @@
     <section id="homePage" class="page active">
       <div class="hero-shell">
         <div class="logo-wrap">
-          <div class="logo-card">
-            <img src="/Logo.png" alt="ДляНеё" class="logo" />
-          </div>
+          <img src="/Logo.png" alt="ДляНеё" class="logo" />
         </div>
 
         <div class="brand-block">
-          <div class="brand-badge">flower mini app</div>
           <h1 class="brand-title">ДляНеё</h1>
           <p class="brand-subtitle">
             Букеты с характером, мягкой формой и тёплой эстетикой.
