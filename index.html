@@ -526,6 +526,13 @@
       flex-wrap: wrap;
     }
 
+    .product-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
     .story-card,
     .profile-card,
     .checkout-card,
@@ -1636,7 +1643,7 @@
       card.innerHTML = `
         <div class="product-media">
           <div class="product-badge">${product.tag}</div>
-          <div class="product-icon">${product.icon}</div>
+          <img src="${product.image}" class="product-img" alt="${product.title}">
         </div>
         <div class="product-body">
           <h3 class="product-title">${product.title}</h3>
@@ -1796,7 +1803,7 @@
 
       state.currentProduct = product;
 
-      productDetailMediaEl.textContent = product.icon;
+      productDetailMediaEl.innerHTML = `<img src="${product.image}" style="width:100%;height:100%;object-fit:cover;display:block;" alt="${product.title}">`;
       productDetailTitleEl.textContent = product.title;
       productDetailPriceEl.textContent = formatPrice(product.price);
       productDetailTextEl.textContent = product.longText;
