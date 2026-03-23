@@ -2,134 +2,352 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>ДляНеё</title>
 
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
   <style>
+    :root {
+      --bg: #f3eee3;
+      --bg-2: #efe7da;
+      --card: rgba(255, 251, 245, 0.68);
+      --text: #5c1b24;
+      --text-soft: #8c6268;
+      --accent: #7a1626;
+      --line: rgba(122, 22, 38, 0.14);
+      --shadow: 0 14px 34px rgba(92, 27, 36, 0.08);
+      --radius-xl: 30px;
+      --container: 480px;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
     body {
       margin: 0;
-      font-family: Arial;
-      background: #f3eee3;
-      color: #5c1b24;
+      font-family: Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top, rgba(255,255,255,0.32), transparent 26%),
+        linear-gradient(180deg, var(--bg), var(--bg-2));
+      min-height: 100vh;
+    }
+
+    button {
+      font-family: inherit;
     }
 
     .app {
-      max-width: 420px;
-      margin: auto;
-      padding: 16px;
+      max-width: var(--container);
+      margin: 0 auto;
+      padding: 8px 14px 32px;
+    }
+
+    .logo-wrap {
+      display: flex;
+      justify-content: center;
+      margin: 6px 0 10px;
     }
 
     .logo {
       width: 140px;
+      height: 140px;
+      object-fit: contain;
       display: block;
-      margin: 10px auto;
     }
 
-    h1 {
+    .brand-block {
       text-align: center;
-      margin: 10px 0;
+      margin-bottom: 14px;
+    }
+
+    .brand-title {
+      margin: 0 0 10px;
+      font-size: 30px;
+      line-height: 1;
+    }
+
+    .brand-subtitle {
+      margin: 0 auto;
+      max-width: 290px;
+      font-size: 15px;
+      line-height: 1.5;
+      color: var(--text-soft);
     }
 
     .btn {
-      width: 100%;
-      padding: 16px;
-      border-radius: 999px;
       border: none;
-      margin-top: 12px;
-      font-size: 16px;
+      border-radius: 999px;
       cursor: pointer;
+      white-space: nowrap;
     }
 
-    .primary {
-      background: #7a1626;
-      color: white;
+    .btn-primary {
+      background: var(--accent);
+      color: #fffaf5;
+      padding: 14px 18px;
+      font-size: 15px;
+      font-weight: 700;
+      box-shadow: var(--shadow);
+      width: 100%;
     }
 
-    .card {
-      background: white;
-      padding: 20px;
-      border-radius: 20px;
-      margin-top: 20px;
+    .btn-ghost {
+      background: transparent;
+      border: 1px solid var(--line);
+      color: var(--text);
+      padding: 12px 16px;
+      font-size: 14px;
+      font-weight: 700;
+      width: 100%;
+    }
+
+    .hero-card,
+    .profile-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      padding: 22px;
+      margin-bottom: 16px;
+    }
+
+    .hero-label {
+      display: inline-block;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      color: var(--accent);
+      background: rgba(122, 22, 38, 0.06);
+      margin-bottom: 14px;
+    }
+
+    .hero-title {
+      margin: 0 0 12px;
+      font-size: 36px;
+      line-height: 0.98;
+    }
+
+    .hero-text {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.55;
+      color: var(--text-soft);
+      max-width: 290px;
+    }
+
+    .status {
+      margin-top: 14px;
+      font-size: 14px;
+      color: var(--accent);
+      min-height: 18px;
+    }
+
+    .profile-pill {
+      margin-top: 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.62);
+      border: 1px solid var(--line);
+      color: var(--text);
+      font-size: 13px;
+    }
+
+    .profile-card h3 {
+      margin: 0 0 8px;
+      font-size: 22px;
+    }
+
+    .profile-card p {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--text-soft);
+    }
+
+    .profile-meta {
+      margin-top: 14px;
+      display: grid;
+      gap: 8px;
+      font-size: 14px;
+      color: var(--text);
     }
 
     .hidden {
-      display: none;
+      display: none !important;
     }
   </style>
 </head>
-
 <body>
-<div class="app">
-
-  <!-- ГЛАВНАЯ -->
-  <div id="home">
-
-    <img src="/Logo.png" class="logo">
-
-    <h1>ДляНеё</h1>
-
-    <button id="loginBtn" class="btn primary">
-      Войти через Telegram
-    </button>
-
-    <div id="profile" class="card hidden">
-      <h3>Вы вошли</h3>
-      <p id="userInfo"></p>
-
-      <button onclick="logout()" class="btn">
-        Выйти
-      </button>
+  <div class="app">
+    <div class="logo-wrap">
+      <img src="/Logo.png" alt="ДляНеё" class="logo" />
     </div>
 
+    <div class="brand-block">
+      <h1 class="brand-title">ДляНеё</h1>
+      <p class="brand-subtitle">Букеты с характером, мягкой формой и тёплой эстетикой.</p>
+    </div>
+
+    <div id="guestBlock">
+      <div class="hero-card">
+        <div class="hero-label">telegram account</div>
+        <h2 class="hero-title">Войти через Telegram</h2>
+        <p class="hero-text">
+          Нажми кнопку входа, и приложение сохранит твой профиль.
+          После выхода можно будет войти обратно в тот же аккаунт.
+        </p>
+
+        <button id="loginBtn" class="btn btn-primary" style="margin-top: 18px;">
+          Войти через Telegram
+        </button>
+
+        <div id="status" class="status"></div>
+      </div>
+    </div>
+
+    <div id="authBlock" class="hidden">
+      <div class="hero-card">
+        <div class="hero-label">вы авторизованы</div>
+        <h2 class="hero-title">Профиль активен</h2>
+        <p class="hero-text">Ты вошёл в mini app и можешь продолжать работу с заказами и профилем.</p>
+
+        <div id="profilePill" class="profile-pill"></div>
+      </div>
+
+      <div class="profile-card">
+        <h3>Ваш аккаунт</h3>
+        <p>Это ваш сохранённый профиль внутри mini app.</p>
+
+        <div id="profileMeta" class="profile-meta"></div>
+
+        <div style="margin-top: 16px;">
+          <button id="logoutBtn" class="btn btn-ghost">Выйти</button>
+        </div>
+      </div>
+    </div>
   </div>
 
-</div>
-
-<script>
-  const tg = window.Telegram.WebApp;
-  tg.expand();
-
-  const user = tg.initDataUnsafe?.user;
-
-  const profileBlock = document.getElementById("profile");
-  const userInfo = document.getElementById("userInfo");
-
-  // если уже есть пользователь
-  if (user) {
-    login(user);
-  }
-
-  document.getElementById("loginBtn").onclick = () => {
-    if (!user) {
-      alert("Открой через Telegram");
-      return;
+  <script>
+    const tg = window.Telegram?.WebApp;
+    if (tg) {
+      tg.expand();
+      tg.ready();
     }
-    login(user);
-  };
 
-  async function login(user) {
+    const loginBtn = document.getElementById('loginBtn');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const guestBlock = document.getElementById('guestBlock');
+    const authBlock = document.getElementById('authBlock');
+    const statusEl = document.getElementById('status');
+    const profilePill = document.getElementById('profilePill');
+    const profileMeta = document.getElementById('profileMeta');
 
-    // 🔥 отправляем на сервер
-    await fetch("/api/telegram-login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(user)
-    });
+    function saveSession(user) {
+      localStorage.setItem('dlynee_user', JSON.stringify(user));
+    }
 
-    userInfo.innerText =
-      user.first_name + " " + (user.username ? "@" + user.username : "");
+    function getSession() {
+      const raw = localStorage.getItem('dlynee_user');
+      if (!raw) return null;
 
-    profileBlock.classList.remove("hidden");
-  }
+      try {
+        return JSON.parse(raw);
+      } catch {
+        return null;
+      }
+    }
 
-  function logout() {
-    location.reload();
-  }
-</script>
+    function clearSession() {
+      localStorage.removeItem('dlynee_user');
+    }
 
+    function renderUser(user) {
+      guestBlock.classList.add('hidden');
+      authBlock.classList.remove('hidden');
+
+      const username = user.username ? '@' + user.username : 'без username';
+
+      profilePill.textContent = `${user.first_name || 'Пользователь'} · ${username}`;
+
+      profileMeta.innerHTML = `
+        <div><strong>ID Telegram:</strong> ${user.id}</div>
+        <div><strong>Имя:</strong> ${user.first_name || '-'}</div>
+        <div><strong>Фамилия:</strong> ${user.last_name || '-'}</div>
+        <div><strong>Username:</strong> ${user.username ? '@' + user.username : '-'}</div>
+      `;
+    }
+
+    function renderGuest() {
+      guestBlock.classList.remove('hidden');
+      authBlock.classList.add('hidden');
+      statusEl.textContent = '';
+    }
+
+    async function loginWithTelegram() {
+      const user = tg?.initDataUnsafe?.user;
+
+      if (!user) {
+        statusEl.textContent = 'Открой mini app внутри Telegram.';
+        return;
+      }
+
+      statusEl.textContent = 'Входим в аккаунт...';
+
+      try {
+        const res = await fetch('/api/telegram-login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(user)
+        });
+
+        if (!res.ok) {
+          statusEl.textContent = 'Ошибка входа';
+          return;
+        }
+
+        saveSession(user);
+        renderUser(user);
+      } catch (error) {
+        statusEl.textContent = 'Ошибка сети';
+      }
+    }
+
+    function logout() {
+      clearSession();
+      renderGuest();
+    }
+
+    function restoreSession() {
+      const savedUser = getSession();
+      const currentTgUser = tg?.initDataUnsafe?.user;
+
+      if (!savedUser) {
+        renderGuest();
+        return;
+      }
+
+      if (currentTgUser && savedUser.id === currentTgUser.id) {
+        renderUser(savedUser);
+        return;
+      }
+
+      clearSession();
+      renderGuest();
+    }
+
+    loginBtn.addEventListener('click', loginWithTelegram);
+    logoutBtn.addEventListener('click', logout);
+
+    restoreSession();
+  </script>
 </body>
 </html>
