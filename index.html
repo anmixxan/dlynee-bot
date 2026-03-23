@@ -2181,12 +2181,18 @@
       });
 
       productBackBtnEl.addEventListener('click', () => {
-        if (state.currentCategory) {
-          showPage('category-detail');
-        } else {
-          showPage('catalog');
-        }
-      });
+  if (state.lastCategorySourcePage === 'catalog') {
+    showPage('catalog');
+    return;
+  }
+
+  if (state.lastCategorySourcePage === 'categories' && state.currentCategory) {
+    showPage('category-detail');
+    return;
+  }
+
+  showPage('catalog');
+});
 
       productDetailAddBtnEl.addEventListener('click', () => {
         if (state.currentProduct) {
