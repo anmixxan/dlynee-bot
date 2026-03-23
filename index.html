@@ -2038,9 +2038,9 @@
        117. LOGIN TELEGRAM
     ========================================================== */
    async function loginTelegram() {
-  const user = tg?.initDataUnsafe?.user;
+  const initData = tg?.initData;
 
-  if (!user) {
+  if (!initData) {
     toast('Открой mini app внутри Telegram');
     return;
   }
@@ -2048,34 +2048,24 @@
   try {
     const res = await fetch('/api/telegram-login', {
       method: 'POST',
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({
-        id: user.id,
-        first_name: user.first_name || '',
-        last_name: user.last_name || '',
-        username: user.username || '',
-        photo_url: user.photo_url || ''
-      })
+      body: JSON.stringify({ initData })
     });
 
-    const text = await res.text();
-    console.log('RAW RESPONSE:', text);
-
-    let data = {};
-    try {
-      data = JSON.parse(text);
-    } catch (e) {}
+    const data = await res.json();
 
     if (!res.ok) {
-      toast(data.error || text || 'Ошибка входа');
+      toast(data.error || 'Ошибка входа');
       return;
     }
 
-    state.user = data.user || user;
+    state.user = data.user;
     saveUser(state.user);
     renderProfile();
+    closeProfile();
     toast('Вы вошли через Telegram');
   } catch (error) {
     console.error('loginTelegram error:', error);
