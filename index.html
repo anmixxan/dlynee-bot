@@ -2170,6 +2170,11 @@
     }, 10);
   }
 });
+      document.addEventListener('click', (e) => {
+  if (!e.target.closest('.search-input')) {
+    searchInputEl.blur();
+  }
+});
 
       categoryBackBtnEl.addEventListener('click', () => {
         showPage(state.lastCategorySourcePage || 'categories');
