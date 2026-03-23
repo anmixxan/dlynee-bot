@@ -14,7 +14,7 @@ export default async function handler(req, res) {
     const { id, first_name, last_name, username, photo_url } = req.body || {};
 
     if (!id) {
-      return res.status(400).json({ error: 'No Telegram user id' });
+      return res.status(400).json({ error: 'Нет Telegram ID' });
     }
 
     const user = {
@@ -35,10 +35,7 @@ export default async function handler(req, res) {
       return res.status(500).json({ error: error.message });
     }
 
-    return res.status(200).json({
-      ok: true,
-      user: data
-    });
+    return res.status(200).json({ ok: true, user: data });
   } catch (error) {
     return res.status(500).json({ error: 'Server error' });
   }
