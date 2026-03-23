@@ -2,30 +2,24 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-  />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>ДляНеё | mini app</title>
-
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
   <style>
     :root {
       --bg: #f3eee3;
       --bg-2: #efe7da;
-      --surface: rgba(255, 251, 245, 0.84);
-      --surface-strong: rgba(255, 251, 245, 0.96);
+      --surface: rgba(255, 251, 245, 0.9);
+      --surface-strong: rgba(255, 251, 245, 0.97);
       --white: #fffaf6;
       --text: #5c1b24;
       --text-soft: #8b6168;
       --accent: #7a1626;
       --accent-2: #8d2435;
       --line: rgba(122, 22, 38, 0.12);
-      --line-strong: rgba(122, 22, 38, 0.18);
       --shadow-soft: 0 10px 24px rgba(92, 27, 36, 0.06);
       --shadow-md: 0 16px 34px rgba(92, 27, 36, 0.08);
-      --shadow-lg: 0 24px 48px rgba(92, 27, 36, 0.10);
       --radius-xxl: 34px;
       --radius-xl: 28px;
       --radius-lg: 22px;
@@ -75,165 +69,75 @@
       margin: 0 auto;
       min-height: 100vh;
       position: relative;
-      padding-bottom: calc(var(--nav-height) + 26px);
+      padding-bottom: calc(var(--nav-height) + 24px);
     }
 
     .topbar {
       position: sticky;
       top: 0;
-      z-index: 40;
+      z-index: 20;
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      gap: 12px;
-      padding: 8px 14px 10px;
+      justify-content: flex-start;
+      padding: 8px 14px 4px;
       background:
         linear-gradient(
           180deg,
           rgba(243, 238, 227, 0.96),
-          rgba(243, 238, 227, 0.86),
+          rgba(243, 238, 227, 0.88),
           rgba(243, 238, 227, 0)
         );
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(8px);
     }
 
     .brand {
       display: flex;
       align-items: center;
-      gap: 12px;
-      min-width: 0;
+      gap: 18px;
     }
 
     .brand-logo {
-      width: 86px;
-      height: 86px;
+      width: 96px;
+      height: 96px;
       object-fit: contain;
       flex-shrink: 0;
       filter: drop-shadow(0 10px 20px rgba(92, 27, 36, 0.08));
     }
 
     .brand-copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 2px;
       min-width: 0;
     }
 
     .brand-title {
-      margin: 0 0 4px;
-      font-size: 26px;
+      margin: 0;
+      font-size: 28px;
       line-height: 1;
-      letter-spacing: 0.01em;
+      letter-spacing: -0.02em;
       font-weight: 700;
+    }
+
+    .brand-mini-line {
+      width: 34px;
+      height: 2px;
+      border-radius: 999px;
+      background: rgba(122, 22, 38, 0.18);
+      margin: 4px 0 2px;
     }
 
     .brand-subtitle {
       margin: 0;
       font-size: 13px;
-      line-height: 1.35;
+      line-height: 1;
       color: var(--text-soft);
-      max-width: 150px;
-    }
-
-    .topbar-clean {
-  padding: 10px 14px 2px;
-  justify-content: flex-start;
-}
-
-.brand-clean {
-  gap: 18px;
-  align-items: center;
-}
-
-.brand-logo-clean {
-  width: 96px;
-  height: 96px;
-  object-fit: contain;
-  flex-shrink: 0;
-}
-
-.brand-copy-clean {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 2px;
-  min-width: 0;
-}
-
-.brand-title-clean {
-  margin: 0;
-  font-size: 25px;
-  line-height: 1;
-  letter-spacing: -0.02em;
-}
-
-.brand-mini-line {
-  width: 28px;
-  height: 2px;
-  border-radius: 999px;
-  background: rgba(122, 22, 38, 0.18);
-  margin: 4px 0 2px;
-}
-
-.brand-subtitle-clean {
-  margin: 0;
-  font-size: 13px;
-  line-height: 1;
-  color: var(--text-soft);
-  max-width: none;
-}
-
-    .top-actions {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-      flex-shrink: 0;
-    }
-
-    .icon-btn {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.72);
-      color: var(--text);
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: var(--shadow-soft);
-      position: relative;
-      transition: transform 0.15s ease;
-    }
-
-    .icon-btn:active,
-    .btn:active,
-    .tab-btn:active,
-    .nav-btn:active,
-    .category-card:active,
-    .product-card:active,
-    .qty-btn:active,
-    .back-btn:active {
-      transform: scale(0.98);
-    }
-
-    .counter-dot {
-      position: absolute;
-      right: -3px;
-      top: -3px;
-      min-width: 20px;
-      height: 20px;
-      padding: 0 6px;
-      border-radius: var(--radius-pill);
-      background: var(--accent);
-      color: var(--white);
-      font-size: 11px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: var(--shadow-soft);
     }
 
     .page {
       display: none;
-      padding: 12px 14px 0;
+      padding: 10px 14px 0;
       animation: fadeIn 0.18s ease;
     }
 
@@ -253,15 +157,15 @@
     }
 
     .hero {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-xxl);
-  padding: 22px 22px 20px;
-  box-shadow: var(--shadow-md);
-  position: relative;
-  overflow: hidden;
-  margin-bottom: 18px;
-}
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xxl);
+      padding: 22px 22px 20px;
+      box-shadow: var(--shadow-md);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 18px;
+    }
 
     .hero::before {
       content: "";
@@ -285,38 +189,14 @@
       background: rgba(141, 36, 53, 0.08);
     }
 
-    .hero-badge {
-      position: relative;
-      z-index: 1;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 12px;
-      border-radius: var(--radius-pill);
-      background: rgba(122, 22, 38, 0.06);
-      color: var(--accent);
-      font-size: 12px;
-      margin-bottom: 14px;
-    }
-
     .hero-title {
-  position: relative;
-  z-index: 1;
-  margin: 0 0 18px;
-  font-size: 42px;
-  line-height: 0.95;
-  letter-spacing: -0.03em;
-  max-width: 320px;
-}
-
-    .hero-text {
       position: relative;
       z-index: 1;
-      margin: 0;
-      max-width: 312px;
-      color: var(--text-soft);
-      font-size: 15px;
-      line-height: 1.55;
+      margin: 0 0 18px;
+      font-size: 42px;
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      max-width: 320px;
     }
 
     .hero-actions {
@@ -325,16 +205,15 @@
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      margin-top: 18px;
+      margin-top: 6px;
     }
 
-    .status {
-      position: relative;
-      z-index: 1;
-      margin-top: 14px;
+    .status,
+    .page-status {
       min-height: 18px;
       color: var(--accent);
       font-size: 14px;
+      margin-top: 14px;
     }
 
     .section {
@@ -370,6 +249,16 @@
       font-weight: 700;
       white-space: nowrap;
       transition: transform 0.15s ease, opacity 0.15s ease;
+    }
+
+    .btn:active,
+    .tab-btn:active,
+    .nav-btn:active,
+    .category-card:active,
+    .product-card:active,
+    .qty-btn:active,
+    .back-btn:active {
+      transform: scale(0.98);
     }
 
     .btn-primary {
@@ -907,13 +796,6 @@
       margin: 0 0 14px;
     }
 
-    .page-status {
-      margin-top: 14px;
-      min-height: 18px;
-      font-size: 14px;
-      color: var(--accent);
-    }
-
     .order-card-head {
       display: flex;
       justify-content: space-between;
@@ -1009,43 +891,38 @@
 
     @media (max-width: 390px) {
       .brand-logo {
-        width: 78px;
-        height: 78px;
+        width: 88px;
+        height: 88px;
       }
 
       .brand-title {
-        font-size: 24px;
+        font-size: 26px;
       }
 
       .hero-title {
-        font-size: 33px;
-      }
-
-      .nav {
-        gap: 6px;
+        font-size: 36px;
       }
     }
   </style>
 </head>
 <body>
   <div class="app-shell">
-   <header class="topbar topbar-clean">
-  <div class="brand brand-clean">
-    <img src="/Logo.png" alt="ДляНеё" class="brand-logo brand-logo-clean" />
-    <div class="brand-copy brand-copy-clean">
-      <h1 class="brand-title brand-title-clean">ДляНеё</h1>
-      <div class="brand-mini-line"></div>
-      <p class="brand-subtitle brand-subtitle-clean">букеты</p>
-    </div>
-  </div>
-</header>
-
-      <div class="top-actions"></div>
+    <header class="topbar">
+      <div class="brand">
+        <img src="/Logo.png" alt="ДляНеё" class="brand-logo" />
+        <div class="brand-copy">
+          <h1 class="brand-title">ДляНеё</h1>
+          <div class="brand-mini-line"></div>
+          <p class="brand-subtitle">букеты</p>
+        </div>
+      </div>
     </header>
 
+    <!-- HOME -->
     <section id="page-home" class="page active">
       <div class="hero">
         <h2 class="hero-title">Букеты для особенных моментов</h2>
+
         <div class="hero-actions">
           <button type="button" id="goCatalogBtn" class="btn btn-primary">Каталог</button>
           <button type="button" id="goCategoriesBtn" class="btn btn-secondary">Категории</button>
@@ -1069,7 +946,7 @@
         <div class="section-head">
           <div>
             <h3 class="section-title">Бестселлеры</h3>
-            <p class="section-subtitle">то, что выбирают чаще всего</p>
+            <p class="section-subtitle">самые любимые букеты</p>
           </div>
         </div>
 
@@ -1080,32 +957,32 @@
         <div class="section-head">
           <div>
             <h3 class="section-title">О бренде</h3>
-            <p class="section-subtitle">без визуального шума</p>
+            <p class="section-subtitle">спокойная эстетика</p>
           </div>
         </div>
 
         <div class="story-grid">
           <article class="story-card">
-            <h3>Спокойная форма</h3>
+            <h3>Минимализм и характер</h3>
             <p>
               ДляНеё — это композиции, в которых важны тон, воздух, пластика и ощущение.
-              Здесь нет перегруза, только собранная подача.
+              Без лишнего визуального шума, только собранная подача.
             </p>
 
             <div class="story-list">
               <div class="story-item">
                 <strong>Фирменная палитра</strong>
-                <span>Винные, пудровые и тёплые молочные оттенки без лишнего шума.</span>
+                <span>Винные, пудровые и тёплые молочные оттенки.</span>
               </div>
 
               <div class="story-item">
                 <strong>Собранный ритм</strong>
-                <span>Каждый букет смотрится так, будто уже находится на своём месте.</span>
+                <span>Каждый букет смотрится цельно и спокойно.</span>
               </div>
 
               <div class="story-item">
                 <strong>Тихая роскошь</strong>
-                <span>Упаковка, открытка и композиция работают как единое целое.</span>
+                <span>Упаковка и композиция работают как единое целое.</span>
               </div>
             </div>
           </article>
@@ -1113,12 +990,13 @@
       </div>
     </section>
 
+    <!-- CATALOG -->
     <section id="page-catalog" class="page">
       <div class="section">
         <div class="section-head">
           <div>
             <h3 class="section-title">Каталог</h3>
-            <p class="section-subtitle">выбери настроение, повод или любимую форму</p>
+            <p class="section-subtitle">выбери настроение, форму и повод</p>
           </div>
         </div>
 
@@ -1128,7 +1006,7 @@
             id="catalogSearchInput"
             class="search-input"
             type="text"
-            placeholder="Найти букет по названию, настроению или тегу"
+            placeholder="Найти букет по названию, тегу или категории"
           />
         </div>
 
@@ -1138,12 +1016,13 @@
       </div>
     </section>
 
+    <!-- CATEGORIES -->
     <section id="page-categories" class="page">
       <div class="section">
         <div class="section-head">
           <div>
-            <h3 class="section-title">Категории</h3>
-            <p class="section-subtitle">отдельные разделы как в настоящем магазине</p>
+            <h3 class="section-title">Разделы</h3>
+            <p class="section-subtitle">отдельные категории как в магазине</p>
           </div>
         </div>
 
@@ -1151,6 +1030,7 @@
       </div>
     </section>
 
+    <!-- CATEGORY DETAIL -->
     <section id="page-category-detail" class="page">
       <div class="back-row">
         <button type="button" id="categoryBackBtn" class="back-btn">←</button>
@@ -1165,6 +1045,7 @@
       <div id="categoryDetailProducts" class="product-grid"></div>
     </section>
 
+    <!-- PRODUCT DETAIL -->
     <section id="page-product-detail" class="page">
       <div class="back-row">
         <button type="button" id="productBackBtn" class="back-btn">←</button>
@@ -1188,6 +1069,7 @@
       </div>
     </section>
 
+    <!-- CART -->
     <section id="page-cart" class="page">
       <div class="section">
         <div class="section-head">
@@ -1199,7 +1081,7 @@
 
         <div class="cart-card">
           <h3>Товары</h3>
-          <p>Проверь состав заказа перед оформлением.</p>
+          <p>Проверь заказ перед оформлением.</p>
 
           <div id="cartItemsWrap"></div>
 
@@ -1221,7 +1103,7 @@
 
         <div class="checkout-card">
           <h3>Оформление</h3>
-          <p>Заполни данные, и заказ отправится в базу.</p>
+          <p>Заполни данные и создай заказ.</p>
 
           <div class="field">
             <label class="field-label" for="checkoutName">Имя</label>
@@ -1253,12 +1135,13 @@
       </div>
     </section>
 
+    <!-- PROFILE -->
     <section id="page-profile" class="page">
       <div class="section">
         <div class="section-head">
           <div>
             <h3 class="section-title">Профиль</h3>
-            <p class="section-subtitle">вход, выход и история текущей сессии</p>
+            <p class="section-subtitle">вход, выход и заказы</p>
           </div>
         </div>
 
@@ -1279,7 +1162,7 @@
 
           <div class="profile-card">
             <h3>Последние заказы</h3>
-            <p>Локальная история только для удобства внутри приложения.</p>
+            <p>Локальная история внутри приложения.</p>
 
             <div id="recentOrdersWrap" class="order-list" style="margin-top:14px;"></div>
           </div>
@@ -1371,21 +1254,21 @@
           id: 'f1',
           label: 'для свидания',
           title: 'Винные акценты',
-          text: 'Глубокие оттенки, спокойная форма и ощущение дорогой простоты.',
+          text: 'Глубокие оттенки и спокойная форма.',
           categoryName: 'Винные'
         },
         {
           id: 'f2',
           label: 'для утра',
           title: 'Светлые формы',
-          text: 'Лёгкие композиции с воздухом и мягкой пудровой гаммой.',
+          text: 'Лёгкие композиции с воздухом и мягкой подачей.',
           categoryName: 'Нежные'
         },
         {
           id: 'f3',
           label: 'без повода',
           title: 'Тихие жесты',
-          text: 'Компактные и тактичные букеты, когда хочется просто порадовать.',
+          text: 'Компактные и тактичные букеты для повседневных поводов.',
           categoryName: 'Повседневные'
         }
       ],
@@ -1393,8 +1276,8 @@
         {
           id: 1,
           title: 'Винный акцент',
-          description: 'Собранная композиция с глубоким тоном, мягкой упаковкой и взрослым спокойным характером.',
-          longText: 'Букет для тех случаев, когда нужен выразительный, но не шумный жест. В нём важны глубина оттенка, спокойный ритм и взрослая подача.',
+          description: 'Собранная композиция с глубоким тоном.',
+          longText: 'Букет для тех случаев, когда нужен выразительный, но не шумный жест.',
           price: 4900,
           size: 'Средний',
           availability: 'Сегодня',
@@ -1405,8 +1288,8 @@
         {
           id: 2,
           title: 'Нежная форма',
-          description: 'Светлый букет с воздухом, деликатной пластикой и чистым утренним ощущением.',
-          longText: 'Лёгкая композиция с мягким ритмом и тактильной подачей. Хорошо подходит для тёплых спокойных жестов и светлых поводов.',
+          description: 'Светлый букет с деликатной пластикой.',
+          longText: 'Лёгкая композиция с мягким ритмом и тактильной подачей.',
           price: 3800,
           size: 'Компактный',
           availability: 'Сегодня',
@@ -1417,8 +1300,8 @@
         {
           id: 3,
           title: 'Тихое признание',
-          description: 'Минималистичная композиция для личного жеста, без визуального шума и лишнего декора.',
-          longText: 'Сдержанный букет для моментов, где важнее тонкость, чем громкость. Хорошо работает как жест внимания и как очень личный подарок.',
+          description: 'Минималистичная композиция для личного жеста.',
+          longText: 'Сдержанный букет для моментов, где важнее тонкость, чем громкость.',
           price: 4200,
           size: 'Средний',
           availability: 'Завтра',
@@ -1429,8 +1312,8 @@
         {
           id: 4,
           title: 'Пудровый свет',
-          description: 'Мягкая светлая гамма, спокойный ритм и красивая тактильная подача в фирменной эстетике.',
-          longText: 'Светлая композиция с ощущением воздуха и мягкости. Идеальна для нежных случаев, утренних встреч и деликатных поздравлений.',
+          description: 'Мягкая светлая гамма и красивая подача.',
+          longText: 'Светлая композиция с ощущением воздуха и мягкости.',
           price: 4600,
           size: 'Большой',
           availability: 'Сегодня',
@@ -1441,8 +1324,8 @@
         {
           id: 5,
           title: 'Глубина вечера',
-          description: 'Букет с более плотной формой и глубоким оттенком для сильного, но очень тихого впечатления.',
-          longText: 'Композиция с насыщенной подачей и чувством внутренней плотности. Подходит для вечерних встреч и акцентных подарков.',
+          description: 'Букет с плотной формой и глубоким оттенком.',
+          longText: 'Композиция с насыщенной подачей для вечерних случаев.',
           price: 5700,
           size: 'Большой',
           availability: 'Завтра',
@@ -1453,8 +1336,8 @@
         {
           id: 6,
           title: 'Лёгкий жест',
-          description: 'Компактная композиция для благодарности, внимания и небольшого красивого повода.',
-          longText: 'Небольшой, но собранный букет для повседневных жестов. Хорош, когда хочется сделать красиво, но без лишней торжественности.',
+          description: 'Компактная композиция для благодарности.',
+          longText: 'Небольшой, но собранный букет для повседневных жестов.',
           price: 3100,
           size: 'Компактный',
           availability: 'Сегодня',
@@ -1465,8 +1348,8 @@
         {
           id: 7,
           title: 'Тёплое утро',
-          description: 'Пудрово-молочная палитра и ощущение света, воздуха и нежного начала дня.',
-          longText: 'Мягкий светлый букет с ощущением тепла и чистого пространства. Подходит для нежных моментов, утренних поздравлений и спокойных встреч.',
+          description: 'Пудрово-молочная палитра и мягкость.',
+          longText: 'Светлый букет с ощущением тепла и чистого пространства.',
           price: 4300,
           size: 'Средний',
           availability: 'Сегодня',
@@ -1477,8 +1360,8 @@
         {
           id: 8,
           title: 'Редкий акцент',
-          description: 'Более статусный букет для важной встречи, съёмки или эффектного подарка.',
-          longText: 'Выразительная композиция для крупных поводов. Сильнее по форме и масштабу, но всё равно остаётся в рамках спокойной эстетики бренда.',
+          description: 'Статусный букет для важной встречи.',
+          longText: 'Выразительная композиция для крупных поводов.',
           price: 6500,
           size: 'Большой',
           availability: 'Под заказ',
@@ -1489,8 +1372,8 @@
         {
           id: 9,
           title: 'Для встречи',
-          description: 'Сдержанная композиция для красивого, но не слишком формального повода.',
-          longText: 'Букет для визита, встречи или небольшого события, где важна аккуратная и собранная подача без перегруза.',
+          description: 'Сдержанная композиция для аккуратного повода.',
+          longText: 'Букет для встречи, визита или небольшого события.',
           price: 4500,
           size: 'Средний',
           availability: 'Сегодня',
@@ -1501,38 +1384,14 @@
         {
           id: 10,
           title: 'Красивое спасибо',
-          description: 'Букет для благодарности, который смотрится собранно и очень бережно.',
-          longText: 'Аккуратная композиция для благодарности преподавателю, коллеге, подруге или близкому человеку. Универсальный и очень спокойный выбор.',
+          description: 'Букет для благодарности и внимания.',
+          longText: 'Аккуратная композиция для спокойного красивого жеста.',
           price: 3900,
           size: 'Компактный',
           availability: 'Сегодня',
           category: 'Повседневные',
           tag: 'Спасибо',
           icon: '❀'
-        },
-        {
-          id: 11,
-          title: 'Вечер для двоих',
-          description: 'Букет с мягким романтическим настроением и взрослой сдержанностью.',
-          longText: 'Подходит для свиданий, важных разговоров и очень личных жестов. В композиции есть глубина, но она подана мягко и тихо.',
-          price: 5200,
-          size: 'Средний',
-          availability: 'Завтра',
-          category: 'Романтика',
-          tag: 'Романтика',
-          icon: '✾'
-        },
-        {
-          id: 12,
-          title: 'Событие',
-          description: 'Более заметная композиция для поздравлений и яркого впечатления.',
-          longText: 'Товар для торжественных случаев, где хочется большего масштаба и более сильного присутствия, но без визуальной перегрузки.',
-          price: 7100,
-          size: 'Большой',
-          availability: 'Под заказ',
-          category: 'Праздник',
-          tag: 'Событие',
-          icon: '❁'
         }
       ]
     };
@@ -1568,10 +1427,6 @@
     const productDetailMetaEl = document.getElementById('productDetailMeta');
     const productDetailAddBtnEl = document.getElementById('productDetailAddBtn');
     const productDetailCatalogBtnEl = document.getElementById('productDetailCatalogBtn');
-    const headerProfileBtnEl = null;
-const headerCartBtnEl = null;
-const headerCartCountEl = null;
-    const navCartCountEl = document.getElementById('navCartCount');
     const goCatalogBtnEl = document.getElementById('goCatalogBtn');
     const goCategoriesBtnEl = document.getElementById('goCategoriesBtn');
     const cartItemsWrapEl = document.getElementById('cartItemsWrap');
@@ -1591,6 +1446,7 @@ const headerCartCountEl = null;
     const profileLogoutBtnEl = document.getElementById('profileLogoutBtn');
     const profileStatusEl = document.getElementById('profileStatus');
     const recentOrdersWrapEl = document.getElementById('recentOrdersWrap');
+    const navCartCountEl = document.getElementById('navCartCount');
 
     function setHomeStatus(text) {
       homeStatusEl.textContent = text || '';
@@ -1651,6 +1507,7 @@ const headerCartCountEl = null;
     function restoreState() {
       const user = readUser();
       const cart = readCart();
+
       if (user) state.user = user;
       if (Array.isArray(cart)) state.cart = cart;
     }
@@ -1698,6 +1555,7 @@ const headerCartCountEl = null;
       }
 
       const q = state.currentCatalogSearch.trim().toLowerCase();
+
       if (q) {
         list = list.filter(item =>
           item.title.toLowerCase().includes(q) ||
@@ -1708,6 +1566,26 @@ const headerCartCountEl = null;
       }
 
       return list;
+    }
+
+    function getCartTotals() {
+      const items = state.cart.reduce((sum, item) => sum + item.qty, 0);
+      const subtotal = state.cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+      const delivery = items > 0 ? 500 : 0;
+      const total = subtotal + delivery;
+
+      return { items, subtotal, delivery, total };
+    }
+
+    function renderCounters() {
+      const { items } = getCartTotals();
+
+      if (items > 0) {
+        navCartCountEl.textContent = items;
+        navCartCountEl.classList.remove('hidden');
+      } else {
+        navCartCountEl.classList.add('hidden');
+      }
     }
 
     function addToCart(productId) {
@@ -1759,29 +1637,6 @@ const headerCartCountEl = null;
       saveCart();
       renderCart();
       setCartStatus('Корзина очищена');
-    }
-
-    function getCartTotals() {
-      const items = state.cart.reduce((sum, item) => sum + item.qty, 0);
-      const subtotal = state.cart.reduce((sum, item) => sum + item.price * item.qty, 0);
-      const delivery = items > 0 ? 500 : 0;
-      const total = subtotal + delivery;
-
-      return { items, subtotal, delivery, total };
-    }
-
-    function renderCounters() {
-      const { items } = getCartTotals();
-
-      if (items > 0) {
-        headerCartCountEl.textContent = items;
-        navCartCountEl.textContent = items;
-        headerCartCountEl.classList.remove('hidden');
-        navCartCountEl.classList.remove('hidden');
-      } else {
-        headerCartCountEl.classList.add('hidden');
-        navCartCountEl.classList.add('hidden');
-      }
     }
 
     function createProductCard(product) {
@@ -1872,10 +1727,9 @@ const headerCartCountEl = null;
 
     function renderCatalogProducts() {
       catalogProductsEl.innerHTML = '';
-
       const visible = getVisibleCatalogProducts();
 
-      if (visible.length === 0) {
+      if (!visible.length) {
         catalogProductsEl.innerHTML = `
           <div class="empty-card">
             <h3>Ничего не найдено</h3>
@@ -1931,7 +1785,7 @@ const headerCartCountEl = null;
 
       const list = state.products.filter(p => p.category === category.name);
 
-      if (list.length === 0) {
+      if (!list.length) {
         categoryDetailProductsEl.innerHTML = `
           <div class="empty-card">
             <h3>Пока пусто</h3>
@@ -1975,7 +1829,7 @@ const headerCartCountEl = null;
         cartItemsWrapEl.innerHTML = `
           <div class="empty-card">
             <h3>Корзина пуста</h3>
-            <p>Добавь несколько букетов из каталога или категорий.</p>
+            <p>Добавь несколько букетов из каталога или разделов.</p>
           </div>
         `;
         cartSummaryBoxEl.classList.add('hidden');
@@ -2007,23 +1861,14 @@ const headerCartCountEl = null;
           </div>
         `;
 
-        row.querySelector('.js-minus').addEventListener('click', () => {
-          changeQty(item.id, -1);
-        });
-
-        row.querySelector('.js-plus').addEventListener('click', () => {
-          changeQty(item.id, 1);
-        });
-
-        row.querySelector('.js-remove').addEventListener('click', () => {
-          removeFromCart(item.id);
-        });
+        row.querySelector('.js-minus').addEventListener('click', () => changeQty(item.id, -1));
+        row.querySelector('.js-plus').addEventListener('click', () => changeQty(item.id, 1));
+        row.querySelector('.js-remove').addEventListener('click', () => removeFromCart(item.id));
 
         cartItemsWrapEl.appendChild(row);
       });
 
       const totals = getCartTotals();
-
       cartItemsCountEl.textContent = totals.items;
       cartDeliveryPriceEl.textContent = formatPrice(totals.delivery);
       cartTotalPriceEl.textContent = formatPrice(totals.total);
@@ -2273,7 +2118,7 @@ const headerCartCountEl = null;
         renderRecentOrders();
 
         checkoutNameEl.value = '';
-        checkoutPhoneEl.value = '';
+        checkoutPhoneEl.value =         checkoutPhoneEl.value = '';
         checkoutAddressEl.value = '';
         checkoutCommentEl.value = '';
 
@@ -2292,15 +2137,13 @@ const headerCartCountEl = null;
         });
       });
 
-      if (headerProfileBtnEl) {
-  headerProfileBtnEl.addEventListener('click', () => showPage('profile'));
-}
+      goCatalogBtnEl.addEventListener('click', () => {
+        showPage('catalog');
+      });
 
-if (headerCartBtnEl) {
-  headerCartBtnEl.addEventListener('click', () => showPage('cart'));
-}
-      goCatalogBtnEl.addEventListener('click', () => showPage('catalog'));
-      goCategoriesBtnEl.addEventListener('click', () => showPage('categories'));
+      goCategoriesBtnEl.addEventListener('click', () => {
+        showPage('categories');
+      });
 
       catalogSearchInputEl.addEventListener('input', (e) => {
         state.currentCatalogSearch = e.target.value;
