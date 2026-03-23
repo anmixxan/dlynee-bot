@@ -2292,8 +2292,13 @@ const headerCartCountEl = null;
         });
       });
 
-      headerProfileBtnEl.addEventListener('click', () => showPage('profile'));
-      headerCartBtnEl.addEventListener('click', () => showPage('cart'));
+      if (headerProfileBtnEl) {
+  headerProfileBtnEl.addEventListener('click', () => showPage('profile'));
+}
+
+if (headerCartBtnEl) {
+  headerCartBtnEl.addEventListener('click', () => showPage('cart'));
+}
       goCatalogBtnEl.addEventListener('click', () => showPage('catalog'));
       goCategoriesBtnEl.addEventListener('click', () => showPage('categories'));
 
