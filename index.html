@@ -681,20 +681,8 @@
        013. DRAWER OVERLAY
     ========================================================== */
     .overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(33, 14, 18, 0.32);
-      backdrop-filter: blur(6px);
-      z-index: 80;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.2s ease;
-    }
-
-    .overlay.active {
-      opacity: 1;
-      pointer-events: auto;
-    }
+  display: none !important;
+}
 
     /* =========================================================
        014. DRAWER
