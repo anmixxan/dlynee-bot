@@ -2154,7 +2154,20 @@
       searchInputEl.addEventListener('keydown', (e) => {
   if (e.key === 'Enter') {
     e.preventDefault();
-    searchInputEl.blur(); // закрывает клавиатуру
+
+    // Жёстко убираем фокус
+    searchInputEl.blur();
+    document.activeElement.blur();
+
+    // Костыль для Telegram (самое важное)
+    setTimeout(() => {
+      searchInputEl.setAttribute('readonly', true);
+      searchInputEl.blur();
+
+      setTimeout(() => {
+        searchInputEl.removeAttribute('readonly');
+      }, 100);
+    }, 10);
   }
 });
 
