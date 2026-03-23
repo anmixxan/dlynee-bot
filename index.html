@@ -2037,7 +2037,7 @@
     /* =========================================================
        117. LOGIN TELEGRAM
     ========================================================== */
-    async function loginTelegram() {
+   async function loginTelegram() {
   const user = tg?.initDataUnsafe?.user;
 
   if (!user) {
@@ -2061,18 +2061,15 @@
     });
 
     const text = await res.text();
-console.log('RAW RESPONSE:', text);
+    console.log('RAW RESPONSE:', text);
 
-let data = {};
-try {
-  data = JSON.parse(text);
-} catch (e) {
-  console.error('Не JSON:', text);
-}
-
+    let data = {};
+    try {
+      data = JSON.parse(text);
+    } catch (e) {}
 
     if (!res.ok) {
-      toast(data?.error || 'Ошибка входа');
+      toast(data.error || text || 'Ошибка входа');
       return;
     }
 
@@ -2080,42 +2077,12 @@ try {
     saveUser(state.user);
     renderProfile();
     toast('Вы вошли через Telegram');
-  } 
-  
-  catch (error) {
-  console.error('loginTelegram error:', error);
-  toast(error.message || 'Ошибка сети');
+  } catch (error) {
+    console.error('loginTelegram error:', error);
+    toast('Ошибка сети');
+  }
 }
 
-}
-
-
-
-
-    function logoutTelegram() {
-      state.user = null;
-      clearUser();
-      renderProfile();
-      toast('Вы вышли');
-    }
-
-    function restoreUser() {
-      const saved = readUser();
-      const tgUser = tg?.initDataUnsafe?.user;
-
-      if (!saved) {
-        state.user = null;
-        return;
-      }
-
-      if (tgUser && saved.id === tgUser.id) {
-        state.user = saved;
-        return;
-      }
-
-      clearUser();
-      state.user = null;
-    }
 
     /* =========================================================
        118. CHECKOUT
