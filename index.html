@@ -2,10 +2,7 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-  />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>ДляНеё | mini app</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
@@ -406,6 +403,7 @@
 
     .product-grid,
     .category-grid,
+    .story-grid,
     .order-list,
     .profile-grid {
       display: grid;
@@ -414,6 +412,7 @@
 
     .category-card,
     .product-card,
+    .story-card,
     .profile-card,
     .cart-card,
     .checkout-card,
@@ -461,7 +460,7 @@
     }
 
     .product-media {
-      height: 170px;
+      height: 158px;
       background:
         radial-gradient(circle at 30% 30%, rgba(255,255,255,0.54), transparent 22%),
         linear-gradient(135deg, rgba(122,22,38,0.16), rgba(215,173,160,0.18));
@@ -470,14 +469,11 @@
       justify-content: center;
       border-bottom: 1px solid rgba(122, 22, 38, 0.06);
       position: relative;
-      overflow: hidden;
     }
 
-    .product-img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
+    .product-icon {
+      font-size: 48px;
+      color: var(--accent);
     }
 
     .product-badge {
@@ -486,12 +482,11 @@
       top: 14px;
       padding: 7px 10px;
       border-radius: var(--radius-pill);
-      background: rgba(255,255,255,0.85);
+      background: rgba(255,255,255,0.78);
       color: var(--accent);
       font-size: 12px;
       font-weight: 700;
       border: 1px solid rgba(122, 22, 38, 0.08);
-      z-index: 2;
     }
 
     .product-body {
@@ -531,6 +526,7 @@
       flex-wrap: wrap;
     }
 
+    .story-card,
     .profile-card,
     .checkout-card,
     .cart-card,
@@ -539,6 +535,7 @@
       padding: 18px;
     }
 
+    .story-card h3,
     .profile-card h3,
     .checkout-card h3,
     .cart-card h3,
@@ -549,6 +546,7 @@
       font-size: 22px;
     }
 
+    .story-card p,
     .profile-card p,
     .checkout-card p,
     .cart-card p,
@@ -558,6 +556,31 @@
       color: var(--text-soft);
       font-size: 14px;
       line-height: 1.5;
+    }
+
+    .story-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .story-item {
+      background: rgba(255,255,255,0.60);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 14px;
+    }
+
+    .story-item strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 15px;
+    }
+
+    .story-item span {
+      color: var(--text-soft);
+      font-size: 13px;
+      line-height: 1.45;
     }
 
     .field {
@@ -743,14 +766,10 @@
 
     .product-detail {
       overflow: hidden;
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: var(--radius-xl);
-      box-shadow: var(--shadow-soft);
     }
 
     .product-detail-media {
-      height: 260px;
+      height: 220px;
       background:
         radial-gradient(circle at 30% 30%, rgba(255,255,255,0.54), transparent 22%),
         linear-gradient(135deg, rgba(122,22,38,0.16), rgba(215,173,160,0.18));
@@ -760,14 +779,6 @@
       color: var(--accent);
       font-size: 60px;
       position: relative;
-      overflow: hidden;
-    }
-
-    .detail-img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
     }
 
     .product-detail-body {
@@ -940,6 +951,40 @@
         </div>
         <div id="homeProducts" class="product-grid"></div>
       </div>
+
+      <div class="section">
+        <div class="section-head">
+          <div>
+            <h3 class="section-title">О бренде</h3>
+            <p class="section-subtitle">спокойная эстетика</p>
+          </div>
+        </div>
+
+        <div class="story-grid">
+          <article class="story-card">
+            <h3>Минимализм и характер</h3>
+            <p>
+              ДляНеё — это композиции, в которых важны тон, воздух, пластика и ощущение.
+              Без лишнего визуального шума, только собранная подача.
+            </p>
+
+            <div class="story-list">
+              <div class="story-item">
+                <strong>Фирменная палитра</strong>
+                <span>Винные, пудровые и тёплые молочные оттенки.</span>
+              </div>
+              <div class="story-item">
+                <strong>Собранный ритм</strong>
+                <span>Каждый букет смотрится спокойно и цельно.</span>
+              </div>
+              <div class="story-item">
+                <strong>Тихая роскошь</strong>
+                <span>Упаковка и композиция работают как единое целое.</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
     </section>
 
     <section id="page-catalog" class="page">
@@ -1005,7 +1050,7 @@
       </div>
 
       <div class="product-detail">
-        <div id="productDetailMedia" class="product-detail-media"></div>
+        <div id="productDetailMedia" class="product-detail-media">✿</div>
         <div class="product-detail-body">
           <h3 id="productDetailTitle">Название</h3>
           <div id="productDetailPrice" class="product-detail-price">0 ₽</div>
@@ -1156,8 +1201,6 @@
       console.log('telegram init skipped');
     }
 
-    const DEFAULT_IMAGE = '/images/photo_2026-03-19_02-27-04.jpg';
-
     const state = {
       user: null,
       cart: [],
@@ -1232,7 +1275,7 @@
           availability: 'Сегодня',
           category: 'Винные',
           tag: 'Хит',
-          image: '/images/1.jpg'
+          icon: '✿'
         },
         {
           id: 2,
@@ -1244,7 +1287,7 @@
           availability: 'Сегодня',
           category: 'Нежные',
           tag: 'Утро',
-          image: DEFAULT_IMAGE
+          icon: '❀'
         },
         {
           id: 3,
@@ -1256,7 +1299,7 @@
           availability: 'Завтра',
           category: 'Романтика',
           tag: 'Для двоих',
-          image: DEFAULT_IMAGE
+          icon: '✾'
         },
         {
           id: 4,
@@ -1268,7 +1311,7 @@
           availability: 'Сегодня',
           category: 'Нежные',
           tag: 'Светлое',
-          image: DEFAULT_IMAGE
+          icon: '❁'
         },
         {
           id: 5,
@@ -1280,7 +1323,7 @@
           availability: 'Завтра',
           category: 'Винные',
           tag: 'Вечер',
-          image: DEFAULT_IMAGE
+          icon: '✿'
         },
         {
           id: 6,
@@ -1292,7 +1335,7 @@
           availability: 'Сегодня',
           category: 'Повседневные',
           tag: 'Лаконично',
-          image: DEFAULT_IMAGE
+          icon: '❀'
         },
         {
           id: 7,
@@ -1304,7 +1347,7 @@
           availability: 'Сегодня',
           category: 'Нежные',
           tag: 'Мягкость',
-          image: DEFAULT_IMAGE
+          icon: '❁'
         },
         {
           id: 8,
@@ -1316,7 +1359,7 @@
           availability: 'Под заказ',
           category: 'Праздник',
           tag: 'Премиум',
-          image: DEFAULT_IMAGE
+          icon: '✾'
         },
         {
           id: 9,
@@ -1328,7 +1371,7 @@
           availability: 'Сегодня',
           category: 'Повседневные',
           tag: 'Встреча',
-          image: DEFAULT_IMAGE
+          icon: '✿'
         },
         {
           id: 10,
@@ -1340,7 +1383,7 @@
           availability: 'Сегодня',
           category: 'Повседневные',
           tag: 'Спасибо',
-          image: DEFAULT_IMAGE
+          icon: '❀'
         }
       ]
     };
@@ -1585,10 +1628,6 @@
       setCartStatus('Корзина очищена');
     }
 
-    function getSafeImage(product) {
-      return product?.image || DEFAULT_IMAGE;
-    }
-
     function createProductCard(product) {
       const card = document.createElement('article');
       card.className = 'product-card';
@@ -1596,7 +1635,7 @@
       card.innerHTML = `
         <div class="product-media">
           <div class="product-badge">${product.tag}</div>
-          <img src="${getSafeImage(product)}" class="product-img" alt="${product.title}">
+          <div class="product-icon">${product.icon}</div>
         </div>
         <div class="product-body">
           <h3 class="product-title">${product.title}</h3>
@@ -1609,11 +1648,6 @@
           </div>
         </div>
       `;
-
-      const img = card.querySelector('.product-img');
-      img.addEventListener('error', () => {
-        img.src = DEFAULT_IMAGE;
-      });
 
       card.querySelector('.js-add').addEventListener('click', (e) => {
         e.stopPropagation();
@@ -1761,15 +1795,7 @@
 
       state.currentProduct = product;
 
-      productDetailMediaEl.innerHTML = `
-        <img src="${getSafeImage(product)}" class="detail-img" alt="${product.title}">
-      `;
-
-      const detailImg = productDetailMediaEl.querySelector('.detail-img');
-      detailImg.addEventListener('error', () => {
-        detailImg.src = DEFAULT_IMAGE;
-      });
-
+      productDetailMediaEl.textContent = product.icon;
       productDetailTitleEl.textContent = product.title;
       productDetailPriceEl.textContent = formatPrice(product.price);
       productDetailTextEl.textContent = product.longText;
@@ -1813,7 +1839,6 @@
           </div>
 
           <div class="cart-item-actions">
-            <div class=" cart-item-actions">
             <div class="qty-box">
               <button type="button" class="qty-btn js-minus">−</button>
               <div class="qty-value">${item.qty}</div>
@@ -1888,32 +1913,29 @@
         return;
       }
 
-      orders
-        .slice()
-        .reverse()
-        .forEach(order => {
-          const card = document.createElement('article');
-          card.className = 'order-card';
+      orders.slice().reverse().forEach(order => {
+        const card = document.createElement('article');
+        card.className = 'order-card';
 
-          const itemsCount = Array.isArray(order.items)
-            ? order.items.reduce((sum, item) => sum + (item.qty || 1), 0)
-            : 0;
+        const itemsCount = Array.isArray(order.items)
+          ? order.items.reduce((sum, item) => sum + (item.qty || 1), 0)
+          : 0;
 
-          card.innerHTML = `
-            <div class="order-card-head">
-              <div>
-                <h3>Заказ #${order.id}</h3>
-                <p>${new Date(order.createdAt).toLocaleString('ru-RU')}</p>
-              </div>
-              <div class="order-status">${order.status || 'new'}</div>
+        card.innerHTML = `
+          <div class="order-card-head">
+            <div>
+              <h3>Заказ #${order.id}</h3>
+              <p>${new Date(order.createdAt).toLocaleString('ru-RU')}</p>
             </div>
+            <div class="order-status">${order.status || 'new'}</div>
+          </div>
 
-            <p>Товаров: ${itemsCount}</p>
-            <p style="margin-top:6px;">Сумма: ${formatPrice(order.total || 0)}</p>
-          `;
+          <p>Товаров: ${itemsCount}</p>
+          <p style="margin-top:6px;">Сумма: ${formatPrice(order.total || 0)}</p>
+        `;
 
-          recentOrdersWrapEl.appendChild(card);
-        });
+        recentOrdersWrapEl.appendChild(card);
+      });
     }
 
     async function loginTelegram() {
