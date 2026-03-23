@@ -2051,22 +2051,31 @@
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(user)
+      body: JSON.stringify({
+        id: user.id,
+        first_name: user.first_name || '',
+        last_name: user.last_name || '',
+        username: user.username || '',
+        photo_url: user.photo_url || ''
+      })
     });
 
+    const data = await res.json();
+
     if (!res.ok) {
-      toast('Ошибка входа');
+      toast(data?.error || 'Ошибка входа');
       return;
     }
 
-    state.user = user;
-    saveUser(user);
+    state.user = data.user || user;
+    saveUser(state.user);
     renderProfile();
-    toast('Вы вошли');
+    toast('Вы вошли через Telegram');
   } catch (error) {
     toast('Ошибка сети');
   }
 }
+
 
 
     function logoutTelegram() {
