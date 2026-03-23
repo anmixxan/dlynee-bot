@@ -2,802 +2,134 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>ДляНеё | букеты</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ДляНеё</title>
+
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
   <style>
-    :root {
-      --bg: #f3eee3;
-      --bg-2: #efe7da;
-      --card: rgba(255, 251, 245, 0.68);
-      --text: #5c1b24;
-      --text-soft: #8c6268;
-      --accent: #7a1626;
-      --accent-soft: #d7ada0;
-      --line: rgba(122, 22, 38, 0.14);
-      --shadow: 0 14px 34px rgba(92, 27, 36, 0.08);
-      --radius-xl: 30px;
-      --radius-lg: 24px;
-      --container: 480px;
-    }
-
-    * {
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-    }
-
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      color: var(--text);
-      background:
-        radial-gradient(circle at top, rgba(255,255,255,0.32), transparent 26%),
-        linear-gradient(180deg, var(--bg), var(--bg-2));
-      min-height: 100vh;
-    }
-
-    button,
-    input {
-      font-family: inherit;
+      font-family: Arial;
+      background: #f3eee3;
+      color: #5c1b24;
     }
 
     .app {
-      max-width: var(--container);
-      margin: 0 auto;
-      padding: 8px 14px 32px;
-    }
-
-    .page {
-      display: none;
-      animation: fadeIn 0.22s ease;
-    }
-
-    .page.active {
-      display: block;
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(8px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .hero-shell {
-      margin-bottom: 18px;
-    }
-
-    .logo-wrap {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin: 6px 0 10px;
+      max-width: 420px;
+      margin: auto;
+      padding: 16px;
     }
 
     .logo {
       width: 140px;
-      height: 140px;
-      object-fit: contain;
       display: block;
+      margin: 10px auto;
     }
 
-    .brand-block {
+    h1 {
       text-align: center;
-      margin-bottom: 14px;
-    }
-
-    .brand-title {
-      margin: 0 0 10px;
-      font-size: 30px;
-      line-height: 1;
-      letter-spacing: 0.01em;
-    }
-
-    .brand-subtitle {
-      margin: 0 auto;
-      max-width: 290px;
-      font-size: 15px;
-      line-height: 1.5;
-      color: var(--text-soft);
-    }
-
-    .auth-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-top: 18px;
+      margin: 10px 0;
     }
 
     .btn {
-      border: none;
-      border-radius: 999px;
-      cursor: pointer;
-      transition: transform 0.14s ease, opacity 0.14s ease, background 0.14s ease;
-      white-space: nowrap;
-    }
-
-    .btn:active {
-      transform: scale(0.98);
-    }
-
-    .btn-primary {
-      background: var(--accent);
-      color: #fffaf5;
-      padding: 14px 18px;
-      font-size: 15px;
-      font-weight: 700;
-      box-shadow: var(--shadow);
-    }
-
-    .btn-secondary {
-      background: rgba(255,255,255,0.62);
-      border: 1px solid var(--line);
-      color: var(--text);
-      padding: 14px 18px;
-      font-size: 15px;
-      font-weight: 700;
-    }
-
-    .btn-ghost {
-      background: transparent;
-      border: 1px solid var(--line);
-      color: var(--text);
-      padding: 12px 16px;
-      font-size: 14px;
-      font-weight: 700;
-    }
-
-    .btn-small {
-      padding: 11px 14px;
-      font-size: 13px;
-      font-weight: 700;
-    }
-
-    .hero-card,
-    .section-card,
-    .choice-card,
-    .form-card {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: var(--radius-xl);
-      box-shadow: var(--shadow);
-    }
-
-    .hero-card {
-      padding: 22px;
-      position: relative;
-      overflow: hidden;
-      margin-bottom: 16px;
-    }
-
-    .hero-card::before {
-      content: "";
-      position: absolute;
-      right: -26px;
-      top: -26px;
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      background: rgba(122, 22, 38, 0.05);
-    }
-
-    .hero-card::after {
-      content: "";
-      position: absolute;
-      left: -26px;
-      bottom: -36px;
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      background: rgba(215, 173, 160, 0.12);
-    }
-
-    .hero-label {
-      position: relative;
-      z-index: 1;
-      display: inline-block;
-      padding: 8px 12px;
-      border-radius: 999px;
-      font-size: 12px;
-      color: var(--accent);
-      background: rgba(122, 22, 38, 0.06);
-      margin-bottom: 14px;
-    }
-
-    .hero-title {
-      position: relative;
-      z-index: 1;
-      margin: 0 0 12px;
-      font-size: 36px;
-      line-height: 0.98;
-      letter-spacing: -0.02em;
-    }
-
-    .hero-text {
-      position: relative;
-      z-index: 1;
-      margin: 0;
-      font-size: 15px;
-      line-height: 1.55;
-      color: var(--text-soft);
-      max-width: 290px;
-    }
-
-    .status {
-      position: relative;
-      z-index: 1;
-      margin-top: 14px;
-      font-size: 14px;
-      color: var(--accent);
-      min-height: 18px;
-    }
-
-    .profile-pill {
-      position: relative;
-      z-index: 1;
-      margin-top: 10px;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 9px 12px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.62);
-      border: 1px solid var(--line);
-      color: var(--text);
-      font-size: 13px;
-    }
-
-    .section-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: end;
-      gap: 12px;
-      margin: 0 4px 12px;
-    }
-
-    .section-title {
-      margin: 0;
-      font-size: 20px;
-      line-height: 1;
-    }
-
-    .section-subtitle {
-      margin: 4px 0 0;
-      font-size: 13px;
-      color: var(--text-soft);
-    }
-
-    .grid {
-      display: grid;
-      gap: 12px;
-    }
-
-    .grid-2 {
-      grid-template-columns: 1fr 1fr;
-    }
-
-    .section-card {
-      padding: 18px;
-      border-radius: var(--radius-lg);
-    }
-
-    .section-card h3 {
-      margin: 0 0 8px;
-      font-size: 21px;
-      line-height: 1.1;
-    }
-
-    .section-card p {
-      margin: 0;
-      font-size: 14px;
-      line-height: 1.5;
-      color: var(--text-soft);
-    }
-
-    .card-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-      margin-top: 14px;
-    }
-
-    .price {
-      font-weight: 700;
-      font-size: 15px;
-    }
-
-    .auth-header {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 14px;
-    }
-
-    .back-btn {
-      width: 42px;
-      height: 42px;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.6);
-      color: var(--text);
-      cursor: pointer;
-      font-size: 18px;
-      flex-shrink: 0;
-    }
-
-    .auth-title-wrap h2 {
-      margin: 0;
-      font-size: 24px;
-      line-height: 1;
-    }
-
-    .auth-title-wrap p {
-      margin: 6px 0 0;
-      font-size: 14px;
-      color: var(--text-soft);
-      line-height: 1.45;
-    }
-
-    .choice-card,
-    .form-card {
-      padding: 18px;
-      margin-bottom: 12px;
-    }
-
-    .choice-card h3,
-    .form-card h3 {
-      margin: 0 0 8px;
-      font-size: 22px;
-    }
-
-    .choice-card p,
-    .form-card p {
-      margin: 0;
-      font-size: 14px;
-      line-height: 1.5;
-      color: var(--text-soft);
-    }
-
-    .choice-actions {
-      display: grid;
-      gap: 10px;
-      margin-top: 16px;
-    }
-
-    .form {
-      display: grid;
-      gap: 12px;
-      margin-top: 16px;
-    }
-
-    .input {
       width: 100%;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.72);
-      color: var(--text);
-      outline: none;
-      border-radius: 18px;
-      padding: 14px 16px;
-      font-size: 15px;
+      padding: 16px;
+      border-radius: 999px;
+      border: none;
+      margin-top: 12px;
+      font-size: 16px;
+      cursor: pointer;
     }
 
-    .input::placeholder {
-      color: #aa8288;
+    .primary {
+      background: #7a1626;
+      color: white;
     }
 
-    .helper {
-      margin-top: 10px;
-      font-size: 13px;
-      color: var(--text-soft);
-      line-height: 1.45;
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 20px;
+      margin-top: 20px;
     }
 
     .hidden {
-      display: none !important;
-    }
-
-    @media (max-width: 390px) {
-      .logo {
-        width: 132px;
-        height: 132px;
-      }
-
-      .brand-title {
-        font-size: 28px;
-      }
-
-      .hero-title {
-        font-size: 33px;
-      }
-
-      .grid-2 {
-        grid-template-columns: 1fr;
-      }
+      display: none;
     }
   </style>
 </head>
+
 <body>
-  <div class="app">
+<div class="app">
 
-    <!-- ГЛАВНАЯ -->
-    <section id="homePage" class="page active">
-      <div class="hero-shell">
-        <div class="logo-wrap">
-          <img src="/Logo.png" alt="ДляНеё" class="logo" />
-        </div>
+  <!-- ГЛАВНАЯ -->
+  <div id="home">
 
-        <div class="brand-block">
-          <h1 class="brand-title">ДляНеё</h1>
-          <p class="brand-subtitle">
-            Букеты с характером, мягкой формой и тёплой эстетикой.
-          </p>
-        </div>
+    <img src="/Logo.png" class="logo">
 
-        <div class="auth-row">
-          <button id="openLoginBtn" class="btn btn-primary">Войти</button>
-          <button id="openRegisterBtn" class="btn btn-secondary">Регистрация</button>
-        </div>
-      </div>
+    <h1>ДляНеё</h1>
 
-      <div class="hero-card">
-        <div class="hero-label">цветы с настроением</div>
-        <h2 class="hero-title">Букеты<br>для особенных<br>моментов</h2>
-        <p class="hero-text">
-          Каталог, профиль, история покупок и оформление заказов прямо внутри Telegram.
-        </p>
+    <button id="loginBtn" class="btn primary">
+      Войти через Telegram
+    </button>
 
-        <div id="homeStatus" class="status"></div>
+    <div id="profile" class="card hidden">
+      <h3>Вы вошли</h3>
+      <p id="userInfo"></p>
 
-        <div id="profilePill" class="profile-pill hidden">
-          <span>👤</span>
-          <span id="profilePillText"></span>
-        </div>
-      </div>
-
-      <div class="section-head">
-        <div>
-          <h2 class="section-title">Разделы</h2>
-          <p class="section-subtitle">главные направления внутри mini app</p>
-        </div>
-      </div>
-
-      <div class="grid grid-2">
-        <div class="section-card">
-          <h3>Каталог</h3>
-          <p>Подборка букетов, фильтры по настроению и быстрый выбор.</p>
-          <div class="card-row">
-            <div class="price">от 3 800 ₽</div>
-            <button class="btn btn-primary btn-small">Открыть</button>
-          </div>
-        </div>
-
-        <div class="section-card">
-          <h3>Мои заказы</h3>
-          <p>История покупок, статусы, детали доставки и повтор заказа.</p>
-          <div class="card-row">
-            <div></div>
-            <button class="btn btn-ghost btn-small">Смотреть</button>
-          </div>
-        </div>
-
-        <div class="section-card">
-          <h3>Поводы</h3>
-          <p>Для свиданий, праздников, благодарности и красивых жестов.</p>
-          <div class="card-row">
-            <div></div>
-            <button class="btn btn-ghost btn-small">Подробнее</button>
-          </div>
-        </div>
-
-        <div class="section-card">
-          <h3>О бренде</h3>
-          <p>Спокойная палитра, авторская подача и эстетика мягкой формы.</p>
-          <div class="card-row">
-            <div></div>
-            <button class="btn btn-ghost btn-small">Читать</button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- СТРАНИЦА ВХОДА -->
-    <section id="loginPage" class="page">
-      <div class="auth-header">
-        <button class="back-btn" data-back="home">←</button>
-        <div class="auth-title-wrap">
-          <h2>Войти</h2>
-          <p>Выбери удобный способ входа в профиль.</p>
-        </div>
-      </div>
-
-      <div class="choice-card hero-card">
-        <h3>Способ входа</h3>
-        <p>
-          Через Telegram — самый быстрый вариант внутри mini app.
-          Через email — для отдельного аккаунта.
-        </p>
-
-        <div class="choice-actions">
-          <button id="loginTelegramBtn" class="btn btn-primary">Войти через Telegram</button>
-          <button id="showEmailLoginBtn" class="btn btn-secondary">Войти через email</button>
-        </div>
-
-        <div id="loginStatus" class="status"></div>
-      </div>
-
-      <div id="emailLoginBlock" class="form-card hidden">
-        <h3>Email вход</h3>
-        <p>Введи email, чтобы войти в аккаунт.</p>
-
-        <div class="form">
-          <input id="loginEmailInput" class="input" type="email" placeholder="Введите email" />
-          <button id="emailLoginBtn" class="btn btn-primary">Продолжить</button>
-        </div>
-
-        <div class="helper">
-          Сейчас это базовый сценарий. Следующим шагом можно подключить полноценную проверку email.
-        </div>
-      </div>
-    </section>
-
-    <!-- СТРАНИЦА РЕГИСТРАЦИИ -->
-    <section id="registerPage" class="page">
-      <div class="auth-header">
-        <button class="back-btn" data-back="home">←</button>
-        <div class="auth-title-wrap">
-          <h2>Регистрация</h2>
-          <p>Создай профиль через Telegram или email.</p>
-        </div>
-      </div>
-
-      <div class="choice-card hero-card">
-        <h3>Создать аккаунт</h3>
-        <p>
-          Telegram подойдёт для быстрого входа в один тап.
-          Email — если хочешь отдельный способ регистрации.
-        </p>
-
-        <div class="choice-actions">
-          <button id="registerTelegramBtn" class="btn btn-primary">Регистрация через Telegram</button>
-          <button id="showEmailRegisterBtn" class="btn btn-secondary">Регистрация через email</button>
-        </div>
-
-        <div id="registerStatus" class="status"></div>
-      </div>
-
-      <div id="emailRegisterBlock" class="form-card hidden">
-        <h3>Регистрация по email</h3>
-        <p>Заполни данные, чтобы создать новый профиль.</p>
-
-        <div class="form">
-          <input id="registerNameInput" class="input" type="text" placeholder="Ваше имя" />
-          <input id="registerEmailInput" class="input" type="email" placeholder="Ваш email" />
-          <button id="emailRegisterBtn" class="btn btn-primary">Создать аккаунт</button>
-        </div>
-
-        <div class="helper">
-          После этого профиль появится на главной странице mini app.
-        </div>
-      </div>
-    </section>
+      <button onclick="logout()" class="btn">
+        Выйти
+      </button>
+    </div>
 
   </div>
 
-  <script>
-    const tg = window.Telegram?.WebApp;
-    if (tg) {
-      tg.expand();
-      tg.ready();
+</div>
+
+<script>
+  const tg = window.Telegram.WebApp;
+  tg.expand();
+
+  const user = tg.initDataUnsafe?.user;
+
+  const profileBlock = document.getElementById("profile");
+  const userInfo = document.getElementById("userInfo");
+
+  // если уже есть пользователь
+  if (user) {
+    login(user);
+  }
+
+  document.getElementById("loginBtn").onclick = () => {
+    if (!user) {
+      alert("Открой через Telegram");
+      return;
     }
+    login(user);
+  };
 
-    const state = {
-      user: null,
-      authMethod: null
-    };
+  async function login(user) {
 
-    const pages = {
-      home: document.getElementById('homePage'),
-      login: document.getElementById('loginPage'),
-      register: document.getElementById('registerPage')
-    };
-
-    const homeStatus = document.getElementById('homeStatus');
-    const profilePill = document.getElementById('profilePill');
-    const profilePillText = document.getElementById('profilePillText');
-
-    const loginStatus = document.getElementById('loginStatus');
-    const registerStatus = document.getElementById('registerStatus');
-
-    const emailLoginBlock = document.getElementById('emailLoginBlock');
-    const emailRegisterBlock = document.getElementById('emailRegisterBlock');
-
-    function showPage(name) {
-      Object.values(pages).forEach((page) => page.classList.remove('active'));
-      pages[name].classList.add('active');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    function renderProfile() {
-      if (!state.user) {
-        profilePill.classList.add('hidden');
-        return;
-      }
-
-      const textParts = [];
-      if (state.user.name) textParts.push(state.user.name);
-      if (state.user.username) textParts.push('@' + state.user.username);
-      if (state.user.email) textParts.push(state.user.email);
-      if (state.authMethod) textParts.push('через ' + state.authMethod);
-
-      profilePillText.textContent = textParts.join(' · ');
-      profilePill.classList.remove('hidden');
-    }
-
-    async function telegramAuth(mode) {
-      const user = tg?.initDataUnsafe?.user;
-      const targetStatus = mode === 'login' ? loginStatus : registerStatus;
-
-      if (!user) {
-        targetStatus.textContent = 'Не удалось получить данные Telegram';
-        return;
-      }
-
-      targetStatus.textContent = mode === 'login'
-        ? 'Выполняем вход через Telegram...'
-        : 'Регистрируем через Telegram...';
-
-      try {
-        const res = await fetch('/api/register', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            telegram_id: user.id,
-            first_name: user.first_name || '',
-            last_name: user.last_name || '',
-            username: user.username || '',
-            auth_type: 'telegram'
-          })
-        });
-
-        if (!res.ok) {
-          targetStatus.textContent = mode === 'login'
-            ? 'Ошибка входа через Telegram'
-            : 'Ошибка регистрации через Telegram';
-          return;
-        }
-
-        state.user = {
-          name: user.first_name || 'Пользователь',
-          username: user.username || '',
-          email: ''
-        };
-        state.authMethod = 'Telegram';
-
-        homeStatus.textContent = mode === 'login'
-          ? 'Вы вошли через Telegram'
-          : 'Вы зарегистрировались через Telegram';
-
-        renderProfile();
-        showPage('home');
-      } catch (error) {
-        targetStatus.textContent = 'Ошибка сети';
-      }
-    }
-
-    async function emailRegister() {
-      const name = document.getElementById('registerNameInput').value.trim();
-      const email = document.getElementById('registerEmailInput').value.trim();
-
-      if (!name || !email) {
-        registerStatus.textContent = 'Заполни имя и email';
-        return;
-      }
-
-      registerStatus.textContent = 'Создаём профиль...';
-
-      try {
-        const res = await fetch('/api/register', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            first_name: name,
-            email: email,
-            auth_type: 'email_register'
-          })
-        });
-
-        if (!res.ok) {
-          registerStatus.textContent = 'Ошибка регистрации по email';
-          return;
-        }
-
-        state.user = {
-          name,
-          username: '',
-          email
-        };
-        state.authMethod = 'Email';
-
-        homeStatus.textContent = 'Вы зарегистрировались через email';
-        renderProfile();
-        showPage('home');
-      } catch (error) {
-        registerStatus.textContent = 'Ошибка сети';
-      }
-    }
-
-    async function emailLogin() {
-      const email = document.getElementById('loginEmailInput').value.trim();
-
-      if (!email) {
-        loginStatus.textContent = 'Введи email';
-        return;
-      }
-
-      loginStatus.textContent = 'Выполняем вход по email...';
-
-      try {
-        const res = await fetch('/api/register', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            email: email,
-            auth_type: 'email_login'
-          })
-        });
-
-        if (!res.ok) {
-          loginStatus.textContent = 'Ошибка входа по email';
-          return;
-        }
-
-        state.user = {
-          name: 'Пользователь',
-          username: '',
-          email
-        };
-        state.authMethod = 'Email';
-
-        homeStatus.textContent = 'Вы вошли через email';
-        renderProfile();
-        showPage('home');
-      } catch (error) {
-        loginStatus.textContent = 'Ошибка сети';
-      }
-    }
-
-    document.getElementById('openLoginBtn').addEventListener('click', () => showPage('login'));
-    document.getElementById('openRegisterBtn').addEventListener('click', () => showPage('register'));
-
-    document.querySelectorAll('[data-back="home"]').forEach((btn) => {
-      btn.addEventListener('click', () => showPage('home'));
+    // 🔥 отправляем на сервер
+    await fetch("/api/telegram-login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(user)
     });
 
-    document.getElementById('loginTelegramBtn').addEventListener('click', () => telegramAuth('login'));
-    document.getElementById('registerTelegramBtn').addEventListener('click', () => telegramAuth('register'));
+    userInfo.innerText =
+      user.first_name + " " + (user.username ? "@" + user.username : "");
 
-    document.getElementById('showEmailLoginBtn').addEventListener('click', () => {
-      emailLoginBlock.classList.remove('hidden');
-    });
+    profileBlock.classList.remove("hidden");
+  }
 
-    document.getElementById('showEmailRegisterBtn').addEventListener('click', () => {
-      emailRegisterBlock.classList.remove('hidden');
-    });
+  function logout() {
+    location.reload();
+  }
+</script>
 
-    document.getElementById('emailLoginBtn').addEventListener('click', emailLogin);
-    document.getElementById('emailRegisterBtn').addEventListener('click', emailRegister);
-  </script>
 </body>
 </html>
