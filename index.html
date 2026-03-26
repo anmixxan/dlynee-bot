@@ -28,7 +28,7 @@
       --radius-sm: 14px;
       --radius-pill: 999px;
       --container: 480px;
-      --nav-height: 88px;
+      --nav-height: 114px;
     }
 
     * {
@@ -70,7 +70,7 @@
       margin: 0 auto;
       min-height: 100vh;
       position: relative;
-      padding-bottom: calc(var(--nav-height) + 24px);
+      padding-bottom: calc(var(--nav-height) + env(safe-area-inset-bottom, 0px) + 30px);
     }
 
     .topbar {
@@ -823,11 +823,11 @@
       bottom: 0;
       width: 100%;
       max-width: var(--container);
-      height: var(--nav-height);
+      min-height: calc(var(--nav-height) + env(safe-area-inset-bottom, 0px));
       display: grid;
       grid-template-columns: repeat(5, 1fr);
-      gap: 8px;
-      padding: 10px 14px 18px;
+      gap: 10px;
+      padding: 12px 14px calc(20px + env(safe-area-inset-bottom, 0px));
       background:
         linear-gradient(
           180deg,
@@ -841,15 +841,16 @@
 
     .nav-btn {
       border: 1px solid var(--line);
-      background: rgba(255,255,255,0.76);
+      background: rgba(255,255,255,0.78);
       color: var(--text);
-      border-radius: 20px;
+      border-radius: 24px;
       cursor: pointer;
       display: grid;
       align-items: center;
       justify-items: center;
-      padding: 8px 6px;
-      gap: 3px;
+      min-height: 78px;
+      padding: 12px 6px 10px;
+      gap: 6px;
       box-shadow: var(--shadow-soft);
       position: relative;
     }
@@ -861,22 +862,22 @@
     }
 
     .nav-icon {
-      font-size: 16px;
+      font-size: 20px;
       line-height: 1;
     }
 
     .nav-label {
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 700;
-      line-height: 1;
+      line-height: 1.1;
     }
 
     .nav-count {
       position: absolute;
       right: 8px;
       top: 6px;
-      min-width: 18px;
-      height: 18px;
+      min-width: 20px;
+      height: 20px;
       border-radius: var(--radius-pill);
       background: var(--accent);
       color: var(--white);
@@ -884,7 +885,7 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 0 5px;
+      padding: 0 6px;
     }
 
     .nav-btn.active .nav-count {
@@ -903,6 +904,25 @@
 
       .hero-title {
         font-size: 37px;
+      }
+
+      .nav {
+        gap: 8px;
+        padding: 10px 12px calc(18px + env(safe-area-inset-bottom, 0px));
+      }
+
+      .nav-btn {
+        min-height: 74px;
+        border-radius: 22px;
+        padding: 10px 4px 9px;
+      }
+
+      .nav-icon {
+        font-size: 19px;
+      }
+
+      .nav-label {
+        font-size: 11px;
       }
     }
   </style>
