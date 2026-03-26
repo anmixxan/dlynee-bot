@@ -1,4 +1,4 @@
-import OpenAI from "openai";
+const OpenAI = require("openai");
 
 const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
@@ -12,7 +12,7 @@ const INSTRUCTIONS = `
 Пиши кратко, понятно и полезно.
 `;
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
   }
@@ -37,7 +37,9 @@ export default async function handler(req, res) {
       reply: response.output_text || "Не удалось получить ответ",
     });
   } catch (error) {
-    console.error(error);
-    return res.status(500).json({ error: "Ошибка запроса к ИИ" });
+    console.error("flower-chat error:", error);
+    return res.status(500).json({
+      error: error?.message || "Ошибка запроса к ИИ",
+    });
   }
-}
+};
