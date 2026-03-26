@@ -2486,24 +2486,52 @@
       return 'Могу помочь по теме цветов: подобрать букет, подсказать сочетания, повод, сезонность или уход. Напиши, кому букет и какой нужен эффект — нежный, романтичный, статусный или повседневный.';
     }
 
-    function sendChatMessage(prefilledText = '') {
-      const text = (prefilledText || chatInputEl.value).trim();
+   function getChatHistoryForApi() {
+  const history = readChatHistory();
 
-      if (!text) {
-        setChatStatus('Напиши вопрос про цветы');
-        return;
-      }
+  return history.slice(-12).map(item => ({
+    role: item.role === 'bot' ? 'assistant' : 'user',
+    text: item.text
+  }));
+}
 
-      addChatMessage('user', text, true);
-      chatInputEl.value = '';
-      setChatStatus('Бот думает...');
+async function sendChatMessage(prefilledText = '') {
+  const text = (prefilledText || chatInputEl.value).trim();
 
-      setTimeout(() => {
-        const reply = getFlowerBotReply(text);
-        addChatMessage('bot', reply, true);
-        setChatStatus('');
-      }, 350);
+  if (!text) {
+    setChatStatus('Напиши вопрос про цветы');
+    return;
+  }
+
+  addChatMessage('user', text, true);
+  chatInputEl.value = '';
+  setChatStatus('Бот думает...');
+
+  try {
+    const res = await fetch('/api/flower-chat', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        messages: getChatHistoryForApi()
+      })
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      setChatStatus(data.error || 'Ошибка ответа ИИ');
+      return;
     }
+
+    addChatMessage('bot', data.reply || 'Нет ответа от ИИ', true);
+    setChatStatus('');
+  } catch (error) {
+    console.error(error);
+    setChatStatus('Ошибка сети');
+  }
+}
 
     async function loginTelegram() {
       const initData = tg?.initData;
