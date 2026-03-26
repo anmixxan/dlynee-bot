@@ -259,7 +259,8 @@
     .category-card:active,
     .product-card:active,
     .qty-btn:active,
-    .back-btn:active {
+    .back-btn:active,
+    .order-preview-card:active {
       transform: scale(0.98);
     }
 
@@ -405,7 +406,8 @@
     .category-grid,
     .story-grid,
     .order-list,
-    .profile-grid {
+    .profile-grid,
+    .order-detail-list {
       display: grid;
       gap: 12px;
     }
@@ -419,7 +421,9 @@
     .empty-card,
     .page-card,
     .product-detail,
-    .order-card {
+    .order-card,
+    .order-preview-card,
+    .order-item-card {
       background: var(--surface);
       border: 1px solid var(--line);
       border-radius: var(--radius-xl);
@@ -531,7 +535,9 @@
     .checkout-card,
     .cart-card,
     .page-card,
-    .order-card {
+    .order-card,
+    .order-preview-card,
+    .order-item-card {
       padding: 18px;
     }
 
@@ -541,7 +547,9 @@
     .cart-card h3,
     .page-card h3,
     .product-detail h3,
-    .order-card h3 {
+    .order-card h3,
+    .order-preview-card h3,
+    .order-item-card h3 {
       margin: 0 0 8px;
       font-size: 22px;
     }
@@ -551,7 +559,9 @@
     .checkout-card p,
     .cart-card p,
     .page-card p,
-    .order-card p {
+    .order-card p,
+    .order-preview-card p,
+    .order-item-card p {
       margin: 0;
       color: var(--text-soft);
       font-size: 14px;
@@ -798,7 +808,9 @@
       margin: 0 0 14px;
     }
 
-    .order-card-head {
+    .order-card-head,
+    .order-preview-head,
+    .order-item-head {
       display: flex;
       justify-content: space-between;
       gap: 12px;
@@ -814,6 +826,48 @@
       color: var(--accent);
       font-size: 12px;
       font-weight: 700;
+    }
+
+    .order-preview-card {
+      cursor: pointer;
+    }
+
+    .order-preview-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid var(--line);
+      color: var(--text-soft);
+      font-size: 13px;
+    }
+
+    .order-item-card .item-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: start;
+    }
+
+    .order-item-card .item-name {
+      font-weight: 700;
+      color: var(--text);
+      font-size: 16px;
+    }
+
+    .order-item-card .item-meta {
+      color: var(--text-soft);
+      font-size: 13px;
+      margin-top: 4px;
+    }
+
+    .order-item-card .item-sum {
+      font-weight: 700;
+      white-space: nowrap;
+      color: var(--text);
+      font-size: 15px;
     }
 
     .nav {
@@ -1175,10 +1229,35 @@
 
           <div class="profile-card">
             <h3>Последние заказы</h3>
-            <p>Локальная история внутри приложения.</p>
+            <p>Нажми на заказ, чтобы открыть детали.</p>
             <div id="recentOrdersWrap" class="order-list" style="margin-top:14px;"></div>
           </div>
         </div>
+      </div>
+    </section>
+
+    <section id="page-order-detail" class="page">
+      <div class="back-row">
+        <button type="button" id="orderBackBtn" class="back-btn">←</button>
+        <div class="back-title">Заказ</div>
+      </div>
+
+      <div class="order-card">
+        <div class="order-card-head">
+          <div>
+            <h3 id="orderDetailTitle">Заказ</h3>
+            <p id="orderDetailDate">Дата</p>
+          </div>
+          <div id="orderDetailStatus" class="order-status">new</div>
+        </div>
+
+        <div id="orderDetailMeta" class="detail-meta" style="margin-top:12px;"></div>
+      </div>
+
+      <div class="order-card" style="margin-top:12px;">
+        <h3>Состав заказа</h3>
+        <p>Все товары внутри заказа.</p>
+        <div id="orderDetailItems" class="order-detail-list" style="margin-top:14px;"></div>
       </div>
     </section>
 
@@ -1228,6 +1307,7 @@
       currentCatalogSearch: '',
       currentCategory: null,
       currentProduct: null,
+      currentOrder: null,
       lastCategorySourcePage: 'categories',
       categories: [
         {
@@ -1415,7 +1495,8 @@
       'category-detail': document.getElementById('page-category-detail'),
       'product-detail': document.getElementById('page-product-detail'),
       cart: document.getElementById('page-cart'),
-      profile: document.getElementById('page-profile')
+      profile: document.getElementById('page-profile'),
+      'order-detail': document.getElementById('page-order-detail')
     };
 
     const navButtons = [...document.querySelectorAll('.nav-btn')];
@@ -1459,6 +1540,12 @@
     const profileStatusEl = document.getElementById('profileStatus');
     const recentOrdersWrapEl = document.getElementById('recentOrdersWrap');
     const navCartCountEl = document.getElementById('navCartCount');
+    const orderBackBtnEl = document.getElementById('orderBackBtn');
+    const orderDetailTitleEl = document.getElementById('orderDetailTitle');
+    const orderDetailDateEl = document.getElementById('orderDetailDate');
+    const orderDetailStatusEl = document.getElementById('orderDetailStatus');
+    const orderDetailMetaEl = document.getElementById('orderDetailMeta');
+    const orderDetailItemsEl = document.getElementById('orderDetailItems');
 
     function setHomeStatus(text) {
       homeStatusEl.textContent = text || '';
@@ -1536,7 +1623,9 @@
 
       const navPage = ['category-detail', 'product-detail'].includes(pageName)
         ? (state.lastCategorySourcePage === 'catalog' ? 'catalog' : 'categories')
-        : pageName;
+        : pageName === 'order-detail'
+          ? 'profile'
+          : pageName;
 
       setActiveNav(navPage);
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1648,7 +1737,7 @@
       setCartStatus('Корзина очищена');
     }
 
-    function createProductCard(product) {
+    function createProductCard(product, sourcePage = 'catalog') {
       const card = document.createElement('article');
       card.className = 'product-card';
 
@@ -1676,11 +1765,11 @@
 
       card.querySelector('.js-open').addEventListener('click', (e) => {
         e.stopPropagation();
-        openProduct(product.id);
+        openProduct(product.id, sourcePage);
       });
 
       card.addEventListener('click', () => {
-        openProduct(product.id);
+        openProduct(product.id, sourcePage);
       });
 
       return card;
@@ -1711,7 +1800,7 @@
     function renderHomeProducts() {
       homeProductsEl.innerHTML = '';
       getFeaturedProducts().forEach(product => {
-        homeProductsEl.appendChild(createProductCard(product));
+        homeProductsEl.appendChild(createProductCard(product, 'home'));
       });
     }
 
@@ -1749,7 +1838,7 @@
       }
 
       visible.forEach(product => {
-        catalogProductsEl.appendChild(createProductCard(product));
+        catalogProductsEl.appendChild(createProductCard(product, 'catalog'));
       });
     }
 
@@ -1784,7 +1873,7 @@
       if (!category) return;
 
       state.currentCategory = category;
-      state.lastCategorySourcePage = sourcePage;
+      state.lastCategorySourcePage = sourcePage === 'home' ? 'categories' : sourcePage;
 
       categoryDetailTitleEl.textContent = category.name;
       categoryDetailHeadingEl.textContent = category.name;
@@ -1802,18 +1891,19 @@
         `;
       } else {
         list.forEach(product => {
-          categoryDetailProductsEl.appendChild(createProductCard(product));
+          categoryDetailProductsEl.appendChild(createProductCard(product, 'categories'));
         });
       }
 
       showPage('category-detail');
     }
 
-    function openProduct(productId) {
+    function openProduct(productId, sourcePage = 'catalog') {
       const product = getProductById(productId);
       if (!product) return;
 
       state.currentProduct = product;
+      state.lastCategorySourcePage = sourcePage === 'home' ? 'catalog' : sourcePage;
 
       productDetailMediaEl.textContent = product.icon;
       productDetailTitleEl.textContent = product.title;
@@ -1828,6 +1918,101 @@
       `;
 
       showPage('product-detail');
+    }
+
+    function normalizeOrder(order) {
+      if (!order || typeof order !== 'object') return null;
+
+      const items = Array.isArray(order.items) ? order.items : [];
+      const totals = order.totals || {};
+      const customer = order.customer || {};
+
+      const itemsCount = items.reduce((sum, item) => sum + Number(item.qty || 1), 0);
+      const delivery = Number(totals.delivery ?? (itemsCount > 0 ? 500 : 0));
+      const subtotal = Number(
+        totals.subtotal ??
+        items.reduce((sum, item) => sum + Number(item.price || 0) * Number(item.qty || 1), 0)
+      );
+      const total = Number(totals.total ?? order.total ?? (subtotal + delivery));
+
+      return {
+        id: order.id || '-',
+        status: order.status || 'new',
+        createdAt: order.createdAt || new Date().toISOString(),
+        items,
+        customer: {
+          name: customer.name || '',
+          phone: customer.phone || '',
+          address: customer.address || '',
+          comment: customer.comment || ''
+        },
+        totals: {
+          subtotal,
+          delivery,
+          total
+        },
+        user: order.user || null
+      };
+    }
+
+    function openOrder(orderId) {
+      const orders = readRecentOrders();
+      const found = orders.find(order => String(order.id) === String(orderId));
+      if (!found) return;
+
+      const order = normalizeOrder(found);
+      if (!order) return;
+
+      state.currentOrder = order;
+
+      orderDetailTitleEl.textContent = `Заказ #${order.id}`;
+      orderDetailDateEl.textContent = new Date(order.createdAt).toLocaleString('ru-RU');
+      orderDetailStatusEl.textContent = order.status;
+
+      orderDetailMetaEl.innerHTML = `
+        <div><strong>Имя:</strong> ${order.customer.name || '—'}</div>
+        <div><strong>Телефон:</strong> ${order.customer.phone || '—'}</div>
+        <div><strong>Адрес:</strong> ${order.customer.address || '—'}</div>
+        <div><strong>Комментарий:</strong> ${order.customer.comment || '—'}</div>
+        <div><strong>Товаров:</strong> ${order.items.reduce((sum, item) => sum + Number(item.qty || 1), 0)}</div>
+        <div><strong>Сумма товаров:</strong> ${formatPrice(order.totals.subtotal)}</div>
+        <div><strong>Доставка:</strong> ${formatPrice(order.totals.delivery)}</div>
+        <div><strong>Итого:</strong> ${formatPrice(order.totals.total)}</div>
+      `;
+
+      orderDetailItemsEl.innerHTML = '';
+
+      if (!order.items.length) {
+        orderDetailItemsEl.innerHTML = `
+          <div class="empty-card">
+            <h3>Нет товаров</h3>
+            <p>Состав этого заказа пока недоступен.</p>
+          </div>
+        `;
+      } else {
+        order.items.forEach(item => {
+          const card = document.createElement('article');
+          card.className = 'order-item-card';
+
+          const qty = Number(item.qty || 1);
+          const price = Number(item.price || 0);
+          const sum = qty * price;
+
+          card.innerHTML = `
+            <div class="item-row">
+              <div>
+                <div class="item-name">${item.title || 'Товар'}</div>
+                <div class="item-meta">${formatPrice(price)} × ${qty}</div>
+              </div>
+              <div class="item-sum">${formatPrice(sum)}</div>
+            </div>
+          `;
+
+          orderDetailItemsEl.appendChild(card);
+        });
+      }
+
+      showPage('order-detail');
     }
 
     function renderCart() {
@@ -1933,29 +2118,42 @@
         return;
       }
 
-      orders.slice().reverse().forEach(order => {
-        const card = document.createElement('article');
-        card.className = 'order-card';
+      orders
+        .slice()
+        .reverse()
+        .forEach(rawOrder => {
+          const order = normalizeOrder(rawOrder);
+          if (!order) return;
 
-        const itemsCount = Array.isArray(order.items)
-          ? order.items.reduce((sum, item) => sum + (item.qty || 1), 0)
-          : 0;
+          const itemsCount = order.items.reduce((sum, item) => sum + Number(item.qty || 1), 0);
 
-        card.innerHTML = `
-          <div class="order-card-head">
-            <div>
-              <h3>Заказ #${order.id}</h3>
-              <p>${new Date(order.createdAt).toLocaleString('ru-RU')}</p>
+          const card = document.createElement('article');
+          card.className = 'order-preview-card';
+
+          card.innerHTML = `
+            <div class="order-preview-head">
+              <div>
+                <h3>Заказ #${order.id}</h3>
+                <p>${new Date(order.createdAt).toLocaleString('ru-RU')}</p>
+              </div>
+              <div class="order-status">${order.status}</div>
             </div>
-            <div class="order-status">${order.status || 'new'}</div>
-          </div>
 
-          <p>Товаров: ${itemsCount}</p>
-          <p style="margin-top:6px;">Сумма: ${formatPrice(order.total || 0)}</p>
-        `;
+            <p>Товаров: ${itemsCount}</p>
+            <p style="margin-top:6px;">Сумма: ${formatPrice(order.totals.total)}</p>
 
-        recentOrdersWrapEl.appendChild(card);
-      });
+            <div class="order-preview-footer">
+              <span>Открыть детали заказа</span>
+              <strong style="color:var(--accent);">→</strong>
+            </div>
+          `;
+
+          card.addEventListener('click', () => {
+            openOrder(order.id);
+          });
+
+          recentOrdersWrapEl.appendChild(card);
+        });
     }
 
     async function loginTelegram() {
@@ -2098,6 +2296,8 @@
             },
             items: state.cart,
             totals: {
+              subtotal: totals.subtotal,
+              delivery: totals.delivery,
               total: totals.total
             }
           })
@@ -2112,10 +2312,22 @@
 
         const recent = readRecentOrders();
         recent.push({
-          id: data.order.id,
+          id: data.order?.id || (recent.length + 1),
           total: totals.total,
+          status: data.order?.status || 'new',
+          user: state.user,
+          customer: {
+            name,
+            phone,
+            address,
+            comment
+          },
           items: state.cart.map(item => ({ ...item })),
-          status: 'new',
+          totals: {
+            subtotal: totals.subtotal,
+            delivery: totals.delivery,
+            total: totals.total
+          },
           createdAt: new Date().toISOString()
         });
         saveRecentOrders(recent);
@@ -2130,7 +2342,7 @@
         checkoutAddressEl.value = '';
         checkoutCommentEl.value = '';
 
-        setCartStatus(`Заказ #${data.order.id} создан`);
+        setCartStatus(`Заказ #${data.order?.id || recent.length} создан`);
         showPage('profile');
       } catch (error) {
         console.error(error);
@@ -2197,6 +2409,10 @@
         }
 
         showPage('catalog');
+      });
+
+      orderBackBtnEl.addEventListener('click', () => {
+        showPage('profile');
       });
 
       productDetailAddBtnEl.addEventListener('click', () => {
