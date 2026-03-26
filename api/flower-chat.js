@@ -31,12 +31,7 @@ export default async function handler(req, res) {
       `,
       input: messages.map((m) => ({
         role: m.role,
-        content: [
-          {
-            type: "input_text",
-            text: String(m.text || "")
-          }
-        ]
+        content: String(m.text || "")
       }))
     });
 
@@ -45,7 +40,6 @@ export default async function handler(req, res) {
     });
   } catch (error) {
     console.error("FLOWER_CHAT_ERROR:", error);
-
     return res.status(500).json({
       error: error?.message || "Internal server error"
     });
