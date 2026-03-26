@@ -2420,118 +2420,60 @@
       chatMessagesEl.scrollTop = chatMessagesEl.scrollHeight;
     }
 
-    function isFlowerTopic(text) {
-      const q = text.toLowerCase();
+    function getChatHistoryForApi() {
+      const history = readChatHistory();
 
-      const keywords = [
-        'цвет', 'цветы', 'цветок', 'букет', 'букеты', 'роза', 'розы', 'пион', 'пионы',
-        'тюльпан', 'тюльпаны', 'лилия', 'лилии', 'хризантем', 'гортенз', 'орхиде',
-        'ромаш', 'альстромер', 'ирис', 'сухоцвет', 'зелень', 'упаковк',
-        'флорист', 'флористик', 'лепест', 'ваза', 'вода', 'стеб', 'подрез',
-        'уход', 'стойк', 'сезон', 'сезонность', 'доставка цветов', 'композици',
-        'повод', 'свидан', 'день рождения', '8 марта', 'маме', 'девушке', 'жене',
-        'невест', 'подарить', 'какие цветы', 'какой букет'
-      ];
-
-      return keywords.some(word => q.includes(word));
+      return history.slice(-12).map(item => ({
+        role: item.role === 'bot' ? 'assistant' : 'user',
+        text: item.text
+      }));
     }
 
-    function getFlowerBotReply(text) {
-      const q = text.toLowerCase().trim();
+    async function sendChatMessage(prefilledText = '') {
+      const text = (prefilledText || chatInputEl.value).trim();
 
-      if (!isFlowerTopic(q)) {
-        return 'Я общаюсь только на тему цветов и букетов 🌷\nСпроси, например: какие цветы подарить, как ухаживать за букетом или что выбрать под определённый повод.';
+      if (!text) {
+        setChatStatus('Напиши вопрос про цветы');
+        return;
       }
 
-      if (q.includes('как ухаж') || q.includes('чтобы дольше стоял') || q.includes('уход')) {
-        return 'Чтобы букет дольше стоял:\n1. Подрежь стебли на 1–2 см под углом.\n2. Поставь в чистую прохладную воду.\n3. Убери листья ниже уровня воды.\n4. Меняй воду каждый день.\n5. Держи букет вдали от солнца, батареи и фруктов.\nЕсли хочешь, подскажу уход отдельно для роз, пионов, тюльпанов или гортензии.';
-      }
+      addChatMessage('user', text, true);
+      chatInputEl.value = '';
+      setChatStatus('Бот думает...');
 
-      if (q.includes('девушк') || q.includes('свидан') || q.includes('романтик')) {
-        return 'Для девушки обычно хорошо подходят:\n• нежные розы;\n• пионы или пионовидные композиции;\n• светлые микс-букеты в мягкой гамме.\nЕсли нужен романтичный вариант — выбирай нежные, воздушные формы. Если хочешь более выразительный жест — винные или глубокие оттенки.';
-      }
+      try {
+        const res = await fetch('/api/flower-chat', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            messages: getChatHistoryForApi()
+          })
+        });
 
-      if (q.includes('маме')) {
-        return 'Для мамы хорошо подходят тёплые, мягкие и собранные букеты:\n• пудровые и молочные оттенки;\n• хризантемы, розы, альстромерии, эустома;\n• средний или большой размер без слишком резкой контрастности.\nТакой букет выглядит заботливо и благородно.';
-      }
+        const raw = await res.text();
+        let data = {};
 
-      if (q.includes('день рождения') || q.includes('на др') || q.includes('на день рождения')) {
-        return 'На день рождения лучше выбирать заметный, но не перегруженный букет:\n• яркий акцент для торжественного настроения;\n• средний или большой размер;\n• цветы с хорошей стойкостью: розы, хризантемы, альстромерии, эустома.\nЕсли скажешь, кому именно подарок, я предложу точнее.';
-      }
+        try {
+          data = JSON.parse(raw);
+        } catch {
+          data = {};
+        }
 
-      if (q.includes('стойк') || q.includes('долго стоят')) {
-        return 'Одни из самых стойких цветов в букете:\n• хризантемы;\n• альстромерии;\n• эустома;\n• гвоздики;\n• некоторые сорта роз.\nЕсли нужна максимальная стойкость, лучше собирать букет на основе этих цветов и держать его в прохладе.';
-      }
+        if (!res.ok) {
+          console.error('flower-chat error:', res.status, raw);
+          setChatStatus(data.error || `Ошибка сервера: ${res.status}`);
+          return;
+        }
 
-      if (q.includes('сезон') || q.includes('сезонность')) {
-        return 'По сезонности ориентир такой:\n• весна — тюльпаны, нарциссы, ранункулюсы;\n• лето — пионы, садовые формы, лёгкие воздушные композиции;\n• осень — более глубокие оттенки, хризантемы, фактурные букеты;\n• зима — собранные композиции со стойкими цветами и плотной формой.';
+        addChatMessage('bot', data.reply || 'Нет ответа от ИИ', true);
+        setChatStatus('');
+      } catch (error) {
+        console.error('flower-chat fetch error:', error);
+        setChatStatus('Ошибка сети');
       }
-
-      if (q.includes('какие цветы') || q.includes('что подарить') || q.includes('какой букет выбрать')) {
-        return 'Чтобы выбрать букет, ориентируйся на 3 вещи:\n1. Повод — свидание, день рождения, благодарность, праздник.\n2. Характер получателя — нежный, яркий, спокойный стиль.\n3. Формат жеста — компактно, средне или заметно.\nНапиши, кому букет и на какой случай, и я дам конкретный совет.';
-      }
-
-      if (q.includes('роз')) {
-        return 'Розы — универсальный вариант. Светлые оттенки выглядят мягко и деликатно, глубокие винные — более выразительно и статусно. Для романтики лучше брать собранную форму без лишней перегруженности.';
-      }
-
-      if (q.includes('пион')) {
-        return 'Пионы хорошо подходят для мягких, воздушных и романтичных букетов. Они особенно хороши в сезон и выглядят объёмно даже без большого количества декора.';
-      }
-
-      if (q.includes('тюльпан')) {
-        return 'Тюльпаны — отличный выбор для лёгкого, свежего и тактичного подарка. Особенно подходят на весну, утренние поводы и для минималистичных букетов.';
-      }
-
-      return 'Могу помочь по теме цветов: подобрать букет, подсказать сочетания, повод, сезонность или уход. Напиши, кому букет и какой нужен эффект — нежный, романтичный, статусный или повседневный.';
     }
-
-   function getChatHistoryForApi() {
-  const history = readChatHistory();
-
-  return history.slice(-12).map(item => ({
-    role: item.role === 'bot' ? 'assistant' : 'user',
-    text: item.text
-  }));
-}
-
-async function sendChatMessage(prefilledText = '') {
-  const text = (prefilledText || chatInputEl.value).trim();
-
-  if (!text) {
-    setChatStatus('Напиши вопрос про цветы');
-    return;
-  }
-
-  addChatMessage('user', text, true);
-  chatInputEl.value = '';
-  setChatStatus('Бот думает...');
-
-  try {
-    const res = await fetch('/api/flower-chat', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        messages: getChatHistoryForApi()
-      })
-    });
-
-    const data = await res.json();
-
-    if (!res.ok) {
-      setChatStatus(data.error || 'Ошибка ответа ИИ');
-      return;
-    }
-
-    addChatMessage('bot', data.reply || 'Нет ответа от ИИ', true);
-    setChatStatus('');
-  } catch (error) {
-    console.error(error);
-    setChatStatus('Ошибка сети');
-  }
-}
 
     async function loginTelegram() {
       const initData = tg?.initData;
