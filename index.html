@@ -79,7 +79,8 @@
       z-index: 20;
       display: flex;
       align-items: center;
-      justify-content: flex-start;
+      justify-content: space-between;
+      gap: 12px;
       padding: 8px 14px 4px;
       background:
         linear-gradient(
@@ -96,6 +97,7 @@
       align-items: center;
       gap: 18px;
       min-width: 0;
+      flex: 1 1 auto;
     }
 
     .brand-logo {
@@ -135,6 +137,20 @@
       font-size: 13px;
       line-height: 1;
       color: var(--text-soft);
+    }
+
+    .header-chat-btn {
+      flex-shrink: 0;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.82);
+      color: var(--accent);
+      border-radius: 999px;
+      padding: 12px 14px;
+      min-height: 46px;
+      cursor: pointer;
+      font-weight: 700;
+      box-shadow: var(--shadow-soft);
+      white-space: nowrap;
     }
 
     .page {
@@ -260,7 +276,10 @@
     .product-card:active,
     .qty-btn:active,
     .back-btn:active,
-    .order-preview-card:active {
+    .order-preview-card:active,
+    .header-chat-btn:active,
+    .chat-send-btn:active,
+    .quick-chip:active {
       transform: scale(0.98);
     }
 
@@ -291,7 +310,8 @@
     }
 
     .banner-row,
-    .tabs {
+    .tabs,
+    .quick-chips {
       display: flex;
       gap: 8px;
       overflow-x: auto;
@@ -300,7 +320,8 @@
     }
 
     .banner-row::-webkit-scrollbar,
-    .tabs::-webkit-scrollbar {
+    .tabs::-webkit-scrollbar,
+    .quick-chips::-webkit-scrollbar {
       display: none;
     }
 
@@ -423,7 +444,9 @@
     .product-detail,
     .order-card,
     .order-preview-card,
-    .order-item-card {
+    .order-item-card,
+    .chat-shell,
+    .chat-help-card {
       background: var(--surface);
       border: 1px solid var(--line);
       border-radius: var(--radius-xl);
@@ -537,7 +560,8 @@
     .page-card,
     .order-card,
     .order-preview-card,
-    .order-item-card {
+    .order-item-card,
+    .chat-help-card {
       padding: 18px;
     }
 
@@ -549,7 +573,8 @@
     .product-detail h3,
     .order-card h3,
     .order-preview-card h3,
-    .order-item-card h3 {
+    .order-item-card h3,
+    .chat-help-card h3 {
       margin: 0 0 8px;
       font-size: 22px;
     }
@@ -561,7 +586,8 @@
     .page-card p,
     .order-card p,
     .order-preview-card p,
-    .order-item-card p {
+    .order-item-card p,
+    .chat-help-card p {
       margin: 0;
       color: var(--text-soft);
       font-size: 14px;
@@ -870,6 +896,95 @@
       font-size: 15px;
     }
 
+    .chat-shell {
+      overflow: hidden;
+      padding: 0;
+    }
+
+    .chat-messages {
+      padding: 16px;
+      display: grid;
+      gap: 10px;
+      max-height: 52vh;
+      overflow-y: auto;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.34), rgba(255,255,255,0));
+    }
+
+    .chat-message {
+      display: flex;
+    }
+
+    .chat-message.user {
+      justify-content: flex-end;
+    }
+
+    .chat-bubble {
+      max-width: 86%;
+      padding: 12px 14px;
+      border-radius: 18px;
+      line-height: 1.5;
+      font-size: 14px;
+      white-space: pre-wrap;
+      word-break: break-word;
+      border: 1px solid var(--line);
+    }
+
+    .chat-message.bot .chat-bubble {
+      background: rgba(255,255,255,0.82);
+      color: var(--text);
+    }
+
+    .chat-message.user .chat-bubble {
+      background: var(--accent);
+      color: var(--white);
+      border-color: var(--accent);
+    }
+
+    .chat-compose {
+      border-top: 1px solid var(--line);
+      padding: 14px;
+      display: grid;
+      gap: 10px;
+      background: rgba(255,251,245,0.92);
+    }
+
+    .chat-row {
+      display: flex;
+      gap: 10px;
+      align-items: flex-end;
+    }
+
+    .chat-input {
+      flex: 1 1 auto;
+      min-height: 52px;
+      max-height: 140px;
+      resize: none;
+    }
+
+    .chat-send-btn {
+      min-width: 96px;
+      border: none;
+      border-radius: 18px;
+      background: var(--accent);
+      color: var(--white);
+      padding: 14px 16px;
+      cursor: pointer;
+      font-weight: 700;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .quick-chip {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.76);
+      color: var(--text);
+      border-radius: 999px;
+      padding: 10px 12px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
     .nav {
       position: fixed;
       left: 50%;
@@ -946,14 +1061,38 @@
       background: rgba(255,255,255,0.16);
     }
 
-    @media (max-width: 390px) {
+    @media (max-width: 420px) {
+      .topbar {
+        gap: 10px;
+      }
+
+      .brand {
+        gap: 12px;
+      }
+
       .brand-logo {
-        width: 92px;
-        height: 92px;
+        width: 88px;
+        height: 88px;
       }
 
       .brand-title {
-        font-size: 28px;
+        font-size: 27px;
+      }
+
+      .header-chat-btn {
+        padding: 11px 12px;
+        font-size: 13px;
+      }
+    }
+
+    @media (max-width: 390px) {
+      .brand-logo {
+        width: 82px;
+        height: 82px;
+      }
+
+      .brand-title {
+        font-size: 25px;
       }
 
       .hero-title {
@@ -978,6 +1117,10 @@
       .nav-label {
         font-size: 11px;
       }
+
+      .chat-send-btn {
+        min-width: 84px;
+      }
     }
   </style>
 </head>
@@ -992,6 +1135,8 @@
           <p class="brand-subtitle">букеты</p>
         </div>
       </div>
+
+      <button type="button" id="headerChatBtn" class="header-chat-btn">ИИ-бот</button>
     </header>
 
     <section id="page-home" class="page active">
@@ -1135,6 +1280,43 @@
             <button type="button" id="productDetailAddBtn" class="btn btn-primary">В корзину</button>
             <button type="button" id="productDetailCatalogBtn" class="btn btn-secondary">В каталог</button>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="page-chat" class="page">
+      <div class="back-row">
+        <button type="button" id="chatBackBtn" class="back-btn">←</button>
+        <div class="back-title">Цветочный ИИ-бот</div>
+      </div>
+
+      <div class="chat-help-card" style="margin-bottom:12px;">
+        <h3>Спроси про цветы</h3>
+        <p>Бот отвечает только на тему цветов, букетов, ухода, сочетаний, сезонности и поводов.</p>
+      </div>
+
+      <div class="quick-chips" style="margin-bottom:12px;">
+        <button type="button" class="quick-chip" data-question="Какие цветы подарить девушке?">Что подарить девушке</button>
+        <button type="button" class="quick-chip" data-question="Как ухаживать за букетом, чтобы он дольше стоял?">Как ухаживать за букетом</button>
+        <button type="button" class="quick-chip" data-question="Какие цветы подойдут на день рождения?">На день рождения</button>
+        <button type="button" class="quick-chip" data-question="Какие цветы самые стойкие?">Самые стойкие цветы</button>
+      </div>
+
+      <div class="chat-shell">
+        <div id="chatMessages" class="chat-messages"></div>
+
+        <div class="chat-compose">
+          <textarea
+            id="chatInput"
+            class="input chat-input"
+            placeholder="Например: какие цветы подарить маме?"
+          ></textarea>
+
+          <div class="chat-row">
+            <button type="button" id="chatSendBtn" class="chat-send-btn">Отправить</button>
+          </div>
+
+          <div id="chatStatus" class="page-status"></div>
         </div>
       </div>
     </section>
@@ -1309,6 +1491,7 @@
       currentProduct: null,
       currentOrder: null,
       lastCategorySourcePage: 'categories',
+      lastSimplePage: 'home',
       categories: [
         {
           id: 'wine',
@@ -1494,12 +1677,21 @@
       categories: document.getElementById('page-categories'),
       'category-detail': document.getElementById('page-category-detail'),
       'product-detail': document.getElementById('page-product-detail'),
+      chat: document.getElementById('page-chat'),
       cart: document.getElementById('page-cart'),
       profile: document.getElementById('page-profile'),
       'order-detail': document.getElementById('page-order-detail')
     };
 
     const navButtons = [...document.querySelectorAll('.nav-btn')];
+    const headerChatBtnEl = document.getElementById('headerChatBtn');
+    const chatBackBtnEl = document.getElementById('chatBackBtn');
+    const chatMessagesEl = document.getElementById('chatMessages');
+    const chatInputEl = document.getElementById('chatInput');
+    const chatSendBtnEl = document.getElementById('chatSendBtn');
+    const chatStatusEl = document.getElementById('chatStatus');
+    const quickChipEls = [...document.querySelectorAll('.quick-chip')];
+
     const homeStatusEl = document.getElementById('homeStatus');
     const featuredRowEl = document.getElementById('featuredRow');
     const homeProductsEl = document.getElementById('homeProducts');
@@ -1559,6 +1751,10 @@
       profileStatusEl.textContent = text || '';
     }
 
+    function setChatStatus(text) {
+      chatStatusEl.textContent = text || '';
+    }
+
     function formatPrice(value) {
       return `${Number(value).toLocaleString('ru-RU')} ₽`;
     }
@@ -1603,6 +1799,18 @@
       }
     }
 
+    function saveChatHistory(history) {
+      localStorage.setItem('dlynee_chat_history', JSON.stringify(history));
+    }
+
+    function readChatHistory() {
+      try {
+        return JSON.parse(localStorage.getItem('dlynee_chat_history') || '[]');
+      } catch {
+        return [];
+      }
+    }
+
     function restoreState() {
       const user = readUser();
       const cart = readCart();
@@ -1616,6 +1824,13 @@
       });
     }
 
+    function rememberSimplePage(pageName) {
+      const simplePages = ['home', 'catalog', 'categories', 'cart', 'profile'];
+      if (simplePages.includes(pageName)) {
+        state.lastSimplePage = pageName;
+      }
+    }
+
     function showPage(pageName) {
       Object.entries(pageEls).forEach(([key, el]) => {
         el.classList.toggle('active', key === pageName);
@@ -1625,10 +1840,23 @@
         ? (state.lastCategorySourcePage === 'catalog' ? 'catalog' : 'categories')
         : pageName === 'order-detail'
           ? 'profile'
-          : pageName;
+          : pageName === 'chat'
+            ? state.lastSimplePage
+            : pageName;
+
+      if (pageName !== 'chat' && pageName !== 'category-detail' && pageName !== 'product-detail' && pageName !== 'order-detail') {
+        rememberSimplePage(pageName);
+      }
 
       setActiveNav(navPage);
       window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function openChatPage() {
+      showPage('chat');
+      setTimeout(() => {
+        chatInputEl.focus();
+      }, 120);
     }
 
     function getCategoryByName(name) {
@@ -2156,6 +2384,127 @@
         });
     }
 
+    function addChatMessage(role, text, save = true) {
+      const row = document.createElement('div');
+      row.className = `chat-message ${role}`;
+
+      const bubble = document.createElement('div');
+      bubble.className = 'chat-bubble';
+      bubble.textContent = text;
+
+      row.appendChild(bubble);
+      chatMessagesEl.appendChild(row);
+      chatMessagesEl.scrollTop = chatMessagesEl.scrollHeight;
+
+      if (save) {
+        const history = readChatHistory();
+        history.push({ role, text });
+        saveChatHistory(history);
+      }
+    }
+
+    function renderChatHistory() {
+      chatMessagesEl.innerHTML = '';
+      const history = readChatHistory();
+
+      if (!history.length) {
+        addChatMessage(
+          'bot',
+          'Привет. Я цветочный ИИ-бот 🌸\nМогу помочь с выбором букета, уходом за цветами, сочетаниями, поводами и сезонностью.',
+          true
+        );
+        return;
+      }
+
+      history.forEach(item => addChatMessage(item.role, item.text, false));
+      chatMessagesEl.scrollTop = chatMessagesEl.scrollHeight;
+    }
+
+    function isFlowerTopic(text) {
+      const q = text.toLowerCase();
+
+      const keywords = [
+        'цвет', 'цветы', 'цветок', 'букет', 'букеты', 'роза', 'розы', 'пион', 'пионы',
+        'тюльпан', 'тюльпаны', 'лилия', 'лилии', 'хризантем', 'гортенз', 'орхиде',
+        'ромаш', 'альстромер', 'ирис', 'сухоцвет', 'зелень', 'упаковк',
+        'флорист', 'флористик', 'лепест', 'ваза', 'вода', 'стеб', 'подрез',
+        'уход', 'стойк', 'сезон', 'сезонность', 'доставка цветов', 'композици',
+        'повод', 'свидан', 'день рождения', '8 марта', 'маме', 'девушке', 'жене',
+        'невест', 'подарить', 'какие цветы', 'какой букет'
+      ];
+
+      return keywords.some(word => q.includes(word));
+    }
+
+    function getFlowerBotReply(text) {
+      const q = text.toLowerCase().trim();
+
+      if (!isFlowerTopic(q)) {
+        return 'Я общаюсь только на тему цветов и букетов 🌷\nСпроси, например: какие цветы подарить, как ухаживать за букетом или что выбрать под определённый повод.';
+      }
+
+      if (q.includes('как ухаж') || q.includes('чтобы дольше стоял') || q.includes('уход')) {
+        return 'Чтобы букет дольше стоял:\n1. Подрежь стебли на 1–2 см под углом.\n2. Поставь в чистую прохладную воду.\n3. Убери листья ниже уровня воды.\n4. Меняй воду каждый день.\n5. Держи букет вдали от солнца, батареи и фруктов.\nЕсли хочешь, подскажу уход отдельно для роз, пионов, тюльпанов или гортензии.';
+      }
+
+      if (q.includes('девушк') || q.includes('свидан') || q.includes('романтик')) {
+        return 'Для девушки обычно хорошо подходят:\n• нежные розы;\n• пионы или пионовидные композиции;\n• светлые микс-букеты в мягкой гамме.\nЕсли нужен романтичный вариант — выбирай нежные, воздушные формы. Если хочешь более выразительный жест — винные или глубокие оттенки.';
+      }
+
+      if (q.includes('маме')) {
+        return 'Для мамы хорошо подходят тёплые, мягкие и собранные букеты:\n• пудровые и молочные оттенки;\n• хризантемы, розы, альстромерии, эустома;\n• средний или большой размер без слишком резкой контрастности.\nТакой букет выглядит заботливо и благородно.';
+      }
+
+      if (q.includes('день рождения') || q.includes('на др') || q.includes('на день рождения')) {
+        return 'На день рождения лучше выбирать заметный, но не перегруженный букет:\n• яркий акцент для торжественного настроения;\n• средний или большой размер;\n• цветы с хорошей стойкостью: розы, хризантемы, альстромерии, эустома.\nЕсли скажешь, кому именно подарок, я предложу точнее.';
+      }
+
+      if (q.includes('стойк') || q.includes('долго стоят')) {
+        return 'Одни из самых стойких цветов в букете:\n• хризантемы;\n• альстромерии;\n• эустома;\n• гвоздики;\n• некоторые сорта роз.\nЕсли нужна максимальная стойкость, лучше собирать букет на основе этих цветов и держать его в прохладе.';
+      }
+
+      if (q.includes('сезон') || q.includes('сезонность')) {
+        return 'По сезонности ориентир такой:\n• весна — тюльпаны, нарциссы, ранункулюсы;\n• лето — пионы, садовые формы, лёгкие воздушные композиции;\n• осень — более глубокие оттенки, хризантемы, фактурные букеты;\n• зима — собранные композиции со стойкими цветами и плотной формой.';
+      }
+
+      if (q.includes('какие цветы') || q.includes('что подарить') || q.includes('какой букет выбрать')) {
+        return 'Чтобы выбрать букет, ориентируйся на 3 вещи:\n1. Повод — свидание, день рождения, благодарность, праздник.\n2. Характер получателя — нежный, яркий, спокойный стиль.\n3. Формат жеста — компактно, средне или заметно.\nНапиши, кому букет и на какой случай, и я дам конкретный совет.';
+      }
+
+      if (q.includes('роз')) {
+        return 'Розы — универсальный вариант. Светлые оттенки выглядят мягко и деликатно, глубокие винные — более выразительно и статусно. Для романтики лучше брать собранную форму без лишней перегруженности.';
+      }
+
+      if (q.includes('пион')) {
+        return 'Пионы хорошо подходят для мягких, воздушных и романтичных букетов. Они особенно хороши в сезон и выглядят объёмно даже без большого количества декора.';
+      }
+
+      if (q.includes('тюльпан')) {
+        return 'Тюльпаны — отличный выбор для лёгкого, свежего и тактичного подарка. Особенно подходят на весну, утренние поводы и для минималистичных букетов.';
+      }
+
+      return 'Могу помочь по теме цветов: подобрать букет, подсказать сочетания, повод, сезонность или уход. Напиши, кому букет и какой нужен эффект — нежный, романтичный, статусный или повседневный.';
+    }
+
+    function sendChatMessage(prefilledText = '') {
+      const text = (prefilledText || chatInputEl.value).trim();
+
+      if (!text) {
+        setChatStatus('Напиши вопрос про цветы');
+        return;
+      }
+
+      addChatMessage('user', text, true);
+      chatInputEl.value = '';
+      setChatStatus('Бот думает...');
+
+      setTimeout(() => {
+        const reply = getFlowerBotReply(text);
+        addChatMessage('bot', reply, true);
+        setChatStatus('');
+      }, 350);
+    }
+
     async function loginTelegram() {
       const initData = tg?.initData;
       const user = tg?.initDataUnsafe?.user;
@@ -2357,6 +2706,29 @@
         });
       });
 
+      headerChatBtnEl.addEventListener('click', openChatPage);
+
+      chatBackBtnEl.addEventListener('click', () => {
+        showPage(state.lastSimplePage || 'home');
+      });
+
+      chatSendBtnEl.addEventListener('click', () => {
+        sendChatMessage();
+      });
+
+      chatInputEl.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+          e.preventDefault();
+          sendChatMessage();
+        }
+      });
+
+      quickChipEls.forEach(btn => {
+        btn.addEventListener('click', () => {
+          sendChatMessage(btn.dataset.question || '');
+        });
+      });
+
       goCatalogBtnEl.addEventListener('click', () => {
         showPage('catalog');
       });
@@ -2443,6 +2815,7 @@
       renderCart();
       renderProfile();
       renderRecentOrders();
+      renderChatHistory();
       bindEvents();
       await loadMe();
       renderProfile();
