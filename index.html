@@ -2972,8 +2972,14 @@
       });
 
       profileSupportBtnEl.addEventListener('click', () => {
-        openChatPage();
-      });
+  const supportUrl = 'https://t.me/anmixxan';
+
+  if (tg?.openTelegramLink) {
+    tg.openTelegramLink(supportUrl);
+  } else {
+    window.open(supportUrl, '_blank');
+  }
+});
 
       checkoutBtnEl.addEventListener('click', createOrder);
       clearCartBtnEl.addEventListener('click', clearCart);
