@@ -14,11 +14,11 @@ async function sendTelegramMessage(chatId, text) {
     },
     body: JSON.stringify({
       chat_id: chatId,
-      text
+      text: text
     })
   });
 
-  return response.json();
+  return await response.json();
 }
 
 export default async function handler(req, res) {
@@ -40,11 +40,17 @@ export default async function handler(req, res) {
 
     if (error) {
       console.error('Supabase error:', error);
-      return res.status(500).json({ ok: false, error: 'Ошибка Supabase' });
+      return res.status(500).json({
+        ok: false,
+        error: 'Supabase error'
+      });
     }
 
     if (!users || users.length === 0) {
-      return res.status(200).json({ ok: true, message: 'Нет пользователей для рассылки' });
+      return res.status(200).json({
+        ok: true,
+        message: 'Нет пользователей'
+      });
     }
 
     let success = 0;
@@ -52,32 +58,31 @@ export default async function handler(req, res) {
 
     for (const user of users) {
       try {
-        const chatId = user.telegram_id;
-        const result = await sendTelegramMessage(chatId, randomPost);
+        const result = await sendTelegramMessage(user.telegram_id, randomPost);
 
         if (result.ok) {
           success++;
         } else {
           failed++;
-          console.log('Telegram send error:', chatId, result);
+          console.log('Telegram error:', result);
         }
       } catch (err) {
         failed++;
-        console.error('Send failed:', user.telegram_id, err);
+        console.error('Send error:', err);
       }
     }
 
     return res.status(200).json({
       ok: true,
       total: users.length,
-      success,
-      failed
+      success: success,
+      failed: failed
     });
   } catch (error) {
     console.error('Broadcast error:', error);
     return res.status(500).json({
       ok: false,
-      error: 'Ошибка рассылки'
+      error: 'Broadcast error'
     });
   }
 }
