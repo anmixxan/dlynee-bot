@@ -1,10 +1,9 @@
 {
-  "name": "dlynee-bot-api",
+  "name": "dlynee-bot",
   "version": "1.0.0",
   "type": "module",
   "dependencies": {
     "@supabase/supabase-js": "^2.49.1",
-    "node-telegram-bot-api": "^0.66.0",
-    "openai": "^5"
+    "openai": "^5.0.0"
   }
 }
