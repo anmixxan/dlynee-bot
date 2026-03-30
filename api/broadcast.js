@@ -23,66 +23,46 @@ async function sendTelegramMessage(chatId, text) {
 
 export default async function handler(req, res) {
   try {
-    const posts = [
-      '🌸 Новая подборка букетов уже в боте',
-      '💐 Загляни в каталог — там красивые букеты',
-      '🌷 Пора порадовать близких цветами',
-      '🌹 У нас есть нежные и винные букеты — заходи посмотреть',
-      '✨ Открой бот и выбери букет для особенного повода'
-    ];
-
-    const randomPost = posts[Math.floor(Math.random() * posts.length)];
-
     const { data: users, error } = await supabase
       .from('users')
       .select('telegram_id')
-      .not('telegram_id', 'is', null);
+      .not('telegram_id', 'is', null)
+      .limit(1);
 
     if (error) {
-      console.error('Supabase error:', error);
       return res.status(500).json({
+        step: 'supabase_select',
         ok: false,
-        error: 'Supabase error'
+        error: error.message
       });
     }
 
     if (!users || users.length === 0) {
       return res.status(200).json({
-        ok: true,
-        message: 'Нет пользователей'
+        step: 'no_users',
+        ok: false,
+        error: 'В таблице users нет пользователей'
       });
     }
 
-    let success = 0;
-    let failed = 0;
+    const chatId = users[0].telegram_id;
 
-    for (const user of users) {
-      try {
-        const result = await sendTelegramMessage(user.telegram_id, randomPost);
-
-        if (result.ok) {
-          success++;
-        } else {
-          failed++;
-          console.log('Telegram error:', result);
-        }
-      } catch (err) {
-        failed++;
-        console.error('Send error:', err);
-      }
-    }
+    const telegramResult = await sendTelegramMessage(
+      chatId,
+      'Тест рассылки 🌸 Если ты видишь это сообщение — всё работает'
+    );
 
     return res.status(200).json({
+      step: 'telegram_send',
       ok: true,
-      total: users.length,
-      success: success,
-      failed: failed
+      chatId: chatId,
+      telegramResult: telegramResult
     });
   } catch (error) {
-    console.error('Broadcast error:', error);
     return res.status(500).json({
+      step: 'catch',
       ok: false,
-      error: 'Broadcast error'
+      error: String(error.message || error)
     });
   }
 }
