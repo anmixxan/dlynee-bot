@@ -279,7 +279,10 @@
     .order-preview-card:active,
     .header-chat-btn:active,
     .chat-send-btn:active,
-    .quick-chip:active {
+    .quick-chip:active,
+    .profile-menu-btn:active,
+    .profile-active-order-card:active,
+    .profile-history-item:active {
       transform: scale(0.98);
     }
 
@@ -487,49 +490,26 @@
     }
 
     .product-media {
-  aspect-ratio: 1 / 1;
-  height: auto;
-  background:
-    radial-gradient(circle at 30% 30%, rgba(255,255,255,0.54), transparent 22%),
-    linear-gradient(135deg, rgba(122,22,38,0.10), rgba(215,173,160,0.12));
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-bottom: 1px solid rgba(122, 22, 38, 0.06);
-  position: relative;
-  overflow: hidden;
-}
+      aspect-ratio: 1 / 1;
+      height: auto;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,0.54), transparent 22%),
+        linear-gradient(135deg, rgba(122,22,38,0.10), rgba(215,173,160,0.12));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1px solid rgba(122, 22, 38, 0.06);
+      position: relative;
+      overflow: hidden;
+    }
 
-.product-media img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  display: block;
-}
-
-.product-detail-media {
-  aspect-ratio: 1 / 1;
-  height: auto;
-  background:
-    radial-gradient(circle at 30% 30%, rgba(255,255,255,0.54), transparent 22%),
-    linear-gradient(135deg, rgba(122,22,38,0.16), rgba(215,173,160,0.18));
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--accent);
-  font-size: 60px;
-  position: relative;
-  overflow: hidden;
-}
-
-.product-detail-media img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  display: block;
-}
+    .product-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
 
     .product-icon {
       font-size: 48px;
@@ -839,7 +819,8 @@
     }
 
     .product-detail-media {
-      height: 320px;
+      aspect-ratio: 1 / 1;
+      height: auto;
       background:
         radial-gradient(circle at 30% 30%, rgba(255,255,255,0.54), transparent 22%),
         linear-gradient(135deg, rgba(122,22,38,0.16), rgba(215,173,160,0.18));
@@ -856,6 +837,8 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+      object-position: center;
+      display: block;
     }
 
     .product-detail-body {
@@ -1102,6 +1085,262 @@
       background: rgba(255,255,255,0.16);
     }
 
+    /* Minimal profile */
+    .profile-minimal-shell {
+      display: grid;
+      gap: 12px;
+    }
+
+    .profile-top-wrap,
+    .profile-min-card,
+    .profile-menu-btn {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .profile-top-wrap {
+      padding: 16px;
+    }
+
+    .profile-top-card {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 0;
+    }
+
+    .profile-avatar {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      overflow: hidden;
+      flex-shrink: 0;
+      background: rgba(122, 22, 38, 0.08);
+      border: 1px solid rgba(122, 22, 38, 0.10);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .profile-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .profile-avatar-fallback {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .profile-user-copy {
+      min-width: 0;
+      display: grid;
+      gap: 4px;
+    }
+
+    .profile-user-name {
+      margin: 0;
+      font-size: 28px;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      font-weight: 700;
+      color: var(--text);
+      word-break: break-word;
+    }
+
+    .profile-user-subtitle {
+      margin: 0;
+      font-size: 13px;
+      color: var(--text-soft);
+      line-height: 1.35;
+    }
+
+    .profile-auth-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+
+    .profile-min-card {
+      padding: 16px;
+    }
+
+    .profile-min-title {
+      margin: 0 0 12px;
+      font-size: 18px;
+      line-height: 1;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    .profile-empty-box,
+    .profile-active-order-card,
+    .profile-address-item,
+    .profile-history-item {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255,255,255,0.62);
+    }
+
+    .profile-empty-box {
+      min-height: 86px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 14px;
+      color: var(--text-soft);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .profile-active-order-card {
+      padding: 14px;
+      cursor: pointer;
+    }
+
+    .profile-active-order-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: start;
+    }
+
+    .profile-active-order-name {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .profile-active-order-date {
+      margin-top: 4px;
+      font-size: 13px;
+      color: var(--text-soft);
+    }
+
+    .profile-active-order-status {
+      display: inline-flex;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(122, 22, 38, 0.08);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .profile-active-order-meta {
+      margin-top: 12px;
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+      font-size: 14px;
+      color: var(--text-soft);
+    }
+
+    .profile-active-order-meta strong {
+      color: var(--text);
+    }
+
+    .profile-menu {
+      display: grid;
+      gap: 10px;
+    }
+
+    .profile-menu-btn {
+      width: 100%;
+      padding: 15px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      cursor: pointer;
+      color: var(--text);
+      background: var(--surface);
+    }
+
+    .profile-menu-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+      font-weight: 700;
+      font-size: 15px;
+    }
+
+    .profile-menu-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: rgba(122, 22, 38, 0.06);
+      border: 1px solid rgba(122, 22, 38, 0.08);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+
+    .profile-menu-arrow {
+      color: var(--text-soft);
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    .profile-address-list,
+    .profile-history-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .profile-address-item,
+    .profile-history-item {
+      padding: 14px;
+    }
+
+    .profile-address-item-title,
+    .profile-history-item-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .profile-address-item-text,
+    .profile-history-item-text {
+      margin-top: 5px;
+      font-size: 13px;
+      color: var(--text-soft);
+      line-height: 1.45;
+    }
+
+    .profile-history-item {
+      cursor: pointer;
+    }
+
+    .profile-history-item-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: start;
+    }
+
+    .profile-history-item-sum {
+      margin-top: 10px;
+      font-size: 14px;
+      color: var(--text-soft);
+    }
+
+    .profile-history-item-sum strong {
+      color: var(--text);
+    }
+
     @media (max-width: 420px) {
       .topbar {
         gap: 10px;
@@ -1161,6 +1400,15 @@
 
       .chat-send-btn {
         min-width: 84px;
+      }
+
+      .profile-user-name {
+        font-size: 24px;
+      }
+
+      .profile-avatar {
+        width: 54px;
+        height: 54px;
       }
     }
   </style>
@@ -1428,21 +1676,11 @@
 
     <section id="page-profile" class="page">
       <div class="section">
-        <div class="section-head">
-          <div>
-            <h3 class="section-title">Профиль</h3>
-            <p class="section-subtitle">вход, выход и заказы</p>
-          </div>
-        </div>
+        <div class="profile-minimal-shell">
+          <div class="profile-top-wrap">
+            <div id="profileMeta" class="profile-top-card"></div>
 
-        <div class="profile-grid">
-          <div class="profile-card">
-            <h3>Аккаунт</h3>
-            <p>Ваш текущий пользователь внутри mini app.</p>
-
-            <div id="profileMeta" class="profile-meta"></div>
-
-            <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;">
+            <div class="profile-auth-actions">
               <button type="button" id="profileLoginBtn" class="btn btn-primary">Войти через Telegram</button>
               <button type="button" id="profileLogoutBtn" class="btn btn-secondary hidden">Выйти</button>
             </div>
@@ -1450,10 +1688,45 @@
             <div id="profileStatus" class="page-status"></div>
           </div>
 
-          <div class="profile-card">
-            <h3>Последние заказы</h3>
-            <p>Нажми на заказ, чтобы открыть детали.</p>
-            <div id="recentOrdersWrap" class="order-list" style="margin-top:14px;"></div>
+          <div class="profile-min-card">
+            <div class="profile-min-title">Активный заказ</div>
+            <div id="profileActiveOrderWrap"></div>
+          </div>
+
+          <div class="profile-menu">
+            <button type="button" id="profileAddressesBtn" class="profile-menu-btn">
+              <span class="profile-menu-left">
+                <span class="profile-menu-icon">⌖</span>
+                <span>Адреса доставки</span>
+              </span>
+              <span class="profile-menu-arrow">→</span>
+            </button>
+
+            <button type="button" id="profileOrdersBtn" class="profile-menu-btn">
+              <span class="profile-menu-left">
+                <span class="profile-menu-icon">▣</span>
+                <span>История заказов</span>
+              </span>
+              <span class="profile-menu-arrow">→</span>
+            </button>
+
+            <button type="button" id="profileSupportBtn" class="profile-menu-btn">
+              <span class="profile-menu-left">
+                <span class="profile-menu-icon">◦</span>
+                <span>Поддержка</span>
+              </span>
+              <span class="profile-menu-arrow">→</span>
+            </button>
+          </div>
+
+          <div id="profileAddressesSection" class="profile-min-card">
+            <div class="profile-min-title">Адреса доставки</div>
+            <div id="profileAddressesWrap" class="profile-address-list"></div>
+          </div>
+
+          <div id="profileOrdersSection" class="profile-min-card">
+            <div class="profile-min-title">История заказов</div>
+            <div id="recentOrdersWrap" class="profile-history-list"></div>
           </div>
         </div>
       </div>
@@ -1789,6 +2062,14 @@
     const orderDetailStatusEl = document.getElementById('orderDetailStatus');
     const orderDetailMetaEl = document.getElementById('orderDetailMeta');
     const orderDetailItemsEl = document.getElementById('orderDetailItems');
+
+    const profileActiveOrderWrapEl = document.getElementById('profileActiveOrderWrap');
+    const profileAddressesWrapEl = document.getElementById('profileAddressesWrap');
+    const profileAddressesBtnEl = document.getElementById('profileAddressesBtn');
+    const profileOrdersBtnEl = document.getElementById('profileOrdersBtn');
+    const profileSupportBtnEl = document.getElementById('profileSupportBtn');
+    const profileAddressesSectionEl = document.getElementById('profileAddressesSection');
+    const profileOrdersSectionEl = document.getElementById('profileOrdersSection');
 
     function setHomeStatus(text) {
       homeStatusEl.textContent = text || '';
@@ -2243,6 +2524,118 @@
       };
     }
 
+    function getUserDisplayName(user) {
+      if (!user) return 'Гость';
+      if (user.username) return user.username;
+
+      const fullName = [user.first_name, user.last_name].filter(Boolean).join(' ').trim();
+      return fullName || 'Профиль';
+    }
+
+    function getUserSubtitle(user) {
+      if (!user) return 'Войдите через Telegram';
+      if (user.username) return '@' + user.username;
+
+      const telegramId = user.telegram_id || user.id || '';
+      return telegramId ? `ID ${telegramId}` : 'Telegram';
+    }
+
+    function getUserInitials(user) {
+      const source =
+        [user?.first_name, user?.last_name].filter(Boolean).join(' ').trim() ||
+        user?.username ||
+        'TG';
+
+      return source.slice(0, 2).toUpperCase();
+    }
+
+    function getActiveOrder() {
+      const orders = readRecentOrders()
+        .map(normalizeOrder)
+        .filter(Boolean)
+        .slice()
+        .reverse();
+
+      return orders.find(order => {
+        const status = String(order.status || '').toLowerCase();
+        return !['done', 'completed', 'delivered', 'cancelled', 'canceled'].includes(status);
+      }) || null;
+    }
+
+    function getSavedAddresses() {
+      const orders = readRecentOrders()
+        .map(normalizeOrder)
+        .filter(Boolean);
+
+      const addresses = orders
+        .map(order => order.customer?.address?.trim())
+        .filter(Boolean);
+
+      return [...new Set(addresses)];
+    }
+
+    function renderProfileAddresses() {
+      const addresses = getSavedAddresses();
+      profileAddressesWrapEl.innerHTML = '';
+
+      if (!addresses.length) {
+        profileAddressesWrapEl.innerHTML = `
+          <div class="profile-empty-box">
+            Пока нет сохранённых адресов доставки
+          </div>
+        `;
+        return;
+      }
+
+      addresses.forEach((address, index) => {
+        const item = document.createElement('div');
+        item.className = 'profile-address-item';
+        item.innerHTML = `
+          <div class="profile-address-item-title">Адрес ${index + 1}</div>
+          <div class="profile-address-item-text">${address}</div>
+        `;
+        profileAddressesWrapEl.appendChild(item);
+      });
+    }
+
+    function renderActiveOrder() {
+      const activeOrder = getActiveOrder();
+      profileActiveOrderWrapEl.innerHTML = '';
+
+      if (!activeOrder) {
+        profileActiveOrderWrapEl.innerHTML = `
+          <div class="profile-empty-box">
+            У вас нет активных заказов
+          </div>
+        `;
+        return;
+      }
+
+      const card = document.createElement('div');
+      card.className = 'profile-active-order-card';
+
+      card.innerHTML = `
+        <div class="profile-active-order-top">
+          <div>
+            <div class="profile-active-order-name">Заказ #${activeOrder.id}</div>
+            <div class="profile-active-order-date">${new Date(activeOrder.createdAt).toLocaleString('ru-RU')}</div>
+          </div>
+          <div class="profile-active-order-status">${activeOrder.status}</div>
+        </div>
+
+        <div class="profile-active-order-meta">
+          <span>Сумма: <strong>${formatPrice(activeOrder.totals.total)}</strong></span>
+          <span>Открыть</span>
+        </div>
+      `;
+
+      card.addEventListener('click', () => {
+        openOrder(activeOrder.id);
+      });
+
+      profileActiveOrderWrapEl.appendChild(card);
+    }
+
     function openOrder(orderId) {
       const orders = readRecentOrders();
       const found = orders.find(order => String(order.id) === String(orderId));
@@ -2359,89 +2752,92 @@
     }
 
     function renderProfile() {
-      profileMetaEl.innerHTML = '';
-
       if (!state.user) {
         profileMetaEl.innerHTML = `
-          <div class="empty-card">
-            <h3>Вы не вошли</h3>
-            <p>Нажми «Войти через Telegram», чтобы использовать реальный аккаунт mini app.</p>
+          <div class="profile-avatar">
+            <div class="profile-avatar-fallback">TG</div>
+          </div>
+          <div class="profile-user-copy">
+            <h3 class="profile-user-name">Гость</h3>
+            <p class="profile-user-subtitle">Войдите через Telegram</p>
           </div>
         `;
 
         profileLoginBtnEl.classList.remove('hidden');
         profileLogoutBtnEl.classList.add('hidden');
+
         setProfileStatus('Вы не вошли');
+
+        renderActiveOrder();
+        renderProfileAddresses();
         return;
       }
 
-      const username = state.user.username ? '@' + state.user.username : 'без username';
-      const telegramId = state.user.telegram_id || state.user.id || '-';
-      const firstName = state.user.first_name || '-';
-      const lastName = state.user.last_name || '-';
+      const avatar = state.user.photo_url
+        ? `<img src="${state.user.photo_url}" alt="${getUserDisplayName(state.user)}">`
+        : `<div class="profile-avatar-fallback">${getUserInitials(state.user)}</div>`;
 
       profileMetaEl.innerHTML = `
-        <div><strong>Имя:</strong> ${firstName}</div>
-        <div><strong>Фамилия:</strong> ${lastName}</div>
-        <div><strong>Username:</strong> ${username}</div>
-        <div><strong>ID Telegram:</strong> ${telegramId}</div>
+        <div class="profile-avatar">${avatar}</div>
+        <div class="profile-user-copy">
+          <h3 class="profile-user-name">${getUserDisplayName(state.user)}</h3>
+          <p class="profile-user-subtitle">${getUserSubtitle(state.user)}</p>
+        </div>
       `;
 
       profileLoginBtnEl.classList.add('hidden');
       profileLogoutBtnEl.classList.remove('hidden');
-      setProfileStatus(`Вы вошли как ${firstName}`);
+
+      setProfileStatus(`Вы вошли как ${getUserDisplayName(state.user)}`);
+
+      renderActiveOrder();
+      renderProfileAddresses();
     }
 
     function renderRecentOrders() {
-      const orders = readRecentOrders();
+      const orders = readRecentOrders()
+        .map(normalizeOrder)
+        .filter(Boolean)
+        .slice()
+        .reverse();
+
       recentOrdersWrapEl.innerHTML = '';
 
       if (!orders.length) {
         recentOrdersWrapEl.innerHTML = `
-          <div class="empty-card">
-            <h3>Пока нет заказов</h3>
-            <p>После оформления здесь появятся последние заказы.</p>
+          <div class="profile-empty-box">
+            История заказов пока пуста
           </div>
         `;
         return;
       }
 
-      orders
-        .slice()
-        .reverse()
-        .forEach(rawOrder => {
-          const order = normalizeOrder(rawOrder);
-          if (!order) return;
+      orders.forEach(order => {
+        const itemsCount = order.items.reduce((sum, item) => sum + Number(item.qty || 1), 0);
 
-          const itemsCount = order.items.reduce((sum, item) => sum + Number(item.qty || 1), 0);
+        const item = document.createElement('div');
+        item.className = 'profile-history-item';
 
-          const card = document.createElement('article');
-          card.className = 'order-preview-card';
-
-          card.innerHTML = `
-            <div class="order-preview-head">
-              <div>
-                <h3>Заказ #${order.id}</h3>
-                <p>${new Date(order.createdAt).toLocaleString('ru-RU')}</p>
-              </div>
-              <div class="order-status">${order.status}</div>
+        item.innerHTML = `
+          <div class="profile-history-item-top">
+            <div>
+              <div class="profile-history-item-title">Заказ #${order.id}</div>
+              <div class="profile-history-item-text">${new Date(order.createdAt).toLocaleString('ru-RU')}</div>
             </div>
+            <div class="profile-active-order-status">${order.status}</div>
+          </div>
 
-            <p>Товаров: ${itemsCount}</p>
-            <p style="margin-top:6px;">Сумма: ${formatPrice(order.totals.total)}</p>
+          <div class="profile-history-item-sum">
+            ${itemsCount} шт. · <strong>${formatPrice(order.totals.total)}</strong>
+          </div>
+        `;
 
-            <div class="order-preview-footer">
-              <span>Открыть детали заказа</span>
-              <strong style="color:var(--accent);">→</strong>
-            </div>
-          `;
-
-          card.addEventListener('click', () => {
-            openOrder(order.id);
-          });
-
-          recentOrdersWrapEl.appendChild(card);
+        item.addEventListener('click', () => {
+          openOrder(order.id);
         });
+
+        recentOrdersWrapEl.appendChild(item);
+      });
     }
 
     function addChatMessage(role, text, save = true) {
@@ -2560,7 +2956,8 @@
             id: user.id,
             first_name: user.first_name || '',
             last_name: user.last_name || '',
-            username: user.username || ''
+            username: user.username || '',
+            photo_url: user.photo_url || ''
           })
         });
 
@@ -2583,7 +2980,8 @@
           telegram_id: user.id,
           first_name: user.first_name || '',
           last_name: user.last_name || '',
-          username: user.username || ''
+          username: user.username || '',
+          photo_url: user.photo_url || ''
         };
 
         saveUser(state.user);
@@ -2710,6 +3108,7 @@
           createdAt: new Date().toISOString()
         });
         saveRecentOrders(recent);
+        renderProfile();
 
         state.cart = [];
         saveCart();
@@ -2830,6 +3229,18 @@
 
       profileLoginBtnEl.addEventListener('click', loginTelegram);
       profileLogoutBtnEl.addEventListener('click', logoutTelegram);
+
+      profileAddressesBtnEl.addEventListener('click', () => {
+        profileAddressesSectionEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+
+      profileOrdersBtnEl.addEventListener('click', () => {
+        profileOrdersSectionEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+
+      profileSupportBtnEl.addEventListener('click', () => {
+        openChatPage();
+      });
 
       checkoutBtnEl.addEventListener('click', createOrder);
       clearCartBtnEl.addEventListener('click', clearCart);
