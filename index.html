@@ -2751,7 +2751,8 @@
       renderCounters();
     }
 
-    function renderProfile() {
+    <script>
+function renderProfile() {
   if (!state.user) {
     profileMetaEl.innerHTML = `
       <div class="profile-avatar">
@@ -2790,27 +2791,7 @@
   renderActiveOrder();
   renderProfileAddresses();
 }
-
-      const avatar = state.user.photo_url
-  ? `<img src="${state.user.photo_url}" alt="${getUserDisplayName(state.user)}">`
-  : `<div class="profile-avatar-fallback">${getUserInitials(state.user)}</div>`;
-
-      profileMetaEl.innerHTML = `
-  <div class="profile-avatar">${avatar}</div>
-  <div class="profile-user-copy">
-    <h3 class="profile-user-name">${getUserDisplayName(state.user)}</h3>
-    <p class="profile-user-subtitle">${getUserSubtitle(state.user)}</p>
-  </div>
-`;
-
-      profileLoginBtnEl.classList.add('hidden');
-      profileLogoutBtnEl.classList.remove('hidden');
-
-      setProfileStatus(`Вы вошли как ${getUserDisplayName(state.user)}`);
-
-      renderActiveOrder();
-      renderProfileAddresses();
-    }
+</script>
 
     function renderRecentOrders() {
       const orders = readRecentOrders()
