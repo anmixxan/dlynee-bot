@@ -11,21 +11,16 @@
       --bg: #f3eee3;
       --bg-2: #efe7da;
       --surface: rgba(255, 251, 245, 0.92);
-      --surface-strong: rgba(255, 251, 245, 0.98);
       --white: #fffaf6;
       --text: #5c1b24;
       --text-soft: #8b6168;
       --accent: #7a1626;
-      --accent-2: #8d2435;
       --line: rgba(122, 22, 38, 0.12);
-      --line-strong: rgba(122, 22, 38, 0.18);
       --shadow-soft: 0 10px 24px rgba(92, 27, 36, 0.06);
       --shadow-md: 0 16px 34px rgba(92, 27, 36, 0.08);
       --radius-xxl: 34px;
       --radius-xl: 28px;
       --radius-lg: 22px;
-      --radius-md: 18px;
-      --radius-sm: 14px;
       --radius-pill: 999px;
       --container: 480px;
       --nav-height: 114px;
@@ -36,9 +31,7 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    html {
-      scroll-behavior: smooth;
-    }
+    html { scroll-behavior: smooth; }
 
     body {
       margin: 0;
@@ -50,20 +43,9 @@
         linear-gradient(180deg, var(--bg), var(--bg-2));
     }
 
-    img {
-      display: block;
-      max-width: 100%;
-    }
-
-    button,
-    input,
-    textarea {
-      font: inherit;
-    }
-
-    .hidden {
-      display: none !important;
-    }
+    img { display: block; max-width: 100%; }
+    button, input, textarea { font: inherit; }
+    .hidden { display: none !important; }
 
     .app-shell {
       max-width: var(--container);
@@ -159,30 +141,37 @@
       animation: fadeIn 0.18s ease;
     }
 
-    .page.active {
-      display: block;
-    }
+    .page.active { display: block; }
 
     @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(6px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero,
+    .story-card,
+    .cart-card,
+    .checkout-card,
+    .page-card,
+    .product-detail,
+    .order-card,
+    .chat-help-card,
+    .chat-shell,
+    .product-card,
+    .category-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-soft);
     }
 
     .hero {
-      background: var(--surface);
-      border: 1px solid var(--line);
       border-radius: var(--radius-xxl);
       padding: 22px 22px 20px;
-      box-shadow: var(--shadow-md);
       position: relative;
       overflow: hidden;
       margin-bottom: 18px;
+      box-shadow: var(--shadow-md);
     }
 
     .hero::before {
@@ -234,9 +223,7 @@
       margin-top: 14px;
     }
 
-    .section {
-      margin-bottom: 18px;
-    }
+    .section { margin-bottom: 18px; }
 
     .section-head {
       display: flex;
@@ -436,26 +423,6 @@
       gap: 12px;
     }
 
-    .category-card,
-    .product-card,
-    .story-card,
-    .profile-card,
-    .cart-card,
-    .checkout-card,
-    .empty-card,
-    .page-card,
-    .product-detail,
-    .order-card,
-    .order-preview-card,
-    .order-item-card,
-    .chat-shell,
-    .chat-help-card {
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: var(--radius-xl);
-      box-shadow: var(--shadow-soft);
-    }
-
     .category-card {
       padding: 18px;
       cursor: pointer;
@@ -530,9 +497,7 @@
       z-index: 2;
     }
 
-    .product-body {
-      padding: 16px;
-    }
+    .product-body { padding: 16px; }
 
     .product-title {
       margin: 0 0 6px;
@@ -568,39 +533,30 @@
     }
 
     .story-card,
-    .profile-card,
     .checkout-card,
     .cart-card,
     .page-card,
     .order-card,
-    .order-preview-card,
-    .order-item-card,
     .chat-help-card {
       padding: 18px;
     }
 
     .story-card h3,
-    .profile-card h3,
     .checkout-card h3,
     .cart-card h3,
     .page-card h3,
     .product-detail h3,
     .order-card h3,
-    .order-preview-card h3,
-    .order-item-card h3,
     .chat-help-card h3 {
       margin: 0 0 8px;
       font-size: 22px;
     }
 
     .story-card p,
-    .profile-card p,
     .checkout-card p,
     .cart-card p,
     .page-card p,
     .order-card p,
-    .order-preview-card p,
-    .order-item-card p,
     .chat-help-card p {
       margin: 0;
       color: var(--text-soft);
@@ -758,7 +714,6 @@
       font-size: 18px;
     }
 
-    .profile-meta,
     .detail-meta {
       display: grid;
       gap: 8px;
@@ -766,7 +721,6 @@
       font-size: 14px;
     }
 
-    .profile-meta div,
     .detail-meta div {
       padding: 12px 14px;
       border-radius: 16px;
@@ -777,6 +731,10 @@
     .empty-card {
       padding: 22px 18px;
       text-align: center;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-soft);
     }
 
     .empty-card h3 {
@@ -841,9 +799,7 @@
       display: block;
     }
 
-    .product-detail-body {
-      padding: 18px;
-    }
+    .product-detail-body { padding: 18px; }
 
     .product-detail-price {
       font-size: 26px;
@@ -858,9 +814,7 @@
       margin: 0 0 14px;
     }
 
-    .order-card-head,
-    .order-preview-head,
-    .order-item-head {
+    .order-card-head {
       display: flex;
       justify-content: space-between;
       gap: 12px;
@@ -878,20 +832,12 @@
       font-weight: 700;
     }
 
-    .order-preview-card {
-      cursor: pointer;
-    }
-
-    .order-preview-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-      margin-top: 14px;
-      padding-top: 12px;
-      border-top: 1px solid var(--line);
-      color: var(--text-soft);
-      font-size: 13px;
+    .order-item-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-soft);
+      padding: 18px;
     }
 
     .order-item-card .item-row {
@@ -931,17 +877,11 @@
       gap: 10px;
       max-height: 52vh;
       overflow-y: auto;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.34), rgba(255,255,255,0));
+      background: linear-gradient(180deg, rgba(255,255,255,0.34), rgba(255,255,255,0));
     }
 
-    .chat-message {
-      display: flex;
-    }
-
-    .chat-message.user {
-      justify-content: flex-end;
-    }
+    .chat-message { display: flex; }
+    .chat-message.user { justify-content: flex-end; }
 
     .chat-bubble {
       max-width: 86%;
@@ -1085,7 +1025,6 @@
       background: rgba(255,255,255,0.16);
     }
 
-    /* Minimal profile */
     .profile-minimal-shell {
       display: grid;
       gap: 12px;
@@ -1100,9 +1039,7 @@
       box-shadow: var(--shadow-soft);
     }
 
-    .profile-top-wrap {
-      padding: 16px;
-    }
+    .profile-top-wrap { padding: 16px; }
 
     .profile-top-card {
       display: flex;
@@ -1166,9 +1103,7 @@
       margin-top: 14px;
     }
 
-    .profile-min-card {
-      padding: 16px;
-    }
+    .profile-min-card { padding: 16px; }
 
     .profile-min-title {
       margin: 0 0 12px;
@@ -1244,9 +1179,7 @@
       color: var(--text-soft);
     }
 
-    .profile-active-order-meta strong {
-      color: var(--text);
-    }
+    .profile-active-order-meta strong { color: var(--text); }
 
     .profile-menu {
       display: grid;
@@ -1320,9 +1253,7 @@
       line-height: 1.45;
     }
 
-    .profile-history-item {
-      cursor: pointer;
-    }
+    .profile-history-item { cursor: pointer; }
 
     .profile-history-item-top {
       display: flex;
@@ -1337,79 +1268,34 @@
       color: var(--text-soft);
     }
 
-    .profile-history-item-sum strong {
-      color: var(--text);
-    }
+    .profile-history-item-sum strong { color: var(--text); }
 
     @media (max-width: 420px) {
-      .topbar {
-        gap: 10px;
-      }
-
-      .brand {
-        gap: 12px;
-      }
-
-      .brand-logo {
-        width: 88px;
-        height: 88px;
-      }
-
-      .brand-title {
-        font-size: 27px;
-      }
-
-      .header-chat-btn {
-        padding: 11px 12px;
-        font-size: 13px;
-      }
+      .topbar { gap: 10px; }
+      .brand { gap: 12px; }
+      .brand-logo { width: 88px; height: 88px; }
+      .brand-title { font-size: 27px; }
+      .header-chat-btn { padding: 11px 12px; font-size: 13px; }
     }
 
     @media (max-width: 390px) {
-      .brand-logo {
-        width: 82px;
-        height: 82px;
-      }
-
-      .brand-title {
-        font-size: 25px;
-      }
-
-      .hero-title {
-        font-size: 37px;
-      }
-
+      .brand-logo { width: 82px; height: 82px; }
+      .brand-title { font-size: 25px; }
+      .hero-title { font-size: 37px; }
       .nav {
         gap: 8px;
         padding: 10px 12px calc(18px + env(safe-area-inset-bottom, 0px));
       }
-
       .nav-btn {
         min-height: 74px;
         border-radius: 22px;
         padding: 10px 4px 9px;
       }
-
-      .nav-icon {
-        font-size: 19px;
-      }
-
-      .nav-label {
-        font-size: 11px;
-      }
-
-      .chat-send-btn {
-        min-width: 84px;
-      }
-
-      .profile-user-name {
-        font-size: 24px;
-      }
-
-      .profile-avatar {
-        width: 54px;
-        height: 54px;
-      }
+      .nav-icon { font-size: 19px; }
+      .nav-label { font-size: 11px; }
+      .chat-send-btn { min-width: 84px; }
+      .profile-user-name { font-size: 24px; }
+      .profile-avatar { width: 54px; height: 54px; }
     }
   </style>
 </head>
@@ -1424,19 +1310,16 @@
           <p class="brand-subtitle">букеты</p>
         </div>
       </div>
-
       <button type="button" id="headerChatBtn" class="header-chat-btn">ИИ-бот</button>
     </header>
 
     <section id="page-home" class="page active">
       <div class="hero">
         <h2 class="hero-title">Букеты для особенных моментов</h2>
-
         <div class="hero-actions">
           <button type="button" id="goCatalogBtn" class="btn btn-primary">Каталог</button>
           <button type="button" id="goCategoriesBtn" class="btn btn-secondary">Категории</button>
         </div>
-
         <div id="homeStatus" class="status"></div>
       </div>
 
@@ -1467,7 +1350,6 @@
             <p class="section-subtitle">спокойная эстетика</p>
           </div>
         </div>
-
         <div class="story-grid">
           <article class="story-card">
             <h3>Минимализм и характер</h3>
@@ -1475,7 +1357,6 @@
               ДляНеё — это композиции, в которых важны тон, воздух, пластика и ощущение.
               Без лишнего визуального шума, только собранная подача.
             </p>
-
             <div class="story-list">
               <div class="story-item">
                 <strong>Фирменная палитра</strong>
@@ -1593,18 +1474,15 @@
 
       <div class="chat-shell">
         <div id="chatMessages" class="chat-messages"></div>
-
         <div class="chat-compose">
           <textarea
             id="chatInput"
             class="input chat-input"
             placeholder="Например: какие цветы подарить маме?"
           ></textarea>
-
           <div class="chat-row">
             <button type="button" id="chatSendBtn" class="chat-send-btn">Отправить</button>
           </div>
-
           <div id="chatStatus" class="page-status"></div>
         </div>
       </div>
@@ -1807,191 +1685,28 @@
       lastCategorySourcePage: 'categories',
       lastSimplePage: 'home',
       categories: [
-        {
-          id: 'wine',
-          name: 'Винные',
-          label: 'глубокий тон',
-          description: 'Композиции с более насыщенными оттенками и взрослым спокойным характером.'
-        },
-        {
-          id: 'soft',
-          name: 'Нежные',
-          label: 'мягкая подача',
-          description: 'Светлые и воздушные букеты с деликатной пластикой и мягкой формой.'
-        },
-        {
-          id: 'romance',
-          name: 'Романтика',
-          label: 'для двоих',
-          description: 'Собранные композиции для свиданий, жестов и особых личных моментов.'
-        },
-        {
-          id: 'daily',
-          name: 'Повседневные',
-          label: 'без повода',
-          description: 'Лаконичные букеты для благодарности, встречи или просто хорошего дня.'
-        },
-        {
-          id: 'event',
-          name: 'Праздник',
-          label: 'заметный акцент',
-          description: 'Более выразительные букеты для важных событий и торжеств.'
-        }
+        { id: 'wine', name: 'Винные', label: 'глубокий тон', description: 'Композиции с более насыщенными оттенками и взрослым спокойным характером.' },
+        { id: 'soft', name: 'Нежные', label: 'мягкая подача', description: 'Светлые и воздушные букеты с деликатной пластикой и мягкой формой.' },
+        { id: 'romance', name: 'Романтика', label: 'для двоих', description: 'Собранные композиции для свиданий, жестов и особых личных моментов.' },
+        { id: 'daily', name: 'Повседневные', label: 'без повода', description: 'Лаконичные букеты для благодарности, встречи или просто хорошего дня.' },
+        { id: 'event', name: 'Праздник', label: 'заметный акцент', description: 'Более выразительные букеты для важных событий и торжеств.' }
       ],
       featured: [
-        {
-          id: 'f1',
-          label: 'для свидания',
-          title: 'Винные акценты',
-          text: 'Глубокие оттенки и спокойная форма.',
-          categoryName: 'Винные'
-        },
-        {
-          id: 'f2',
-          label: 'для утра',
-          title: 'Светлые формы',
-          text: 'Лёгкие композиции с воздухом и мягкой подачей.',
-          categoryName: 'Нежные'
-        },
-        {
-          id: 'f3',
-          label: 'без повода',
-          title: 'Тихие жесты',
-          text: 'Компактные и тактичные букеты для повседневных поводов.',
-          categoryName: 'Повседневные'
-        }
+        { id: 'f1', label: 'для свидания', title: 'Винные акценты', text: 'Глубокие оттенки и спокойная форма.', categoryName: 'Винные' },
+        { id: 'f2', label: 'для утра', title: 'Светлые формы', text: 'Лёгкие композиции с воздухом и мягкой подачей.', categoryName: 'Нежные' },
+        { id: 'f3', label: 'без повода', title: 'Тихие жесты', text: 'Компактные и тактичные букеты для повседневных поводов.', categoryName: 'Повседневные' }
       ],
       products: [
-        {
-          id: 1,
-          title: 'Винный акцент',
-          description: 'Собранная композиция с глубоким тоном.',
-          longText: 'Букет для тех случаев, когда нужен выразительный, но не шумный жест.',
-          price: 4900,
-          size: 'Средний',
-          availability: 'Сегодня',
-          category: 'Винные',
-          tag: 'Хит',
-          image: '/rose-1.jpg',
-          icon: '✿'
-        },
-        {
-          id: 2,
-          title: 'Нежная форма',
-          description: 'Светлый букет с деликатной пластикой.',
-          longText: 'Лёгкая композиция с мягким ритмом и тактильной подачей.',
-          price: 3800,
-          size: 'Компактный',
-          availability: 'Сегодня',
-          category: 'Нежные',
-          tag: 'Утро',
-          image: '/rose-2.jpg',
-          icon: '❀'
-        },
-        {
-          id: 3,
-          title: 'Тихое признание',
-          description: 'Минималистичная композиция для личного жеста.',
-          longText: 'Сдержанный букет для моментов, где важнее тонкость, чем громкость.',
-          price: 4200,
-          size: 'Средний',
-          availability: 'Завтра',
-          category: 'Романтика',
-          tag: 'Для двоих',
-          image: '/rose-3.jpg',
-          icon: '✾'
-        },
-        {
-          id: 4,
-          title: 'Пудровый свет',
-          description: 'Мягкая светлая гамма и красивая подача.',
-          longText: 'Светлая композиция с ощущением воздуха и мягкости.',
-          price: 4600,
-          size: 'Большой',
-          availability: 'Сегодня',
-          category: 'Нежные',
-          tag: 'Светлое',
-          image: '/rose-1.jpg',
-          icon: '❁'
-        },
-        {
-          id: 5,
-          title: 'Глубина вечера',
-          description: 'Букет с плотной формой и глубоким оттенком.',
-          longText: 'Композиция с насыщенной подачей для вечерних случаев.',
-          price: 5700,
-          size: 'Большой',
-          availability: 'Завтра',
-          category: 'Винные',
-          tag: 'Вечер',
-          image: '/rose-2.jpg',
-          icon: '✿'
-        },
-        {
-          id: 6,
-          title: 'Лёгкий жест',
-          description: 'Компактная композиция для благодарности.',
-          longText: 'Небольшой, но собранный букет для повседневных жестов.',
-          price: 3100,
-          size: 'Компактный',
-          availability: 'Сегодня',
-          category: 'Повседневные',
-          tag: 'Лаконично',
-          image: '/rose-3.jpg',
-          icon: '❀'
-        },
-        {
-          id: 7,
-          title: 'Тёплое утро',
-          description: 'Пудрово-молочная палитра и мягкость.',
-          longText: 'Светлый букет с ощущением тепла и чистого пространства.',
-          price: 4300,
-          size: 'Средний',
-          availability: 'Сегодня',
-          category: 'Нежные',
-          tag: 'Мягкость',
-          image: '/rose-1.jpg',
-          icon: '❁'
-        },
-        {
-          id: 8,
-          title: 'Редкий акцент',
-          description: 'Статусный букет для важной встречи.',
-          longText: 'Выразительная композиция для крупных поводов.',
-          price: 6500,
-          size: 'Большой',
-          availability: 'Под заказ',
-          category: 'Праздник',
-          tag: 'Премиум',
-          image: '/rose-2.jpg',
-          icon: '✾'
-        },
-        {
-          id: 9,
-          title: 'Для встречи',
-          description: 'Сдержанная композиция для аккуратного повода.',
-          longText: 'Букет для встречи, визита или небольшого события.',
-          price: 4500,
-          size: 'Средний',
-          availability: 'Сегодня',
-          category: 'Повседневные',
-          tag: 'Встреча',
-          image: '/rose-3.jpg',
-          icon: '✿'
-        },
-        {
-          id: 10,
-          title: 'Красивое спасибо',
-          description: 'Букет для благодарности и внимания.',
-          longText: 'Аккуратная композиция для спокойного красивого жеста.',
-          price: 3900,
-          size: 'Компактный',
-          availability: 'Сегодня',
-          category: 'Повседневные',
-          tag: 'Спасибо',
-          image: '/rose-1.jpg',
-          icon: '❀'
-        }
+        { id: 1, title: 'Винный акцент', description: 'Собранная композиция с глубоким тоном.', longText: 'Букет для тех случаев, когда нужен выразительный, но не шумный жест.', price: 4900, size: 'Средний', availability: 'Сегодня', category: 'Винные', tag: 'Хит', image: '/rose-1.jpg', icon: '✿' },
+        { id: 2, title: 'Нежная форма', description: 'Светлый букет с деликатной пластикой.', longText: 'Лёгкая композиция с мягким ритмом и тактильной подачей.', price: 3800, size: 'Компактный', availability: 'Сегодня', category: 'Нежные', tag: 'Утро', image: '/rose-2.jpg', icon: '❀' },
+        { id: 3, title: 'Тихое признание', description: 'Минималистичная композиция для личного жеста.', longText: 'Сдержанный букет для моментов, где важнее тонкость, чем громкость.', price: 4200, size: 'Средний', availability: 'Завтра', category: 'Романтика', tag: 'Для двоих', image: '/rose-3.jpg', icon: '✾' },
+        { id: 4, title: 'Пудровый свет', description: 'Мягкая светлая гамма и красивая подача.', longText: 'Светлая композиция с ощущением воздуха и мягкости.', price: 4600, size: 'Большой', availability: 'Сегодня', category: 'Нежные', tag: 'Светлое', image: '/rose-1.jpg', icon: '❁' },
+        { id: 5, title: 'Глубина вечера', description: 'Букет с плотной формой и глубоким оттенком.', longText: 'Композиция с насыщенной подачей для вечерних случаев.', price: 5700, size: 'Большой', availability: 'Завтра', category: 'Винные', tag: 'Вечер', image: '/rose-2.jpg', icon: '✿' },
+        { id: 6, title: 'Лёгкий жест', description: 'Компактная композиция для благодарности.', longText: 'Небольшой, но собранный букет для повседневных жестов.', price: 3100, size: 'Компактный', availability: 'Сегодня', category: 'Повседневные', tag: 'Лаконично', image: '/rose-3.jpg', icon: '❀' },
+        { id: 7, title: 'Тёплое утро', description: 'Пудрово-молочная палитра и мягкость.', longText: 'Светлый букет с ощущением тепла и чистого пространства.', price: 4300, size: 'Средний', availability: 'Сегодня', category: 'Нежные', tag: 'Мягкость', image: '/rose-1.jpg', icon: '❁' },
+        { id: 8, title: 'Редкий акцент', description: 'Статусный букет для важной встречи.', longText: 'Выразительная композиция для крупных поводов.', price: 6500, size: 'Большой', availability: 'Под заказ', category: 'Праздник', tag: 'Премиум', image: '/rose-2.jpg', icon: '✾' },
+        { id: 9, title: 'Для встречи', description: 'Сдержанная композиция для аккуратного повода.', longText: 'Букет для встречи, визита или небольшого события.', price: 4500, size: 'Средний', availability: 'Сегодня', category: 'Повседневные', tag: 'Встреча', image: '/rose-3.jpg', icon: '✿' },
+        { id: 10, title: 'Красивое спасибо', description: 'Букет для благодарности и внимания.', longText: 'Аккуратная композиция для спокойного красивого жеста.', price: 3900, size: 'Компактный', availability: 'Сегодня', category: 'Повседневные', tag: 'Спасибо', image: '/rose-1.jpg', icon: '❀' }
       ]
     };
 
@@ -2071,21 +1786,10 @@
     const profileAddressesSectionEl = document.getElementById('profileAddressesSection');
     const profileOrdersSectionEl = document.getElementById('profileOrdersSection');
 
-    function setHomeStatus(text) {
-      homeStatusEl.textContent = text || '';
-    }
-
-    function setCartStatus(text) {
-      cartStatusEl.textContent = text || '';
-    }
-
-    function setProfileStatus(text) {
-      profileStatusEl.textContent = text || '';
-    }
-
-    function setChatStatus(text) {
-      chatStatusEl.textContent = text || '';
-    }
+    function setHomeStatus(text) { homeStatusEl.textContent = text || ''; }
+    function setCartStatus(text) { cartStatusEl.textContent = text || ''; }
+    function setProfileStatus(text) { profileStatusEl.textContent = text || ''; }
+    function setChatStatus(text) { chatStatusEl.textContent = text || ''; }
 
     function formatPrice(value) {
       return `${Number(value).toLocaleString('ru-RU')} ₽`;
@@ -2329,8 +2033,7 @@
 
       card.querySelector('.js-open').addEventListener('click', (e) => {
         e.stopPropagation();
-        openProduct(product.id, sourcePage);
-      });
+        openProduct(product.id, sourcePage);       });
 
       card.addEventListener('click', () => {
         openProduct(product.id, sourcePage);
@@ -2522,6 +2225,10 @@
         },
         user: order.user || null
       };
+    }
+
+    function getTelegramAvatarUrl() {
+      return tg?.initDataUnsafe?.user?.photo_url || state.user?.photo_url || '';
     }
 
     function getUserDisplayName(user) {
@@ -2751,47 +2458,51 @@
       renderCounters();
     }
 
-    <script>
-function renderProfile() {
-  if (!state.user) {
-    profileMetaEl.innerHTML = `
-      <div class="profile-avatar">
-        <div class="profile-avatar-fallback">TG</div>
-      </div>
-      <div class="profile-user-copy">
-        <h3 class="profile-user-name">Гость</h3>
-        <p class="profile-user-subtitle">Войдите через Telegram</p>
-      </div>
-    `;
+    function renderProfile() {
+      if (!state.user) {
+        profileMetaEl.innerHTML = `
+          <div class="profile-avatar">
+            <div class="profile-avatar-fallback">TG</div>
+          </div>
+          <div class="profile-user-copy">
+            <h3 class="profile-user-name">Гость</h3>
+            <p class="profile-user-subtitle">Войдите через Telegram</p>
+          </div>
+        `;
 
-    profileLoginBtnEl.classList.remove('hidden');
-    profileLogoutBtnEl.classList.add('hidden');
-    setProfileStatus('Вы не вошли');
-    renderActiveOrder();
-    renderProfileAddresses();
-    return;
-  }
+        profileLoginBtnEl.classList.remove('hidden');
+        profileLogoutBtnEl.classList.add('hidden');
+        setProfileStatus('Вы не вошли');
+        renderActiveOrder();
+        renderProfileAddresses();
+        return;
+      }
 
-  const avatar = state.user.photo_url
-    ? `<img src="${state.user.photo_url}" alt="${getUserDisplayName(state.user)}">`
-    : `<div class="profile-avatar-fallback">${getUserInitials(state.user)}</div>`;
+      const liveAvatar = getTelegramAvatarUrl();
+      if (liveAvatar && liveAvatar !== state.user.photo_url) {
+        state.user.photo_url = liveAvatar;
+        saveUser(state.user);
+      }
 
-  profileMetaEl.innerHTML = `
-    <div class="profile-avatar">${avatar}</div>
-    <div class="profile-user-copy">
-      <h3 class="profile-user-name">${getUserDisplayName(state.user)}</h3>
-      <p class="profile-user-subtitle">${getUserSubtitle(state.user)}</p>
-    </div>
-  `;
+      const avatar = liveAvatar
+        ? `<img src="${liveAvatar}" alt="${getUserDisplayName(state.user)}" referrerpolicy="no-referrer">`
+        : `<div class="profile-avatar-fallback">${getUserInitials(state.user)}</div>`;
 
-  profileLoginBtnEl.classList.add('hidden');
-  profileLogoutBtnEl.classList.remove('hidden');
-  setProfileStatus('Вход выполнен');
+      profileMetaEl.innerHTML = `
+        <div class="profile-avatar">${avatar}</div>
+        <div class="profile-user-copy">
+          <h3 class="profile-user-name">${getUserDisplayName(state.user)}</h3>
+          <p class="profile-user-subtitle">${getUserSubtitle(state.user)}</p>
+        </div>
+      `;
 
-  renderActiveOrder();
-  renderProfileAddresses();
-}
-</script>
+      profileLoginBtnEl.classList.add('hidden');
+      profileLogoutBtnEl.classList.remove('hidden');
+      setProfileStatus('Вход выполнен');
+
+      renderActiveOrder();
+      renderProfileAddresses();
+    }
 
     function renderRecentOrders() {
       const orders = readRecentOrders()
@@ -2951,13 +2662,13 @@ function renderProfile() {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-  initData: initData || '',
-  id: user.id,
-  first_name: user.first_name || '',
-  last_name: user.last_name || '',
-  username: user.username || '',
-  photo_url: user.photo_url || ''
-})
+            initData: initData || '',
+            id: user.id,
+            first_name: user.first_name || '',
+            last_name: user.last_name || '',
+            username: user.username || '',
+            photo_url: user.photo_url || ''
+          })
         });
 
         const text = await res.text();
@@ -2974,14 +2685,15 @@ function renderProfile() {
           return;
         }
 
-        state.user = data.user || {
-  id: user.id,
-  telegram_id: user.id,
-  first_name: user.first_name || '',
-  last_name: user.last_name || '',
-  username: user.username || '',
-  photo_url: user.photo_url || ''
-};
+        state.user = {
+          ...(data.user || {}),
+          id: data.user?.id || user.id,
+          telegram_id: data.user?.telegram_id || user.id,
+          first_name: data.user?.first_name || user.first_name || '',
+          last_name: data.user?.last_name || user.last_name || '',
+          username: data.user?.username || user.username || '',
+          photo_url: data.user?.photo_url || user.photo_url || ''
+        };
 
         saveUser(state.user);
         renderProfile();
@@ -2990,8 +2702,19 @@ function renderProfile() {
         showPage('profile');
       } catch (error) {
         console.error(error);
-        setProfileStatus('Ошибка сети');
-        setHomeStatus('Ошибка сети');
+        state.user = {
+          id: user.id,
+          telegram_id: user.id,
+          first_name: user.first_name || '',
+          last_name: user.last_name || '',
+          username: user.username || '',
+          photo_url: user.photo_url || ''
+        };
+        saveUser(state.user);
+        renderProfile();
+        setProfileStatus('Вход выполнен локально');
+        setHomeStatus(`Вы вошли как ${state.user.first_name || 'Пользователь'}`);
+        showPage('profile');
       }
     }
 
@@ -3024,9 +2747,20 @@ function renderProfile() {
 
         const data = await res.json();
 
-        if (data?.user) {
-          state.user = data.user;
-          saveUser(data.user);
+        const tgUser = tg?.initDataUnsafe?.user;
+
+        if (data?.user || tgUser) {
+          state.user = {
+            ...(data?.user || state.user || {}),
+            id: data?.user?.id || tgUser?.id || state.user?.id,
+            telegram_id: data?.user?.telegram_id || tgUser?.id || state.user?.telegram_id,
+            first_name: data?.user?.first_name || tgUser?.first_name || state.user?.first_name || '',
+            last_name: data?.user?.last_name || tgUser?.last_name || state.user?.last_name || '',
+            username: data?.user?.username || tgUser?.username || state.user?.username || '',
+            photo_url: data?.user?.photo_url || tgUser?.photo_url || state.user?.photo_url || ''
+          };
+
+          saveUser(state.user);
         }
       } catch (e) {
         console.log('me skipped');
@@ -3246,21 +2980,22 @@ function renderProfile() {
     }
 
     async function init() {
-  restoreState();
+      restoreState();
 
-  const tgUser = tg?.initDataUnsafe?.user;
-  if (tgUser) {
-    state.user = {
-      ...(state.user || {}),
-      id: tgUser.id,
-      telegram_id: tgUser.id,
-      first_name: tgUser.first_name || state.user?.first_name || '',
-      last_name: tgUser.last_name || state.user?.last_name || '',
-      username: tgUser.username || state.user?.username || '',
-      photo_url: tgUser.photo_url || state.user?.photo_url || ''
-    };
-    saveUser(state.user);
-  }
+      const tgUser = tg?.initDataUnsafe?.user;
+      if (tgUser) {
+        state.user = {
+          ...(state.user || {}),
+          id: tgUser.id,
+          telegram_id: tgUser.id,
+          first_name: tgUser.first_name || state.user?.first_name || '',
+          last_name: tgUser.last_name || state.user?.last_name || '',
+          username: tgUser.username || state.user?.username || '',
+          photo_url: tgUser.photo_url || state.user?.photo_url || ''
+        };
+        saveUser(state.user);
+      }
+
       renderHomeFeatured();
       renderHomeProducts();
       renderCatalogTabs();
