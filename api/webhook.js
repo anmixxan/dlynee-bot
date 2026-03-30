@@ -54,7 +54,6 @@ export default async function handler(req, res) {
       return res.status(200).send('ok');
     }
 
-    await sendMessage(chatId, `Ты написал: ${text}`);
     return res.status(200).send('ok');
   } catch (error) {
     console.error('Webhook error:', error);
