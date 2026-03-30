@@ -1005,39 +1005,6 @@
       white-space: nowrap;
     }
 
-    .nav {
-      position: fixed;
-      left: 50%;
-      transform: translateX(-50%);
-      bottom: 0;
-      width: 100%;
-      max-width: var(--container);
-      min-height: calc(var(--nav-height) + env(safe-area-inset-bottom, 0px));
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 10px;
-      padding: 12px 14px calc(20px + env(safe-area-inset-bottom, 0px));
-      background:
-        linear-gradient(
-          180deg,
-          rgba(243, 238, 227, 0),
-          rgba(243, 238, 227, 0.84),
-          rgba(243, 238, 227, 0.98)
-        );
-      backdrop-filter: blur(10px);
-      z-index: 50;
-    }
-
-    .nav-btn {
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.78);
-      color: var(--text);
-      border-radius: 24px;
-      cursor: pointer;
-      display: grid;
-      align-items: center;
-      justify-items: ce
-
     @media (max-width: 420px) {
       .topbar {
         gap: 10px;
