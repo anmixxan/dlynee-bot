@@ -11,14 +11,11 @@
       --bg: #f3eee3;
       --bg-2: #efe7da;
       --surface: rgba(255, 251, 245, 0.92);
-      --surface-strong: rgba(255, 251, 245, 0.98);
       --white: #fffaf6;
       --text: #5c1b24;
       --text-soft: #8b6168;
       --accent: #7a1626;
-      --accent-2: #8d2435;
       --line: rgba(122, 22, 38, 0.12);
-      --line-strong: rgba(122, 22, 38, 0.18);
       --shadow-soft: 0 10px 24px rgba(92, 27, 36, 0.06);
       --shadow-md: 0 16px 34px rgba(92, 27, 36, 0.08);
       --radius-xxl: 34px;
@@ -279,7 +276,9 @@
     .order-preview-card:active,
     .header-chat-btn:active,
     .chat-send-btn:active,
-    .quick-chip:active {
+    .quick-chip:active,
+    .profile-menu-btn:active,
+    .profile-order-brief:active {
       transform: scale(0.98);
     }
 
@@ -427,7 +426,7 @@
     .category-grid,
     .story-grid,
     .order-list,
-    .profile-grid,
+    .profile-layout,
     .order-detail-list {
       display: grid;
       gap: 12px;
@@ -499,7 +498,8 @@
       overflow: hidden;
     }
 
-    .product-media img {
+    .product-media img,
+    .product-detail-media img {
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -524,7 +524,6 @@
       font-weight: 700;
       border: 1px solid rgba(122, 22, 38, 0.08);
       z-index: 2;
-      backdrop-filter: blur(3px);
     }
 
     .product-body {
@@ -755,7 +754,6 @@
       font-size: 18px;
     }
 
-    .profile-meta,
     .detail-meta {
       display: grid;
       gap: 8px;
@@ -763,7 +761,6 @@
       font-size: 14px;
     }
 
-    .profile-meta div,
     .detail-meta div {
       padding: 12px 14px;
       border-radius: 16px;
@@ -829,14 +826,6 @@
       overflow: hidden;
     }
 
-    .product-detail-media img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-      display: block;
-    }
-
     .product-detail-body {
       padding: 18px;
     }
@@ -855,8 +844,7 @@
     }
 
     .order-card-head,
-    .order-preview-head,
-    .order-item-head {
+    .order-preview-head {
       display: flex;
       justify-content: space-between;
       gap: 12px;
@@ -927,8 +915,7 @@
       gap: 10px;
       max-height: 52vh;
       overflow-y: auto;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.34), rgba(255,255,255,0));
+      background: linear-gradient(180deg, rgba(255,255,255,0.34), rgba(255,255,255,0));
     }
 
     .chat-message {
@@ -1005,87 +992,6 @@
       white-space: nowrap;
     }
 
-    .nav {
-      position: fixed;
-      left: 50%;
-      transform: translateX(-50%);
-      bottom: 0;
-      width: 100%;
-      max-width: var(--container);
-      min-height: calc(var(--nav-height) + env(safe-area-inset-bottom, 0px));
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 10px;
-      padding: 12px 14px calc(20px + env(safe-area-inset-bottom, 0px));
-      background:
-        linear-gradient(
-          180deg,
-          rgba(243, 238, 227, 0),
-          rgba(243, 238, 227, 0.84),
-          rgba(243, 238, 227, 0.98)
-        );
-      backdrop-filter: blur(10px);
-      z-index: 50;
-    }
-
-    .nav-btn {
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.78);
-      color: var(--text);
-      border-radius: 24px;
-      cursor: pointer;
-      display: grid;
-      align-items: center;
-      justify-items: center;
-      min-height: 78px;
-      padding: 12px 6px 10px;
-      gap: 6px;
-      box-shadow: var(--shadow-soft);
-      position: relative;
-    }
-
-    .nav-btn.active {
-      background: var(--accent);
-      color: var(--white);
-      border-color: var(--accent);
-    }
-
-    .nav-icon {
-      font-size: 20px;
-      line-height: 1;
-    }
-
-    .nav-label {
-      font-size: 12px;
-      font-weight: 700;
-      line-height: 1.1;
-    }
-
-    .nav-count {
-      position: absolute;
-      right: 8px;
-      top: 6px;
-      min-width: 20px;
-      height: 20px;
-      border-radius: var(--radius-pill);
-      background: var(--accent);
-      color: var(--white);
-      font-size: 10px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0 6px;
-    }
-
-    .nav-btn.active .nav-count {
-      background: rgba(255,255,255,0.16);
-    }
-
-    .profile-layout {
-      display: grid;
-      gap: 12px;
-    }
-
     .profile-hero-card {
       padding: 20px 18px;
     }
@@ -1137,6 +1043,13 @@
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+    }
+
+    .profile-inline-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 18px;
     }
 
     .profile-block-title {
@@ -1204,10 +1117,6 @@
       color: var(--text);
     }
 
-    .profile-menu-btn:active {
-      transform: scale(0.99);
-    }
-
     .profile-menu-btn + .profile-menu-btn {
       border-top: 1px solid rgba(122, 22, 38, 0.08);
     }
@@ -1269,11 +1178,74 @@
       font-size: 14px;
     }
 
-    .profile-inline-actions {
-      display: flex;
+    .nav {
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 0;
+      width: 100%;
+      max-width: var(--container);
+      min-height: calc(var(--nav-height) + env(safe-area-inset-bottom, 0px));
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
       gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 18px;
+      padding: 12px 14px calc(20px + env(safe-area-inset-bottom, 0px));
+      background: linear-gradient(180deg, rgba(243,238,227,0), rgba(243,238,227,0.84), rgba(243,238,227,0.98));
+      backdrop-filter: blur(10px);
+      z-index: 50;
+    }
+
+    .nav-btn {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.78);
+      color: var(--text);
+      border-radius: 24px;
+      cursor: pointer;
+      display: grid;
+      align-items: center;
+      justify-items: center;
+      min-height: 78px;
+      padding: 12px 6px 10px;
+      gap: 6px;
+      box-shadow: var(--shadow-soft);
+      position: relative;
+    }
+
+    .nav-btn.active {
+      background: var(--accent);
+      color: var(--white);
+      border-color: var(--accent);
+    }
+
+    .nav-icon {
+      font-size: 20px;
+      line-height: 1;
+    }
+
+    .nav-label {
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1.1;
+    }
+
+    .nav-count {
+      position: absolute;
+      right: 8px;
+      top: 6px;
+      min-width: 20px;
+      height: 20px;
+      border-radius: var(--radius-pill);
+      background: var(--accent);
+      color: var(--white);
+      font-size: 10px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 6px;
+    }
+
+    .nav-btn.active .nav-count {
+      background: rgba(255,255,255,0.16);
     }
 
     @media (max-width: 420px) {
@@ -1336,6 +1308,10 @@
       .chat-send-btn {
         min-width: 84px;
       }
+
+      .profile-name {
+        font-size: 24px;
+      }
     }
   </style>
 </head>
@@ -1351,7 +1327,7 @@
         </div>
       </div>
 
-      <button type="button" id="headerChatBtn" class="headerChatBtn header-chat-btn">ИИ-бот</button>
+      <button type="button" id="headerChatBtn" class="header-chat-btn">ИИ-бот</button>
     </header>
 
     <section id="page-home" class="page active">
@@ -1521,16 +1497,10 @@
         <div id="chatMessages" class="chat-messages"></div>
 
         <div class="chat-compose">
-          <textarea
-            id="chatInput"
-            class="input chat-input"
-            placeholder="Например: какие цветы подарить маме?"
-          ></textarea>
-
+          <textarea id="chatInput" class="input chat-input" placeholder="Например: какие цветы подарить маме?"></textarea>
           <div class="chat-row">
             <button type="button" id="chatSendBtn" class="chat-send-btn">Отправить</button>
           </div>
-
           <div id="chatStatus" class="page-status"></div>
         </div>
       </div>
@@ -1614,7 +1584,59 @@
             <div id="profileHero"></div>
 
             <div class="profile-inline-actions">
-              <b
+              <button type="button" id="profileLoginBtn" class="btn btn-primary">Войти через Telegram</button>
+              <button type="button" id="profileLogoutBtn" class="btn btn-secondary hidden">Выйти</button>
+            </div>
+
+            <div id="profileStatus" class="page-status"></div>
+          </div>
+
+          <div class="profile-card">
+            <div class="profile-block-title">Активный заказ</div>
+            <div id="profileActiveOrder"></div>
+          </div>
+
+          <div class="profile-card profile-menu">
+            <button type="button" id="profileAddressesBtn" class="profile-menu-btn">
+              <span class="profile-menu-main">
+                <span class="profile-menu-icon">⌂</span>
+                <span class="profile-menu-text">Адреса доставки</span>
+              </span>
+              <span class="profile-menu-arrow">→</span>
+            </button>
+
+            <button type="button" id="profileOrdersBtn" class="profile-menu-btn">
+              <span class="profile-menu-main">
+                <span class="profile-menu-icon">◔</span>
+                <span class="profile-menu-text">История заказов</span>
+              </span>
+              <span class="profile-menu-arrow">→</span>
+            </button>
+
+            <button type="button" id="profileSupportBtn" class="profile-menu-btn">
+              <span class="profile-menu-main">
+                <span class="profile-menu-icon">✦</span>
+                <span class="profile-menu-text">Поддержка</span>
+              </span>
+              <span class="profile-menu-arrow">→</span>
+            </button>
+          </div>
+
+          <div class="profile-card profile-bonus-card">
+            <div class="profile-bonus-title">Бонусные баллы</div>
+            <div class="profile-bonus-value">500</div>
+            <div class="profile-bonus-label">баллов</div>
+          </div>
+
+          <div class="profile-card">
+            <div class="profile-block-title">История заказов</div>
+            <div id="recentOrdersWrap" class="order-list"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="page-order-detail" class="page">
       <div class="back-row">
         <button type="button" id="orderBackBtn" class="back-btn">←</button>
         <div class="back-title">Заказ</div>
@@ -1629,7 +1651,7 @@
           <div id="orderDetailStatus" class="order-status">new</div>
         </div>
 
-        <div id="orderDetailMeta" class="detail-meta" style="margin-top:12px;"></div>
+        <div id="orderDetailMeta" class="detail-meta"></div>
       </div>
 
       <div class="order-card" style="margin-top:12px;">
@@ -1689,201 +1711,28 @@
       lastCategorySourcePage: 'categories',
       lastSimplePage: 'home',
       categories: [
-        {
-          id: 'wine',
-          name: 'Винные',
-          label: 'глубокий тон',
-          description: 'Композиции с более насыщенными оттенками и взрослым спокойным характером.'
-        },
-        {
-          id: 'soft',
-          name: 'Нежные',
-          label: 'мягкая подача',
-          description: 'Светлые и воздушные букеты с деликатной пластикой и мягкой формой.'
-        },
-        {
-          id: 'romance',
-          name: 'Романтика',
-          label: 'для двоих',
-          description: 'Собранные композиции для свиданий, жестов и особых личных моментов.'
-        },
-        {
-          id: 'daily',
-          name: 'Повседневные',
-          label: 'без повода',
-          description: 'Лаконичные букеты для благодарности, встречи или просто хорошего дня.'
-        },
-        {
-          id: 'event',
-          name: 'Праздник',
-          label: 'заметный акцент',
-          description: 'Более выразительные букеты для важных событий и торжеств.'
-        }
+        { id: 'wine', name: 'Винные', label: 'глубокий тон', description: 'Композиции с более насыщенными оттенками и взрослым спокойным характером.' },
+        { id: 'soft', name: 'Нежные', label: 'мягкая подача', description: 'Светлые и воздушные букеты с деликатной пластикой и мягкой формой.' },
+        { id: 'romance', name: 'Романтика', label: 'для двоих', description: 'Собранные композиции для свиданий, жестов и особых личных моментов.' },
+        { id: 'daily', name: 'Повседневные', label: 'без повода', description: 'Лаконичные букеты для благодарности, встречи или просто хорошего дня.' },
+        { id: 'event', name: 'Праздник', label: 'заметный акцент', description: 'Более выразительные букеты для важных событий и торжеств.' }
       ],
       featured: [
-        {
-          id: 'f1',
-          label: 'для свидания',
-          title: 'Винные акценты',
-          text: 'Глубокие оттенки и спокойная форма.',
-          categoryName: 'Винные'
-        },
-        {
-          id: 'f2',
-          label: 'для утра',
-          title: 'Светлые формы',
-          text: 'Лёгкие композиции с воздухом и мягкой подачей.',
-          categoryName: 'Нежные'
-        },
-        {
-          id: 'f3',
-          label: 'без повода',
-          title: 'Тихие жесты',
-          text: 'Компактные и тактичные букеты для повседневных поводов.',
-          categoryName: 'Повседневные'
-        }
+        { id: 'f1', label: 'для свидания', title: 'Винные акценты', text: 'Глубокие оттенки и спокойная форма.', categoryName: 'Винные' },
+        { id: 'f2', label: 'для утра', title: 'Светлые формы', text: 'Лёгкие композиции с воздухом и мягкой подачей.', categoryName: 'Нежные' },
+        { id: 'f3', label: 'без повода', title: 'Тихие жесты', text: 'Компактные и тактичные букеты для повседневных поводов.', categoryName: 'Повседневные' }
       ],
       products: [
-        {
-          id: 1,
-          title: 'Винный акцент',
-          description: 'Собранная композиция с глубоким тоном.',
-          longText: 'Букет для тех случаев, когда нужен выразительный, но не шумный жест.',
-          price: 4900,
-          size: 'Средний',
-          availability: 'Сегодня',
-          category: 'Винные',
-          tag: 'Хит',
-          icon: '✿',
-          image: '/rose-1.jpg',
-          imagePosition: 'center center'
-        },
-        {
-          id: 2,
-          title: 'Нежная форма',
-          description: 'Светлый букет с деликатной пластикой.',
-          longText: 'Лёгкая композиция с мягким ритмом и тактильной подачей.',
-          price: 3800,
-          size: 'Компактный',
-          availability: 'Сегодня',
-          category: 'Нежные',
-          tag: 'Утро',
-          icon: '❀',
-          image: '/rose-2.jpg',
-          imagePosition: 'center center'
-        },
-        {
-          id: 3,
-          title: 'Тихое признание',
-          description: 'Минималистичная композиция для личного жеста.',
-          longText: 'Сдержанный букет для моментов, где важнее тонкость, чем громкость.',
-          price: 4200,
-          size: 'Средний',
-          availability: 'Завтра',
-          category: 'Романтика',
-          tag: 'Для двоих',
-          icon: '✾',
-          image: '/rose-3.jpg',
-          imagePosition: 'center center'
-        },
-        {
-          id: 4,
-          title: 'Пудровый свет',
-          description: 'Мягкая светлая гамма и красивая подача.',
-          longText: 'Светлая композиция с ощущением воздуха и мягкости.',
-          price: 4600,
-          size: 'Большой',
-          availability: 'Сегодня',
-          category: 'Нежные',
-          tag: 'Светлое',
-          icon: '❁',
-          image: '/rose-1.jpg',
-          imagePosition: 'center center'
-        },
-        {
-          id: 5,
-          title: 'Глубина вечера',
-          description: 'Букет с плотной формой и глубоким оттенком.',
-          longText: 'Композиция с насыщенной подачей для вечерних случаев.',
-          price: 5700,
-          size: 'Большой',
-          availability: 'Завтра',
-          category: 'Винные',
-          tag: 'Вечер',
-          icon: '✿',
-          image: '/rose-2.jpg',
-          imagePosition: 'center center'
-        },
-        {
-          id: 6,
-          title: 'Лёгкий жест',
-          description: 'Компактная композиция для благодарности.',
-          longText: 'Небольшой, но собранный букет для повседневных жестов.',
-          price: 3100,
-          size: 'Компактный',
-          availability: 'Сегодня',
-          category: 'Повседневные',
-          tag: 'Лаконично',
-          icon: '❀',
-          image: '/rose-3.jpg',
-          imagePosition: 'center center'
-        },
-        {
-          id: 7,
-          title: 'Тёплое утро',
-          description: 'Пудрово-молочная палитра и мягкость.',
-          longText: 'Светлый букет с ощущением тепла и чистого пространства.',
-          price: 4300,
-          size: 'Средний',
-          availability: 'Сегодня',
-          category: 'Нежные',
-          tag: 'Мягкость',
-          icon: '❁',
-          image: '/rose-1.jpg',
-          imagePosition: 'center center'
-        },
-        {
-          id: 8,
-          title: 'Редкий акцент',
-          description: 'Статусный букет для важной встречи.',
-          longText: 'Выразительная композиция для крупных поводов.',
-          price: 6500,
-          size: 'Большой',
-          availability: 'Под заказ',
-          category: 'Праздник',
-          tag: 'Премиум',
-          icon: '✾',
-          image: '/rose-2.jpg',
-          imagePosition: 'center center'
-        },
-        {
-          id: 9,
-          title: 'Для встречи',
-          description: 'Сдержанная композиция для аккуратного повода.',
-          longText: 'Букет для встречи, визита или небольшого события.',
-          price: 4500,
-          size: 'Средний',
-          availability: 'Сегодня',
-          category: 'Повседневные',
-          tag: 'Встреча',
-          icon: '✿',
-          image: '/rose-3.jpg',
-          imagePosition: 'center center'
-        },
-        {
-          id: 10,
-          title: 'Красивое спасибо',
-          description: 'Букет для благодарности и внимания.',
-          longText: 'Аккуратная композиция для спокойного красивого жеста.',
-          price: 3900,
-          size: 'Компактный',
-          availability: 'Сегодня',
-          category: 'Повседневные',
-          tag: 'Спасибо',
-          icon: '❀',
-          image: '/rose-1.jpg',
-          imagePosition: 'center center'
-        }
+        { id: 1, title: 'Винный акцент', description: 'Собранная композиция с глубоким тоном.', longText: 'Букет для тех случаев, когда нужен выразительный, но не шумный жест.', price: 4900, size: 'Средний', availability: 'Сегодня', category: 'Винные', tag: 'Хит', icon: '✿', image: '/rose-1.jpg', imagePosition: 'center center' },
+        { id: 2, title: 'Нежная форма', description: 'Светлый букет с деликатной пластикой.', longText: 'Лёгкая композиция с мягким ритмом и тактильной подачей.', price: 3800, size: 'Компактный', availability: 'Сегодня', category: 'Нежные', tag: 'Утро', icon: '❀', image: '/rose-2.jpg', imagePosition: 'center center' },
+        { id: 3, title: 'Тихое признание', description: 'Минималистичная композиция для личного жеста.', longText: 'Сдержанный букет для моментов, где важнее тонкость, чем громкость.', price: 4200, size: 'Средний', availability: 'Завтра', category: 'Романтика', tag: 'Для двоих', icon: '✾', image: '/rose-3.jpg', imagePosition: 'center center' },
+        { id: 4, title: 'Пудровый свет', description: 'Мягкая светлая гамма и красивая подача.', longText: 'Светлая композиция с ощущением воздуха и мягкости.', price: 4600, size: 'Большой', availability: 'Сегодня', category: 'Нежные', tag: 'Светлое', icon: '❁', image: '/rose-1.jpg', imagePosition: 'center center' },
+        { id: 5, title: 'Глубина вечера', description: 'Букет с плотной формой и глубоким оттенком.', longText: 'Композиция с насыщенной подачей для вечерних случаев.', price: 5700, size: 'Большой', availability: 'Завтра', category: 'Винные', tag: 'Вечер', icon: '✿', image: '/rose-2.jpg', imagePosition: 'center center' },
+        { id: 6, title: 'Лёгкий жест', description: 'Компактная композиция для благодарности.', longText: 'Небольшой, но собранный букет для повседневных жестов.', price: 3100, size: 'Компактный', availability: 'Сегодня', category: 'Повседневные', tag: 'Лаконично', icon: '❀', image: '/rose-3.jpg', imagePosition: 'center center' },
+        { id: 7, title: 'Тёплое утро', description: 'Пудрово-молочная палитра и мягкость.', longText: 'Светлый букет с ощущением тепла и чистого пространства.', price: 4300, size: 'Средний', availability: 'Сегодня', category: 'Нежные', tag: 'Мягкость', icon: '❁', image: '/rose-1.jpg', imagePosition: 'center center' },
+        { id: 8, title: 'Редкий акцент', description: 'Статусный букет для важной встречи.', longText: 'Выразительная композиция для крупных поводов.', price: 6500, size: 'Большой', availability: 'Под заказ', category: 'Праздник', tag: 'Премиум', icon: '✾', image: '/rose-2.jpg', imagePosition: 'center center' },
+        { id: 9, title: 'Для встречи', description: 'Сдержанная композиция для аккуратного повода.', longText: 'Букет для встречи, визита или небольшого события.', price: 4500, size: 'Средний', availability: 'Сегодня', category: 'Повседневные', tag: 'Встреча', icon: '✿', image: '/rose-3.jpg', imagePosition: 'center center' },
+        { id: 10, title: 'Красивое спасибо', description: 'Букет для благодарности и внимания.', longText: 'Аккуратная композиция для спокойного красивого жеста.', price: 3900, size: 'Компактный', availability: 'Сегодня', category: 'Повседневные', tag: 'Спасибо', icon: '❀', image: '/rose-1.jpg', imagePosition: 'center center' }
       ]
     };
 
@@ -1942,10 +1791,14 @@
     const checkoutBtnEl = document.getElementById('checkoutBtn');
     const clearCartBtnEl = document.getElementById('clearCartBtn');
     const cartStatusEl = document.getElementById('cartStatus');
-    const profileMetaEl = document.getElementById('profileMeta');
+    const profileHeroEl = document.getElementById('profileHero');
+    const profileActiveOrderEl = document.getElementById('profileActiveOrder');
     const profileLoginBtnEl = document.getElementById('profileLoginBtn');
     const profileLogoutBtnEl = document.getElementById('profileLogoutBtn');
     const profileStatusEl = document.getElementById('profileStatus');
+    const profileAddressesBtnEl = document.getElementById('profileAddressesBtn');
+    const profileOrdersBtnEl = document.getElementById('profileOrdersBtn');
+    const profileSupportBtnEl = document.getElementById('profileSupportBtn');
     const recentOrdersWrapEl = document.getElementById('recentOrdersWrap');
     const navCartCountEl = document.getElementById('navCartCount');
     const orderBackBtnEl = document.getElementById('orderBackBtn');
@@ -1973,6 +1826,16 @@
 
     function formatPrice(value) {
       return `${Number(value).toLocaleString('ru-RU')} ₽`;
+    }
+
+    function getDisplayName(user) {
+      if (!user) return 'Гость';
+      const fullName = `${user.first_name || ''} ${user.last_name || ''}`.trim();
+      return fullName || user.username || 'Пользователь';
+    }
+
+    function getTelegramProfilePhoto() {
+      return state.user?.photo_url || tg?.initDataUnsafe?.user?.photo_url || '';
     }
 
     function saveUser(user) {
@@ -2042,9 +1905,7 @@
 
     function rememberSimplePage(pageName) {
       const simplePages = ['home', 'catalog', 'categories', 'cart', 'profile'];
-      if (simplePages.includes(pageName)) {
-        state.lastSimplePage = pageName;
-      }
+      if (simplePages.includes(pageName)) state.lastSimplePage = pageName;
     }
 
     function showPage(pageName) {
@@ -2060,7 +1921,7 @@
             ? state.lastSimplePage
             : pageName;
 
-      if (pageName !== 'chat' && pageName !== 'category-detail' && pageName !== 'product-detail' && pageName !== 'order-detail') {
+      if (!['chat', 'category-detail', 'product-detail', 'order-detail'].includes(pageName)) {
         rememberSimplePage(pageName);
       }
 
@@ -2070,9 +1931,7 @@
 
     function openChatPage() {
       showPage('chat');
-      setTimeout(() => {
-        chatInputEl.focus();
-      }, 120);
+      setTimeout(() => chatInputEl.focus(), 120);
     }
 
     function getCategoryByName(name) {
@@ -2093,11 +1952,9 @@
 
     function getVisibleCatalogProducts() {
       let list = [...state.products];
-
       if (state.currentCatalogTab !== 'Все') {
         list = list.filter(item => item.category === state.currentCatalogTab);
       }
-
       const q = state.currentCatalogSearch.trim().toLowerCase();
       if (q) {
         list = list.filter(item =>
@@ -2107,7 +1964,6 @@
           item.tag.toLowerCase().includes(q)
         );
       }
-
       return list;
     }
 
@@ -2121,7 +1977,6 @@
 
     function renderCounters() {
       const { items } = getCartTotals();
-
       if (items > 0) {
         navCartCountEl.textContent = items;
         navCartCountEl.classList.remove('hidden');
@@ -2135,16 +1990,9 @@
       if (!product) return;
 
       const existing = state.cart.find(item => item.id === product.id);
-
-      if (existing) {
-        existing.qty += 1;
-      } else {
-        state.cart.push({
-          id: product.id,
-          title: product.title,
-          price: product.price,
-          qty: 1
-        });
+      if (existing) existing.qty += 1;
+      else {
+        state.cart.push({ id: product.id, title: product.title, price: product.price, qty: 1 });
       }
 
       saveCart();
@@ -2162,14 +2010,11 @@
     function changeQty(productId, delta) {
       const item = state.cart.find(x => x.id === productId);
       if (!item) return;
-
       item.qty += delta;
-
       if (item.qty <= 0) {
         removeFromCart(productId);
         return;
       }
-
       saveCart();
       renderCart();
     }
@@ -2181,18 +2026,21 @@
       setCartStatus('Корзина очищена');
     }
 
+    function getProductMediaHtml(product, imageClass = '') {
+      if (product.image) {
+        return `<img src="${product.image}" alt="${product.title}" class="${imageClass}" style="object-position:${product.imagePosition || 'center center'};" onerror="this.remove();" />`;
+      }
+      return `<div class="product-icon">${product.icon}</div>`;
+    }
+
     function createProductCard(product, sourcePage = 'catalog') {
       const card = document.createElement('article');
       card.className = 'product-card';
 
-      const mediaHtml = product.image
-        ? `<img src="${product.image}" alt="${product.title}" style="object-position:${product.imagePosition || 'center center'};" onerror="this.style.display='none'; this.parentElement.insertAdjacentHTML('beforeend', '<div class=&quot;product-icon&quot;>${product.icon}</div>')" />`
-        : `<div class="product-icon">${product.icon}</div>`;
-
       card.innerHTML = `
         <div class="product-media">
           <div class="product-badge">${product.tag}</div>
-          ${mediaHtml}
+          ${getProductMediaHtml(product)}
         </div>
         <div class="product-body">
           <h3 class="product-title">${product.title}</h3>
@@ -2206,6 +2054,17 @@
         </div>
       `;
 
+      const media = card.querySelector('.product-media');
+      if (!media.querySelector('img') && !media.querySelector('.product-icon')) {
+        media.insertAdjacentHTML('beforeend', `<div class="product-icon">${product.icon}</div>`);
+      }
+      const img = media.querySelector('img');
+      if (img) {
+        img.addEventListener('error', () => {
+          media.insertAdjacentHTML('beforeend', `<div class="product-icon">${product.icon}</div>`);
+        }, { once: true });
+      }
+
       card.querySelector('.js-add').addEventListener('click', (e) => {
         e.stopPropagation();
         addToCart(product.id);
@@ -2216,57 +2075,43 @@
         openProduct(product.id, sourcePage);
       });
 
-      card.addEventListener('click', () => {
-        openProduct(product.id, sourcePage);
-      });
-
+      card.addEventListener('click', () => openProduct(product.id, sourcePage));
       return card;
     }
 
     function renderHomeFeatured() {
       featuredRowEl.innerHTML = '';
-
       state.featured.forEach(item => {
         const card = document.createElement('article');
         card.className = 'banner-card';
-
         card.innerHTML = `
           <div class="banner-label">${item.label}</div>
           <h3 class="banner-title">${item.title}</h3>
           <p class="banner-text">${item.text}</p>
           <button type="button" class="btn btn-primary btn-small">Открыть</button>
         `;
-
-        card.querySelector('button').addEventListener('click', () => {
-          openCategoryByName(item.categoryName, 'home');
-        });
-
+        card.querySelector('button').addEventListener('click', () => openCategoryByName(item.categoryName, 'home'));
         featuredRowEl.appendChild(card);
       });
     }
 
     function renderHomeProducts() {
       homeProductsEl.innerHTML = '';
-      getFeaturedProducts().forEach(product => {
-        homeProductsEl.appendChild(createProductCard(product, 'home'));
-      });
+      getFeaturedProducts().forEach(product => homeProductsEl.appendChild(createProductCard(product, 'home')));
     }
 
     function renderCatalogTabs() {
       catalogTabsEl.innerHTML = '';
-
       getCatalogTabs().forEach(tab => {
         const btn = document.createElement('button');
         btn.type = 'button';
         btn.className = `tab-btn ${state.currentCatalogTab === tab ? 'active' : ''}`;
         btn.textContent = tab;
-
         btn.addEventListener('click', () => {
           state.currentCatalogTab = tab;
           renderCatalogTabs();
           renderCatalogProducts();
         });
-
         catalogTabsEl.appendChild(btn);
       });
     }
@@ -2274,7 +2119,6 @@
     function renderCatalogProducts() {
       catalogProductsEl.innerHTML = '';
       const visible = getVisibleCatalogProducts();
-
       if (!visible.length) {
         catalogProductsEl.innerHTML = `
           <div class="empty-card">
@@ -2284,21 +2128,15 @@
         `;
         return;
       }
-
-      visible.forEach(product => {
-        catalogProductsEl.appendChild(createProductCard(product, 'catalog'));
-      });
+      visible.forEach(product => catalogProductsEl.appendChild(createProductCard(product, 'catalog')));
     }
 
     function renderCategories() {
       categoriesGridEl.innerHTML = '';
-
       state.categories.forEach(category => {
         const count = state.products.filter(p => p.category === category.name).length;
-
         const card = document.createElement('article');
         card.className = 'category-card';
-
         card.innerHTML = `
           <h3>${category.name}</h3>
           <p>${category.description}</p>
@@ -2307,11 +2145,7 @@
             <span style="font-size:13px;color:var(--text-soft);">${count} товаров</span>
           </div>
         `;
-
-        card.addEventListener('click', () => {
-          openCategoryByName(category.name, 'categories');
-        });
-
+        card.addEventListener('click', () => openCategoryByName(category.name, 'categories'));
         categoriesGridEl.appendChild(card);
       });
     }
@@ -2338,9 +2172,7 @@
           </div>
         `;
       } else {
-        list.forEach(product => {
-          categoryDetailProductsEl.appendChild(createProductCard(product, 'categories'));
-        });
+        list.forEach(product => categoryDetailProductsEl.appendChild(createProductCard(product, 'categories')));
       }
 
       showPage('category-detail');
@@ -2353,14 +2185,20 @@
       state.currentProduct = product;
       state.lastCategorySourcePage = sourcePage === 'home' ? 'catalog' : sourcePage;
 
-      productDetailMediaEl.innerHTML = product.image
-        ? `<img src="${product.image}" alt="${product.title}" style="object-position:${product.imagePosition || 'center center'};" onerror="this.remove(); this.parentElement.textContent='${product.icon}';" />`
-        : product.icon;
+      productDetailMediaEl.innerHTML = getProductMediaHtml(product);
+      const detailImg = productDetailMediaEl.querySelector('img');
+      if (detailImg) {
+        detailImg.addEventListener('error', () => {
+          productDetailMediaEl.innerHTML = `<div class="product-icon">${product.icon}</div>`;
+        }, { once: true });
+      }
+      if (!detailImg && !productDetailMediaEl.querySelector('.product-icon')) {
+        productDetailMediaEl.innerHTML = `<div class="product-icon">${product.icon}</div>`;
+      }
 
       productDetailTitleEl.textContent = product.title;
       productDetailPriceEl.textContent = formatPrice(product.price);
       productDetailTextEl.textContent = product.longText;
-
       productDetailMetaEl.innerHTML = `
         <div><strong>Категория:</strong> ${product.category}</div>
         <div><strong>Размер:</strong> ${product.size}</div>
@@ -2373,17 +2211,12 @@
 
     function normalizeOrder(order) {
       if (!order || typeof order !== 'object') return null;
-
       const items = Array.isArray(order.items) ? order.items : [];
       const totals = order.totals || {};
       const customer = order.customer || {};
-
       const itemsCount = items.reduce((sum, item) => sum + Number(item.qty || 1), 0);
       const delivery = Number(totals.delivery ?? (itemsCount > 0 ? 500 : 0));
-      const subtotal = Number(
-        totals.subtotal ??
-        items.reduce((sum, item) => sum + Number(item.price || 0) * Number(item.qty || 1), 0)
-      );
+      const subtotal = Number(totals.subtotal ?? items.reduce((sum, item) => sum + Number(item.price || 0) * Number(item.qty || 1), 0));
       const total = Number(totals.total ?? order.total ?? (subtotal + delivery));
 
       return {
@@ -2397,11 +2230,7 @@
           address: customer.address || '',
           comment: customer.comment || ''
         },
-        totals: {
-          subtotal,
-          delivery,
-          total
-        },
+        totals: { subtotal, delivery, total },
         user: order.user || null
       };
     }
@@ -2410,16 +2239,13 @@
       const orders = readRecentOrders();
       const found = orders.find(order => String(order.id) === String(orderId));
       if (!found) return;
-
       const order = normalizeOrder(found);
       if (!order) return;
 
       state.currentOrder = order;
-
       orderDetailTitleEl.textContent = `Заказ #${order.id}`;
       orderDetailDateEl.textContent = new Date(order.createdAt).toLocaleString('ru-RU');
       orderDetailStatusEl.textContent = order.status;
-
       orderDetailMetaEl.innerHTML = `
         <div><strong>Имя:</strong> ${order.customer.name || '—'}</div>
         <div><strong>Телефон:</strong> ${order.customer.phone || '—'}</div>
@@ -2432,7 +2258,6 @@
       `;
 
       orderDetailItemsEl.innerHTML = '';
-
       if (!order.items.length) {
         orderDetailItemsEl.innerHTML = `
           <div class="empty-card">
@@ -2444,11 +2269,9 @@
         order.items.forEach(item => {
           const card = document.createElement('article');
           card.className = 'order-item-card';
-
           const qty = Number(item.qty || 1);
           const price = Number(item.price || 0);
           const sum = qty * price;
-
           card.innerHTML = `
             <div class="item-row">
               <div>
@@ -2458,7 +2281,6 @@
               <div class="item-sum">${formatPrice(sum)}</div>
             </div>
           `;
-
           orderDetailItemsEl.appendChild(card);
         });
       }
@@ -2468,7 +2290,6 @@
 
     function renderCart() {
       cartItemsWrapEl.innerHTML = '';
-
       if (!state.cart.length) {
         cartItemsWrapEl.innerHTML = `
           <div class="empty-card">
@@ -2484,7 +2305,6 @@
       state.cart.forEach(item => {
         const row = document.createElement('div');
         row.className = 'cart-item';
-
         row.innerHTML = `
           <div class="cart-item-top">
             <div>
@@ -2493,22 +2313,18 @@
             </div>
             <div class="cart-item-price">${formatPrice(item.price * item.qty)}</div>
           </div>
-
           <div class="cart-item-actions">
             <div class="qty-box">
               <button type="button" class="qty-btn js-minus">−</button>
               <div class="qty-value">${item.qty}</div>
               <button type="button" class="qty-btn js-plus">+</button>
             </div>
-
             <button type="button" class="btn btn-ghost btn-small js-remove">Удалить</button>
           </div>
         `;
-
         row.querySelector('.js-minus').addEventListener('click', () => changeQty(item.id, -1));
         row.querySelector('.js-plus').addEventListener('click', () => changeQty(item.id, 1));
         row.querySelector('.js-remove').addEventListener('click', () => removeFromCart(item.id));
-
         cartItemsWrapEl.appendChild(row);
       });
 
@@ -2517,47 +2333,77 @@
       cartDeliveryPriceEl.textContent = formatPrice(totals.delivery);
       cartTotalPriceEl.textContent = formatPrice(totals.total);
       cartSummaryBoxEl.classList.remove('hidden');
-
       renderCounters();
     }
 
-    function renderProfile() {
-      profileMetaEl.innerHTML = '';
-
-      if (!state.user) {
-        profileMetaEl.innerHTML = `
-          <div class="empty-card">
-            <h3>Вы не вошли</h3>
-            <p>Нажми «Войти через Telegram», чтобы использовать реальный аккаунт mini app.</p>
-          </div>
-        `;
-
-        profileLoginBtnEl.classList.remove('hidden');
-        profileLogoutBtnEl.classList.add('hidden');
-        setProfileStatus('Вы не вошли');
+    function renderProfileActiveOrder() {
+      const orders = readRecentOrders();
+      const latest = orders.length ? normalizeOrder(orders[orders.length - 1]) : null;
+      if (!latest) {
+        profileActiveOrderEl.innerHTML = `<div class="profile-order-empty">У вас пока нет активных заказов</div>`;
         return;
       }
 
-      const username = state.user.username ? '@' + state.user.username : 'без username';
-      const telegramId = state.user.telegram_id || state.user.id || '-';
-      const firstName = state.user.first_name || '-';
-      const lastName = state.user.last_name || '-';
-
-      profileMetaEl.innerHTML = `
-        <div><strong>Имя:</strong> ${firstName}</div>
-        <div><strong>Фамилия:</strong> ${lastName}</div>
-        <div><strong>Username:</strong> ${username}</div>
-        <div><strong>ID Telegram:</strong> ${telegramId}</div>
+      const itemsCount = latest.items.reduce((sum, item) => sum + Number(item.qty || 1), 0);
+      profileActiveOrderEl.innerHTML = `
+        <button type="button" class="profile-order-brief" data-order-id="${latest.id}">
+          <div>
+            <div class="profile-order-title">Заказ #${latest.id}</div>
+            <div class="profile-order-meta">${itemsCount} шт · ${formatPrice(latest.totals.total)}</div>
+          </div>
+          <div style="display:grid;justify-items:end;gap:6px;">
+            <span class="order-status">${latest.status}</span>
+            <span class="profile-menu-arrow">→</span>
+          </div>
+        </button>
       `;
+      const btn = profileActiveOrderEl.querySelector('[data-order-id]');
+      if (btn) btn.addEventListener('click', () => openOrder(latest.id));
+    }
 
-      profileLoginBtnEl.classList.add('hidden');
-      profileLogoutBtnEl.classList.remove('hidden');
-      setProfileStatus(`Вы вошли как ${firstName}`);
+    function renderProfile() {
+      const photo = getTelegramProfilePhoto();
+      if (!state.user) {
+        profileHeroEl.innerHTML = `
+          <div class="profile-user">
+            <div class="profile-avatar profile-avatar-fallback">✦</div>
+            <div class="profile-user-copy">
+              <div class="profile-name">Гость</div>
+              <div class="profile-handle">Войдите через Telegram, чтобы сохранить заказы</div>
+            </div>
+          </div>
+        `;
+        profileLoginBtnEl.classList.remove('hidden');
+        profileLogoutBtnEl.classList.add('hidden');
+        setProfileStatus('Вы не вошли');
+        renderProfileActiveOrder();
+        return;
+      }
+
+      const displayName = getDisplayName(state.user);
+      const username = state.user.username ? `@${state.user.username}` : 'Telegram аккаунт';
+      const initials = displayName.trim().charAt(0).toUpperCase() || '✦';
+      profileHeroEl.innerHTML = `
+        <div class="profile-user">
+          ${photo
+            ? `<img src="${photo}" alt="${displayName}" class="profile-avatar" />`
+            : `<div class="profile-avatar profile-avatar-fallback">${initials}</div>`}
+          <div class="profile-user-copy">
+            <div class="profile-name">${displayName}</div>
+            <div class="profile-handle">${username}</div>
+          </div>
+        </div>
+      `;
+        profileLoginBtnEl.classList.add('hidden');
+        profileLogoutBtnEl.classList.remove('hidden');
+        setProfileStatus(`Вы вошли как ${displayName}`);
+        renderProfileActiveOrder();
     }
 
     function renderRecentOrders() {
       const orders = readRecentOrders();
       recentOrdersWrapEl.innerHTML = '';
+      renderProfileActiveOrder();
 
       if (!orders.length) {
         recentOrdersWrapEl.innerHTML = `
@@ -2569,56 +2415,41 @@
         return;
       }
 
-      orders
-        .slice()
-        .reverse()
-        .forEach(rawOrder => {
-          const order = normalizeOrder(rawOrder);
-          if (!order) return;
-
-          const itemsCount = order.items.reduce((sum, item) => sum + Number(item.qty || 1), 0);
-
-          const card = document.createElement('article');
-          card.className = 'order-preview-card';
-
-          card.innerHTML = `
-            <div class="order-preview-head">
-              <div>
-                <h3>Заказ #${order.id}</h3>
-                <p>${new Date(order.createdAt).toLocaleString('ru-RU')}</p>
-              </div>
-              <div class="order-status">${order.status}</div>
+      orders.slice().reverse().forEach(rawOrder => {
+        const order = normalizeOrder(rawOrder);
+        if (!order) return;
+        const itemsCount = order.items.reduce((sum, item) => sum + Number(item.qty || 1), 0);
+        const card = document.createElement('article');
+        card.className = 'order-preview-card';
+        card.innerHTML = `
+          <div class="order-preview-head">
+            <div>
+              <h3>Заказ #${order.id}</h3>
+              <p>${new Date(order.createdAt).toLocaleString('ru-RU')}</p>
             </div>
-
-            <p>Товаров: ${itemsCount}</p>
-            <p style="margin-top:6px;">Сумма: ${formatPrice(order.totals.total)}</p>
-
-            <div class="order-preview-footer">
-              <span>Открыть детали заказа</span>
-              <strong style="color:var(--accent);">→</strong>
-            </div>
-          `;
-
-          card.addEventListener('click', () => {
-            openOrder(order.id);
-          });
-
-          recentOrdersWrapEl.appendChild(card);
-        });
+            <div class="order-status">${order.status}</div>
+          </div>
+          <p>Товаров: ${itemsCount}</p>
+          <p style="margin-top:6px;">Сумма: ${formatPrice(order.totals.total)}</p>
+          <div class="order-preview-footer">
+            <span>Открыть детали заказа</span>
+            <strong style="color:var(--accent);">→</strong>
+          </div>
+        `;
+        card.addEventListener('click', () => openOrder(order.id));
+        recentOrdersWrapEl.appendChild(card);
+      });
     }
 
     function addChatMessage(role, text, save = true) {
       const row = document.createElement('div');
       row.className = `chat-message ${role}`;
-
       const bubble = document.createElement('div');
       bubble.className = 'chat-bubble';
       bubble.textContent = text;
-
       row.appendChild(bubble);
       chatMessagesEl.appendChild(row);
       chatMessagesEl.scrollTop = chatMessagesEl.scrollHeight;
-
       if (save) {
         const history = readChatHistory();
         history.push({ role, text });
@@ -2629,24 +2460,16 @@
     function renderChatHistory() {
       chatMessagesEl.innerHTML = '';
       const history = readChatHistory();
-
       if (!history.length) {
-        addChatMessage(
-          'bot',
-          'Привет. Я цветочный ИИ-бот 🌸\nМогу помочь с выбором букета, уходом за цветами, сочетаниями, поводами и сезонностью.',
-          true
-        );
+        addChatMessage('bot', 'Привет. Я цветочный ИИ-бот 🌸\nМогу помочь с выбором букета, уходом за цветами, сочетаниями, поводами и сезонностью.', true);
         return;
       }
-
       history.forEach(item => addChatMessage(item.role, item.text, false));
       chatMessagesEl.scrollTop = chatMessagesEl.scrollHeight;
     }
 
     function getChatHistoryForApi() {
-      const history = readChatHistory();
-
-      return history.slice(-12).map(item => ({
+      return readChatHistory().slice(-12).map(item => ({
         role: item.role === 'bot' ? 'assistant' : 'user',
         text: item.text
       }));
@@ -2654,7 +2477,6 @@
 
     async function sendChatMessage(prefilledText = '') {
       const text = (prefilledText || chatInputEl.value).trim();
-
       if (!text) {
         setChatStatus('Напиши вопрос про цветы');
         return;
@@ -2667,22 +2489,13 @@
       try {
         const res = await fetch('/api/flower-chat', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            messages: getChatHistoryForApi()
-          })
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ messages: getChatHistoryForApi() })
         });
 
         const raw = await res.text();
         let data = {};
-
-        try {
-          data = JSON.parse(raw);
-        } catch {
-          data = {};
-        }
+        try { data = JSON.parse(raw); } catch {}
 
         if (!res.ok) {
           console.error('flower-chat error:', res.status, raw);
@@ -2701,7 +2514,6 @@
     async function loginTelegram() {
       const initData = tg?.initData;
       const user = tg?.initDataUnsafe?.user;
-
       if (!user) {
         setProfileStatus('Открой mini app внутри Telegram');
         setHomeStatus('Открой mini app внутри Telegram');
@@ -2715,24 +2527,20 @@
         const res = await fetch('/api/telegram-login', {
           method: 'POST',
           credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json'
-          },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             initData: initData || '',
             id: user.id,
             first_name: user.first_name || '',
             last_name: user.last_name || '',
-            username: user.username || ''
+            username: user.username || '',
+            photo_url: user.photo_url || ''
           })
         });
 
         const text = await res.text();
         let data = {};
-
-        try {
-          data = JSON.parse(text);
-        } catch {}
+        try { data = JSON.parse(text); } catch {}
 
         if (!res.ok) {
           const message = data.error || text || 'Ошибка входа';
@@ -2741,12 +2549,14 @@
           return;
         }
 
-        state.user = data.user || {
-          id: user.id,
-          telegram_id: user.id,
-          first_name: user.first_name || '',
-          last_name: user.last_name || '',
-          username: user.username || ''
+        state.user = {
+          ...(data.user || {}),
+          id: data.user?.id || user.id,
+          telegram_id: data.user?.telegram_id || data.user?.id || user.id,
+          first_name: data.user?.first_name || user.first_name || '',
+          last_name: data.user?.last_name || user.last_name || '',
+          username: data.user?.username || user.username || '',
+          photo_url: data.user?.photo_url || user.photo_url || ''
         };
 
         saveUser(state.user);
@@ -2763,11 +2573,8 @@
 
     async function logoutTelegram() {
       try {
-        await fetch('/api/logout', {
-          method: 'POST',
-          credentials: 'include'
-        });
-      } catch (e) {
+        await fetch('/api/logout', { method: 'POST', credentials: 'include' });
+      } catch {
         console.log('logout skipped');
       }
 
@@ -2781,20 +2588,17 @@
 
     async function loadMe() {
       try {
-        const res = await fetch('/api/me', {
-          method: 'GET',
-          credentials: 'include'
-        });
-
+        const res = await fetch('/api/me', { method: 'GET', credentials: 'include' });
         if (!res.ok) return;
-
         const data = await res.json();
-
         if (data?.user) {
-          state.user = data.user;
-          saveUser(data.user);
+          state.user = {
+            ...data.user,
+            photo_url: data.user.photo_url || tg?.initDataUnsafe?.user?.photo_url || ''
+          };
+          saveUser(state.user);
         }
-      } catch (e) {
+      } catch {
         console.log('me skipped');
       }
     }
@@ -2804,7 +2608,6 @@
         setCartStatus('Сначала войди через Telegram');
         return;
       }
-
       if (!state.cart.length) {
         setCartStatus('Корзина пуста');
         return;
@@ -2814,7 +2617,6 @@
       const phone = checkoutPhoneEl.value.trim();
       const address = checkoutAddressEl.value.trim();
       const comment = checkoutCommentEl.value.trim();
-
       if (!name || !phone || !address) {
         setCartStatus('Заполни имя, телефон и адрес');
         return;
@@ -2825,28 +2627,16 @@
       try {
         const res = await fetch('/api/create-order', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             user: state.user,
-            customer: {
-              name,
-              phone,
-              address,
-              comment
-            },
+            customer: { name, phone, address, comment },
             items: state.cart,
-            totals: {
-              subtotal: totals.subtotal,
-              delivery: totals.delivery,
-              total: totals.total
-            }
+            totals: { subtotal: totals.subtotal, delivery: totals.delivery, total: totals.total }
           })
         });
 
         const data = await res.json();
-
         if (!res.ok) {
           setCartStatus(data.error || 'Ошибка заказа');
           return;
@@ -2858,18 +2648,9 @@
           total: totals.total,
           status: data.order?.status || 'new',
           user: state.user,
-          customer: {
-            name,
-            phone,
-            address,
-            comment
-          },
+          customer: { name, phone, address, comment },
           items: state.cart.map(item => ({ ...item })),
-          totals: {
-            subtotal: totals.subtotal,
-            delivery: totals.delivery,
-            total: totals.total
-          },
+          totals: { subtotal: totals.subtotal, delivery: totals.delivery, total: totals.total },
           createdAt: new Date().toISOString()
         });
         saveRecentOrders(recent);
@@ -2894,20 +2675,12 @@
 
     function bindEvents() {
       navButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-          showPage(btn.dataset.page);
-        });
+        btn.addEventListener('click', () => showPage(btn.dataset.page));
       });
 
       headerChatBtnEl.addEventListener('click', openChatPage);
-
-      chatBackBtnEl.addEventListener('click', () => {
-        showPage(state.lastSimplePage || 'home');
-      });
-
-      chatSendBtnEl.addEventListener('click', () => {
-        sendChatMessage();
-      });
+      chatBackBtnEl.addEventListener('click', () => showPage(state.lastSimplePage || 'home'));
+      chatSendBtnEl.addEventListener('click', () => sendChatMessage());
 
       chatInputEl.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' && !e.shiftKey) {
@@ -2917,68 +2690,32 @@
       });
 
       quickChipEls.forEach(btn => {
-        btn.addEventListener('click', () => {
-          sendChatMessage(btn.dataset.question || '');
-        });
+        btn.addEventListener('click', () => sendChatMessage(btn.dataset.question || ''));
       });
 
-      goCatalogBtnEl.addEventListener('click', () => {
-        showPage('catalog');
-      });
-
-      goCategoriesBtnEl.addEventListener('click', () => {
-        showPage('categories');
-      });
+      goCatalogBtnEl.addEventListener('click', () => showPage('catalog'));
+      goCategoriesBtnEl.addEventListener('click', () => showPage('categories'));
 
       catalogSearchInputEl.addEventListener('input', (e) => {
         state.currentCatalogSearch = e.target.value;
         renderCatalogProducts();
       });
 
-      catalogSearchInputEl.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') {
-          e.preventDefault();
-          catalogSearchInputEl.blur();
-          document.activeElement.blur();
-
-          setTimeout(() => {
-            catalogSearchInputEl.setAttribute('readonly', true);
-            catalogSearchInputEl.blur();
-
-            setTimeout(() => {
-              catalogSearchInputEl.removeAttribute('readonly');
-            }, 100);
-          }, 10);
-        }
-      });
-
-      document.addEventListener('click', (e) => {
-        if (!e.target.closest('.search-input')) {
-          catalogSearchInputEl.blur();
-        }
-      });
-
-      categoryBackBtnEl.addEventListener('click', () => {
-        showPage(state.lastCategorySourcePage || 'categories');
-      });
+      categoryBackBtnEl.addEventListener('click', () => showPage(state.lastCategorySourcePage || 'categories'));
 
       productBackBtnEl.addEventListener('click', () => {
         if (state.lastCategorySourcePage === 'catalog') {
           showPage('catalog');
           return;
         }
-
         if (state.lastCategorySourcePage === 'categories' && state.currentCategory) {
           showPage('category-detail');
           return;
         }
-
         showPage('catalog');
       });
 
-      orderBackBtnEl.addEventListener('click', () => {
-        showPage('profile');
-      });
+      orderBackBtnEl.addEventListener('click', () => showPage('profile'));
 
       productDetailAddBtnEl.addEventListener('click', () => {
         if (state.currentProduct) {
@@ -2987,12 +2724,23 @@
         }
       });
 
-      productDetailCatalogBtnEl.addEventListener('click', () => {
-        showPage('catalog');
-      });
-
+      productDetailCatalogBtnEl.addEventListener('click', () => showPage('catalog'));
       profileLoginBtnEl.addEventListener('click', loginTelegram);
       profileLogoutBtnEl.addEventListener('click', logoutTelegram);
+
+      profileAddressesBtnEl.addEventListener('click', () => {
+        setProfileStatus('Адрес можно указать при оформлении заказа');
+        showPage('cart');
+      });
+
+      profileOrdersBtnEl.addEventListener('click', () => {
+        recentOrdersWrapEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+
+      profileSupportBtnEl.addEventListener('click', () => {
+        setProfileStatus('Открываем чат поддержки');
+        openChatPage();
+      });
 
       checkoutBtnEl.addEventListener('click', createOrder);
       clearCartBtnEl.addEventListener('click', clearCart);
