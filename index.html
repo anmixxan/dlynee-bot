@@ -2774,16 +2774,16 @@
       }
 
       const avatar = state.user.photo_url
-        ? `<img src="${state.user.photo_url}" alt="${getUserDisplayName(state.user)}">`
-        : `<div class="profile-avatar-fallback">${getUserInitials(state.user)}</div>`;
+  ? `<img src="${state.user.photo_url}" alt="${getUserDisplayName(state.user)}">`
+  : `<div class="profile-avatar-fallback">${getUserInitials(state.user)}</div>`;
 
       profileMetaEl.innerHTML = `
-        <div class="profile-avatar">${avatar}</div>
-        <div class="profile-user-copy">
-          <h3 class="profile-user-name">${getUserDisplayName(state.user)}</h3>
-          <p class="profile-user-subtitle">${getUserSubtitle(state.user)}</p>
-        </div>
-      `;
+  <div class="profile-avatar">${avatar}</div>
+  <div class="profile-user-copy">
+    <h3 class="profile-user-name">${getUserDisplayName(state.user)}</h3>
+    <p class="profile-user-subtitle">${getUserSubtitle(state.user)}</p>
+  </div>
+`;
 
       profileLoginBtnEl.classList.add('hidden');
       profileLogoutBtnEl.classList.remove('hidden');
@@ -2952,13 +2952,13 @@
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            initData: initData || '',
-            id: user.id,
-            first_name: user.first_name || '',
-            last_name: user.last_name || '',
-            username: user.username || '',
-            photo_url: user.photo_url || ''
-          })
+  initData: initData || '',
+  id: user.id,
+  first_name: user.first_name || '',
+  last_name: user.last_name || '',
+  username: user.username || '',
+  photo_url: user.photo_url || ''
+})
         });
 
         const text = await res.text();
@@ -2976,13 +2976,13 @@
         }
 
         state.user = data.user || {
-          id: user.id,
-          telegram_id: user.id,
-          first_name: user.first_name || '',
-          last_name: user.last_name || '',
-          username: user.username || '',
-          photo_url: user.photo_url || ''
-        };
+  id: user.id,
+  telegram_id: user.id,
+  first_name: user.first_name || '',
+  last_name: user.last_name || '',
+  username: user.username || '',
+  photo_url: user.photo_url || ''
+};
 
         saveUser(state.user);
         renderProfile();
@@ -3247,7 +3247,21 @@
     }
 
     async function init() {
-      restoreState();
+  restoreState();
+
+  const tgUser = tg?.initDataUnsafe?.user;
+  if (tgUser) {
+    state.user = {
+      ...(state.user || {}),
+      id: tgUser.id,
+      telegram_id: tgUser.id,
+      first_name: tgUser.first_name || state.user?.first_name || '',
+      last_name: tgUser.last_name || state.user?.last_name || '',
+      username: tgUser.username || state.user?.username || '',
+      photo_url: tgUser.photo_url || state.user?.photo_url || ''
+    };
+    saveUser(state.user);
+  }
       renderHomeFeatured();
       renderHomeProducts();
       renderCatalogTabs();
