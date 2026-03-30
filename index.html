@@ -1624,6 +1624,11 @@
             <div class="profile-bonus-value">500</div>
             <div class="profile-bonus-label">баллов</div>
           </div>
+          <div class="profile-card profile-bonus-card">
+            <div class="profile-bonus-title">Бонусные баллы</div>
+            <div class="profile-bonus-value">500</div>
+            <div class="profile-bonus-label">баллов</div>
+          </div>
 
           <div class="profile-card">
             <div class="profile-block-title">История заказов</div>
@@ -2736,7 +2741,8 @@
       });
 
       profileSupportBtnEl.addEventListener('click', () => {
-        window.open('https://t.me/anmixxan', '_blank');
+        setProfileStatus('Открываем чат поддержки');
+        openChatPage();
       });
 
       checkoutBtnEl.addEventListener('click', createOrder);
