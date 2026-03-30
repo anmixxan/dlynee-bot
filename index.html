@@ -487,15 +487,22 @@
     }
 
     .product-media {
-      height: 158px;
+      height: 220px;
       background:
         radial-gradient(circle at 30% 30%, rgba(255,255,255,0.54), transparent 22%),
-        linear-gradient(135deg, rgba(122,22,38,0.16), rgba(215,173,160,0.18));
+        linear-gradient(135deg, rgba(122,22,38,0.10), rgba(215,173,160,0.12));
       display: flex;
       align-items: center;
       justify-content: center;
       border-bottom: 1px solid rgba(122, 22, 38, 0.06);
       position: relative;
+      overflow: hidden;
+    }
+
+    .product-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
     .product-icon {
@@ -509,11 +516,12 @@
       top: 14px;
       padding: 7px 10px;
       border-radius: var(--radius-pill);
-      background: rgba(255,255,255,0.78);
+      background: rgba(255,255,255,0.86);
       color: var(--accent);
       font-size: 12px;
       font-weight: 700;
       border: 1px solid rgba(122, 22, 38, 0.08);
+      z-index: 2;
     }
 
     .product-body {
@@ -805,7 +813,7 @@
     }
 
     .product-detail-media {
-      height: 220px;
+      height: 320px;
       background:
         radial-gradient(circle at 30% 30%, rgba(255,255,255,0.54), transparent 22%),
         linear-gradient(135deg, rgba(122,22,38,0.16), rgba(215,173,160,0.18));
@@ -815,6 +823,13 @@
       color: var(--accent);
       font-size: 60px;
       position: relative;
+      overflow: hidden;
+    }
+
+    .product-detail-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
     .product-detail-body {
@@ -1558,6 +1573,7 @@
           availability: 'Сегодня',
           category: 'Винные',
           tag: 'Хит',
+          image: '/rose-1.jpg',
           icon: '✿'
         },
         {
@@ -1570,6 +1586,7 @@
           availability: 'Сегодня',
           category: 'Нежные',
           tag: 'Утро',
+          image: '/rose-2.jpg',
           icon: '❀'
         },
         {
@@ -1582,6 +1599,7 @@
           availability: 'Завтра',
           category: 'Романтика',
           tag: 'Для двоих',
+          image: '/rose-3.jpg',
           icon: '✾'
         },
         {
@@ -1594,6 +1612,7 @@
           availability: 'Сегодня',
           category: 'Нежные',
           tag: 'Светлое',
+          image: '/rose-1.jpg',
           icon: '❁'
         },
         {
@@ -1606,6 +1625,7 @@
           availability: 'Завтра',
           category: 'Винные',
           tag: 'Вечер',
+          image: '/rose-2.jpg',
           icon: '✿'
         },
         {
@@ -1618,6 +1638,7 @@
           availability: 'Сегодня',
           category: 'Повседневные',
           tag: 'Лаконично',
+          image: '/rose-3.jpg',
           icon: '❀'
         },
         {
@@ -1630,6 +1651,7 @@
           availability: 'Сегодня',
           category: 'Нежные',
           tag: 'Мягкость',
+          image: '/rose-1.jpg',
           icon: '❁'
         },
         {
@@ -1642,6 +1664,7 @@
           availability: 'Под заказ',
           category: 'Праздник',
           tag: 'Премиум',
+          image: '/rose-2.jpg',
           icon: '✾'
         },
         {
@@ -1654,6 +1677,7 @@
           availability: 'Сегодня',
           category: 'Повседневные',
           tag: 'Встреча',
+          image: '/rose-3.jpg',
           icon: '✿'
         },
         {
@@ -1666,6 +1690,7 @@
           availability: 'Сегодня',
           category: 'Повседневные',
           tag: 'Спасибо',
+          image: '/rose-1.jpg',
           icon: '❀'
         }
       ]
@@ -1972,7 +1997,11 @@
       card.innerHTML = `
         <div class="product-media">
           <div class="product-badge">${product.tag}</div>
-          <div class="product-icon">${product.icon}</div>
+          ${
+            product.image
+              ? `<img src="${product.image}" alt="${product.title}" loading="lazy" onerror="this.remove(); this.parentElement.insertAdjacentHTML('beforeend', '<div class=&quot;product-icon&quot;>${product.icon || '✿'}</div>')">`
+              : `<div class="product-icon">${product.icon || '✿'}</div>`
+          }
         </div>
         <div class="product-body">
           <h3 class="product-title">${product.title}</h3>
@@ -2133,7 +2162,12 @@
       state.currentProduct = product;
       state.lastCategorySourcePage = sourcePage === 'home' ? 'catalog' : sourcePage;
 
-      productDetailMediaEl.textContent = product.icon;
+      if (product.image) {
+        productDetailMediaEl.innerHTML = `<img src="${product.image}" alt="${product.title}" onerror="this.parentElement.textContent='${product.icon || '✿'}'">`;
+      } else {
+        productDetailMediaEl.textContent = product.icon || '✿';
+      }
+
       productDetailTitleEl.textContent = product.title;
       productDetailPriceEl.textContent = formatPrice(product.price);
       productDetailTextEl.textContent = product.longText;
