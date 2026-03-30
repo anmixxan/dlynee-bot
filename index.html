@@ -1621,9 +1621,6 @@
               <span class="profile-menu-arrow">→</span>
             </button>
           </div>
-
-          <div class="profile-card profile-bonus-card">
-            <div class="profile-bonus-title">Бонусные баллы</div>
             <div class="profile-bonus-value">500</div>
             <div class="profile-bonus-label">баллов</div>
           </div>
@@ -2461,7 +2458,8 @@
       chatMessagesEl.innerHTML = '';
       const history = readChatHistory();
       if (!history.length) {
-        addChatMessage('bot', 'Привет. Я цветочный ИИ-бот 🌸\nМогу помочь с выбором букета, уходом за цветами, сочетаниями, поводами и сезонностью.', true);
+        addChatMessage('bot', 'Привет. Я цветочный ИИ-бот 🌸
+Могу помочь с выбором букета, уходом за цветами, сочетаниями, поводами и сезонностью.', true);
         return;
       }
       history.forEach(item => addChatMessage(item.role, item.text, false));
@@ -2738,8 +2736,7 @@
       });
 
       profileSupportBtnEl.addEventListener('click', () => {
-        setProfileStatus('Открываем чат поддержки');
-        openChatPage();
+        window.open('https://t.me/anmixxan', '_blank');
       });
 
       checkoutBtnEl.addEventListener('click', createOrder);
